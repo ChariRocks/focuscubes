@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus Cubes Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .breathing-circle {
+            animation: breathe 4s infinite ease-in-out;
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .state-card {
+            transition: all 0.3s ease;
+        }
+
+        .state-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="p-6 max-w-4xl mx-auto">
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-8">
+            <h1 class="text-2xl font-bold text-gray-800">Focus Cubes</h1>
+            <button class="p-2 rounded-full bg-gray-100">
+                <i class="fas fa-user text-gray-600"></i>
+            </button>
+        </header>
+
+        <!-- State Visualizer -->
+        <div id="stateVisualizer" class="bg-white rounded-xl p-6 shadow-lg mb-8">
+            <div class="flex justify-between items-center mb-6">
+                <div class="flex items-center space-x-4">
+                    <div class="p-3 rounded-xl bg-blue-100">
+                        <i class="fas fa-compass text-blue-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-medium text-gray-800">Current State</h3>
+                        <p class="text-gray-600" id="stateDescription">Clear thinking, steady progress</p>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <div class="text-sm text-gray-500">Heart Rate</div>
+                    <div class="flex items-center justify-end">
+                        <i class="fas fa-heart text-red-500 mr-2"></i>
+                        <span class="text-2xl font-medium text-gray-800" id="heartRate">72</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Breathing Guide -->
+            <div class="relative w-32 h-32 mx-auto mb-6">
+                <div class="absolute inset-0 rounded-full bg-blue-100 breathing-circle"></div>
+                <div class="absolute inset-0 flex items-center justify-center text-gray-600" id="breathingText">
+                    Breathe In
+                </div>
+            </div>
+
+            <!-- State Selector -->
+            <div class="grid grid-cols-2 gap-4">
+                <button class="state-card bg-blue-50 p-4 rounded-xl text-left" data-state="calm">
+                    <i class="fas fa-compass text-blue-600 mb-2"></i>
+                    <div class="text-sm font-medium text-gray-800">Calm</div>
+                </button>
+                <button class="state-card bg-green-50 p-4 rounded-xl text-left" data-state="focus">
+                    <i class="fas fa-bullseye text-green-600 mb-2"></i>
+                    <div class="text-sm font-medium text-gray-800">Focus</div>
+                </button>
+                <button class="state-card bg-yellow-50 p-4 rounded-xl text-left" data-state="energized">
+                    <i class="fas fa-sun text-yellow-600 mb-2"></i>
+                    <div class="text-sm font-medium text-gray-800">Energized</div>
+                </button>
+                <button class="state-card bg-purple-50 p-4 rounded-xl text-left" data-state="reflective">
+                    <i class="fas fa-moon text-purple-600 mb-2"></i>
+                    <div class="text-sm font-medium text-gray-800">Reflective</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Flow Section -->
+        <div class="bg-white rounded-xl p-6 shadow-lg mb-8">
+            <div class="flex items-center space-x-4 mb-4">
+                <i class="fas fa-wave-square text-blue-600"></i>
+                <h3 class="text-xl font-medium text-gray-800">Your Flow</h3>
+            </div>
+            <div class="h-32 bg-gray-100 rounded-xl flex items-center justify-center text-gray-500">
+                Flow Visualization Coming Soon
+            </div>
+        </div>
+
+        <!-- Insight Cards -->
+        <div class="grid grid-cols-2 gap-6">
+            <div class="bg-white rounded-xl p-6 shadow-lg">
+                <div class="flex items-center space-x-3 mb-2">
+                    <i class="fas fa-brain text-purple-600"></i>
+                    <h4 class="text-lg font-medium text-gray-800">Thought Pattern</h4>
+                </div>
+                <p class="text-gray-600">Your thinking is clear and focused, ideal for strategic decisions.</p>
+            </div>
+            <div class="bg-white rounded-xl p-6 shadow-lg">
+                <div class="flex items-center space-x-3 mb-2">
+                    <i class="fas fa-sparkles text-yellow-600"></i>
+                    <h4 class="text-lg font-medium text-gray-800">Energy Level</h4>
+                </div>
+                <p class="text-gray-600">You're in a balanced state, perfect for sustained performance.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State configurations
+        const states = {
+            calm: {
+                color: 'blue',
+                description: 'Clear thinking, steady progress',
+                heartRate: 72
+            },
+            focus: {
+                color: 'green',
+                description: 'In the zone, peak performance',
+                heartRate: 75
+            },
+            energized: {
+                color: 'yellow',
+                description: 'Energized and focused',
+                heartRate: 82
+            },
+            reflective: {
+                color: 'purple',
+                description: 'Deep insight, creative thinking',
+                heartRate: 68
+            }
+        };
+
+        // Breathing animation
+        let isBreathingIn = true;
+        setInterval(() => {
+            const breathingText = document.getElementById('breathingText');
+            breathingText.textContent = isBreathingIn ? 'Breathe Out' : 'Breathe In';
+            isBreathingIn = !isBreathingIn;
+        }, 4000);
+
+        // State selection handlers
+        document.querySelectorAll('.state-card').forEach(button => {
+            button.addEventListener('click', () => {
+                const state = button.dataset.state;
+                const stateConfig = states[state];
+                
+                // Update description and heart rate
+                document.getElementById('stateDescription').textContent = stateConfig.description;
+                document.getElementById('heartRate').textContent = stateConfig.heartRate;
+
+                // Update visual feedback
+                document.querySelectorAll('.state-card').forEach(b => {
+                    b.classList.remove('ring-2', 'ring-offset-2');
+                });
+                button.classList.add('ring-2', 'ring-offset-2');
+            });
+        });
+
+        // Simulate heart rate variations
+        setInterval(() => {
+            const heartRate = document.getElementById('heartRate');
+            const currentRate = parseInt(heartRate.textContent);
+            const variation = Math.random() > 0.5 ? 1 : -1;
+            heartRate.textContent = currentRate + variation;
+        }, 2000);
+    </script>
+</body>
+</html>
