@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Call Center Meditation App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lucide-icons/0.259.0/lucide-icons.css" rel="stylesheet">
+    <style>
+        .screen {
+            display: none;
+        }
+        .screen.active {
+            display: block;
+        }
+        
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.5); }
+        }
+        
+        .breathing-box {
+            transition: all 0.5s ease-in-out;
+        }
+        
+        .breathing-box.inhale {
+            animation: breathe 4s infinite;
+        }
+        
+        .fade-enter {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .fade-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 300ms, transform 300ms;
+        }
+
+        .hover-lift {
+            transition: transform 0.2s;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-4px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="max-w-md mx-auto min-h-screen bg-white">
+        <!-- Home Screen -->
+        <div id="homeScreen" class="screen active p-6">
+            <h1 class="text-xl font-medium text-gray-800 mb-2">How are you feeling?</h1>
+            <p class="text-sm text-gray-600 mb-6">Every breath is a chance to reset and be your best self</p>
+
+            <div class="grid grid-cols-2 gap-4">
+                <!-- During Call -->
+                <div class="flex flex-col h-full">
+                    <h2 class="text-sm font-medium text-gray-600 mb-2">During Call</h2>
+                    <button onclick="startQuickBreathing()" 
+                            class="flex-1 bg-white border border-yellow-100 rounded-xl p-6 flex flex-col items-center gap-4 shadow-sm hover:shadow-md transition-all hover-lift">
+                        <div class="w-16 h-16 rounded-full bg-yellow-50 flex items-center justify-center">
+                            <i data-lucide="phone" class="w-8 h-8 text-yellow-600"></i>
+                        </div>
+                        <div class="text-center">
+                            <h3 class="font-medium text-gray-800 text-lg">Gather Myself</h3>
+                            <p class="text-sm text-gray-600">4-second box breathing</p>
+                            <p class="text-xs text-gray-400 mt-1">Perfect for challenging conversations</p>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Between Calls -->
+                <div class="flex flex-col h-full">
+                    <h2 class="text-sm font-medium text-gray-600 mb-2">Between Calls</h2>
+                    <div class="flex-1 space-y-3">
+                        <button onclick="showIntensityScreen()" 
+                                class="w-full bg-white border border-green-100 rounded-xl p-4 flex items-start gap-3 hover-lift">
+                            <div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center">
+                                <i data-lucide="battery" class="w-5 h-5 text-green-600"></i>
+                            </div>
+                            <div class="text-left">
+                                <h3 class="font-medium text-gray-800">Energy Boost</h3>
+                                <p class="text-xs text-gray-400">Recharge between calls</p>
+                            </div>
+                        </button>
+
+                        <button onclick="showIntensityScreen()" 
+                                class="w-full bg-white border border-teal-100 rounded-xl p-4 flex items-start gap-3 hover-lift">
+                            <div class="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center">
+                                <i data-lucide="coffee" class="w-5 h-5 text-teal-600"></i>
+                            </div>
+                            <div class="text-left">
+                                <h3 class="font-medium text-gray-800">Sharpen Focus</h3>
+                                <p class="text-xs text-gray-400">Clear your mind</p>
+                            </div>
+                        </button>
+
+                        <button onclick="showIntensityScreen()" 
+                                class="w-full bg-white border border-cyan-100 rounded-xl p-4 flex items-start gap-3 hover-lift">
+                            <div class="w-10 h-10 rounded-full bg-cyan-50 flex items-center justify-center">
+                                <i data-lucide="sparkles" class="w-5 h-5 text-cyan-600"></i>
+                            </div>
+                            <div class="text-left">
+                                <h3 class="font-medium text-gray-800">Ready to Shine</h3>
+                                <p class="text-xs text-gray-400">Boost your brilliance</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-sm text-gray-500 text-center mt-8">
+                12 teammates found their reset today
+            </p>
+        </div>
+
+        <!-- Intensity Screen -->
+        <div id="intensityScreen" class="screen p-6">
+            <h2 class="text-xl font-medium text-gray-800 mb-2">How strong is this feeling?</h2>
+            <p class="text-sm text-gray-600 mb-8">Higher intensity adds more breathing cycles for a deeper reset</p>
+
+            <div class="space-y-2 mb-8">
+                <button onclick="selectIntensity('Barely There', 3)" 
+                        class="w-full p-4 rounded-lg text-left bg-gray-50 hover:bg-gray-100">
+                    Barely There
+                </button>
+                <button onclick="selectIntensity('Noticeable', 3)" 
+                        class="w-full p-4 rounded-lg text-left bg-gray-50 hover:bg-gray-100">
+                    Noticeable
+                </button>
+                <button onclick="selectIntensity('Moderate', 3)" 
+                        class="w-full p-4 rounded-lg text-left bg-teal-50 border-2 border-teal-200">
+                    Moderate <span class="text-teal-600 text-sm">(3 cycles)</span>
+                </button>
+                <button onclick="selectIntensity('Pretty Strong', 4)" 
+                        class="w-full p-4 rounded-lg text-left bg-gray-50 hover:bg-gray-100">
+                    Pretty Strong
+                </button>
+                <button onclick="selectIntensity('Very Intense', 5)" 
+                        class="w-full p-4 rounded-lg text-left bg-gray-50 hover:bg-gray-100">
+                    Very Intense
+                </button>
+            </div>
+
+            <h2 class="text-xl font-medium text-gray-800 mb-4">How long can you comfortably inhale?</h2>
+            <div class="grid grid-cols-2 gap-2 mb-8">
+                <button onclick="setBreathingTime(3)" 
+                        class="p-4 rounded-lg bg-gray-50 hover:bg-gray-100">
+                    3 seconds
+                </button>
+                <button onclick="setBreathingTime(4)" 
+                        class="p-4 rounded-lg bg-teal-50 border-2 border-teal-200">
+                    4 seconds <span class="block text-sm text-teal-600">(recommended)</span>
+                </button>
+                <button onclick="setBreathingTime(5)" 
+                        class="p-4 rounded-lg bg-gray-50 hover:bg-gray-100">
+                    5 seconds
+                </button>
+                <button onclick="setBreathingTime(6)" 
+                        class="p-4 rounded-lg bg-gray-50 hover:bg-gray-100">
+                    6 seconds
+                </button>
+            </div>
+
+            <button onclick="startBreathing()" 
+                    class="w-full bg-teal-600 text-white py-4 rounded-lg font-medium hover:bg-teal-700">
+                Start Breathing Exercise
+            </button>
+        </div>
+
+        <!-- Breathing Screen -->
+        <div id="breathingScreen" class="screen min-h-screen bg-gradient-to-b from-teal-50 to-white p-6 flex flex-col items-center justify-center">
+            <div class="text-center mb-16">
+                <h2 class="text-2xl font-medium text-gray-800">Quick Reset</h2>
+                <p id="cycleCount" class="text-base text-gray-600 mt-2">Cycle 1 of 3</p>
+            </div>
+
+            <p id="breathingInstruction" class="text-lg text-gray-600 mb-12">Get ready...</p>
+
+            <div id="breathingBox" 
+                 class="w-48 h-48 rounded-lg flex items-center justify-center shadow-lg bg-teal-100">
+                <span id="timer" class="text-4xl font-light text-gray-800">4</span>
+            </div>
+
+            <div id="completeButtons" class="mt-24 hidden">
+                <div class="flex gap-3">
+                    <button onclick="resetBreathing()" 
+                            class="px-6 py-3 rounded-lg font-medium border-2 border-teal-600 text-teal-600 hover:bg-teal-50 flex items-center gap-2">
+                        <i data-lucide="refresh-ccw" class="w-4 h-4"></i>
+                        Another Reset
+                    </button>
+                    <!-- <button onclick="showHomeScreen()"  -->
+                        <button onclick="navigateToPage('assess.html')" 
+                            class="px-6 py-3 rounded-lg font-medium bg-teal-600 text-white hover:bg-teal-700">
+                        Feel Better
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentScreen = 'homeScreen';
+        let breathingTime = 4;
+        let totalCycles = 3;
+        let currentCycle = 1;
+        let phase = 'ready';
+        let timer;
+
+          // URL Navigation handling
+          function navigateToPage(pageUrl) {
+            window.location.href = pageUrl;
+        }
+
+        // Screen Navigation
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+            currentScreen = screenId;
+        }
+
+        function showHomeScreen() {
+            showScreen('homeScreen');
+        }
+
+        function showIntensityScreen() {
+            showScreen('intensityScreen');
+        }
+
+        function selectIntensity(level, cycles) {
+            totalCycles = cycles;
+        }
+
+        function setBreathingTime(time) {
+            breathingTime = time;
+        }
+
+        function startQuickBreathing() {
+            breathingTime = 4;
+            totalCycles = 3;
+            startBreathing();
+        }
+
+        function startBreathing() {
+            showScreen('breathingScreen');
+            currentCycle = 1;
+            phase = 'ready';
+            updateBreathingUI();
+            startBreathingCycle();
+        }
+
+        function updateBreathingUI() {
+            const box = document.getElementById('breathingBox');
+            const instruction = document.getElementById('breathingInstruction');
+            const cycleCount = document.getElementById('cycleCount');
+            const completeButtons = document.getElementById('completeButtons');
+
+            cycleCount.textContent = `Cycle ${currentCycle} of ${totalCycles}`;
+
+            switch (phase) {
+                case 'inhale':
+                    box.style.transform = 'scale(1.5)';
+                    box.style.backgroundColor = 'rgb(204, 251, 241)';
+                    instruction.textContent = 'Breathe in...';
+                    break;
+                case 'hold1':
+                case 'hold2':
+                    box.style.backgroundColor = 'rgb(254, 249, 195)';
+                    instruction.textContent = 'Hold...';
+                    break;
+                case 'exhale':
+                    box.style.transform = 'scale(1)';
+                    box.style.backgroundColor = 'rgb(204, 251, 241)';
+                    instruction.textContent = 'Breathe out...';
+                    break;
+                case 'complete':
+                    instruction.textContent = 'Great job!';
+                    completeButtons.classList.remove('hidden');
+                    break;
+                default:
+                    box.style.transform = 'scale(1)';
+                    instruction.textContent = 'Get ready...';
+            }
+        }
+
+        function startBreathingCycle() {
+            let timeLeft = breathingTime;
+            phase = 'inhale';
+            updateBreathingUI();
+
+            function updateTimer() {
+                if (timeLeft > 0) {
+                    document.getElementById('timer').textContent = timeLeft;
+                    timeLeft--;
+                    timer = setTimeout(updateTimer, 1000);
+                } else {
+                    switch (phase) {
+                        case 'inhale':
+                            phase = 'hold1';
+                            timeLeft = breathingTime;
+                            break;
+                        case 'hold1':
+                            phase = 'exhale';
+                            timeLeft = breathingTime;
+                            break;
+                        case 'exhale':
+                            phase = 'hold2';
+                            timeLeft = breathingTime;
+                            break;
+                        case 'hold2':
+                            if (currentCycle < totalCycles) {
+                                currentCycle++;
+                                phase = 'inhale';
+                                timeLeft = breathingTime;
+                            } else {
+                                phase = 'complete';
+                                updateBreathingUI();
+                                return;
+                            }
+                            break;
+                    }
+                    updateBreathingUI();
+                    updateTimer();
+                }
+            }
+
+            updateTimer();
+        }
+
+        function resetBreathing() {
+            clearTimeout(timer);
+            document.getElementById('completeButtons').classList.add('hidden');
+            startBreathing();
+        }
+
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>

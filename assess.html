@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meditation Complete</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lucide-icons/0.259.0/lucide-icons.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+    <div class="max-w-[430px] min-h-[932px] mx-auto bg-white p-6">
+        <div class="flex justify-between mb-8">
+            <button id="backBtn" class="text-gray-600 hover:text-gray-900">
+                <i data-lucide="chevron-left" class="w-6 h-6"></i>
+            </button>
+            <button id="homeBtn" class="text-gray-600 hover:text-gray-900">
+                <i data-lucide="home" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <h1 class="text-2xl font-medium text-gray-900 mb-8">How do you feel now?</h1>
+
+        <div class="grid grid-cols-2 gap-4 mb-12" id="feelingOptions">
+            <button data-feeling="much-better" class="p-4 rounded-xl bg-teal-50 text-gray-900 hover:scale-[1.02] transition-all">
+                Much Better
+            </button>
+            <button data-feeling="slightly-better" class="p-4 rounded-xl bg-gray-50 text-gray-900 hover:scale-[1.02] transition-all">
+                Slightly Better
+            </button>
+            <button data-feeling="no-change" class="p-4 rounded-xl bg-gray-100 text-gray-900 hover:scale-[1.02] transition-all">
+                No Change
+            </button>
+            <button data-feeling="slightly-worse" class="p-4 rounded-xl bg-red-50 text-gray-900 hover:scale-[1.02] transition-all">
+                Slightly Worse
+            </button>
+        </div>
+
+        <h2 class="text-2xl font-medium text-gray-900 mb-6">What positive changes do you notice?</h2>
+
+        <div class="grid grid-cols-2 gap-4 mb-12" id="changesOptions">
+            <button data-change="more-calm" class="p-4 rounded-xl bg-blue-50 text-gray-900 hover:scale-[1.02] transition-all">
+                More Calm
+            </button>
+            <button data-change="clearer-mind" class="p-4 rounded-xl bg-purple-50 text-gray-900 hover:scale-[1.02] transition-all">
+                Clearer Mind
+            </button>
+            <button data-change="more-energy" class="p-4 rounded-xl bg-green-50 text-gray-900 hover:scale-[1.02] transition-all">
+                More Energy
+            </button>
+            <button data-change="lighter-mood" class="p-4 rounded-xl bg-yellow-50 text-gray-900 hover:scale-[1.02] transition-all">
+                Lighter Mood
+            </button>
+        </div>
+
+        <button id="completeBtn" class="w-full p-4 rounded-xl bg-gray-100 text-gray-500 hover:bg-gray-200 transition-all mb-8">
+            Complete Reset
+        </button>
+
+        <p class="text-center text-gray-500">Thank you for taking time for yourself today</p>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        let selectedFeeling = null;
+        let selectedChanges = new Set();
+
+        // Handle feeling selection
+        document.querySelectorAll('#feelingOptions button').forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove previous selection
+                document.querySelectorAll('#feelingOptions button').forEach(b => {
+                    b.classList.remove('ring-2', 'ring-blue-500', 'shadow-lg', 'scale-[1.02]');
+                });
+                
+                // Add selection to clicked button
+                button.classList.add('ring-2', 'ring-blue-500', 'shadow-lg', 'scale-[1.02]');
+                selectedFeeling = button.dataset.feeling;
+                updateCompleteButton();
+            });
+        });
+
+        // Handle changes selection
+        document.querySelectorAll('#changesOptions button').forEach(button => {
+            button.addEventListener('click', () => {
+                if (selectedChanges.has(button.dataset.change)) {
+                    selectedChanges.delete(button.dataset.change);
+                    button.classList.remove('ring-2', 'ring-blue-500', 'shadow-lg', 'scale-[1.02]');
+                } else {
+                    selectedChanges.add(button.dataset.change);
+                    button.classList.add('ring-2', 'ring-blue-500', 'shadow-lg', 'scale-[1.02]');
+                }
+                updateCompleteButton();
+            });
+        });
+
+        function updateCompleteButton() {
+            const completeBtn = document.getElementById('completeBtn');
+            if (selectedFeeling && selectedChanges.size > 0) {
+                completeBtn.classList.remove('bg-gray-100', 'text-gray-500');
+                completeBtn.classList.add('bg-teal-100', 'text-teal-700', 'hover:bg-teal-200');
+            } else {
+                completeBtn.classList.add('bg-gray-100', 'text-gray-500');
+                completeBtn.classList.remove('bg-teal-100', 'text-teal-700', 'hover:bg-teal-200');
+            }
+        }
+
+        // Handle completion
+        document.getElementById('completeBtn').addEventListener('click', () => {
+            if (selectedFeeling && selectedChanges.size > 0) {
+                console.log('Completed with:', { selectedFeeling, selectedChanges: Array.from(selectedChanges) });
+                // Handle completion action here
+            }
+        });
+
+        // Handle navigation
+        document.getElementById('backBtn').addEventListener('click', () => {
+            console.log('Back clicked');
+            // Handle back navigation
+        });
+
+        document.getElementById('homeBtn').addEventListener('click', () => {
+            console.log('Home clicked');
+            // Handle home navigation
+        });
+    </script>
+</body>
+</html>
