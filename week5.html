@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset & Thrive - Week 5</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .section-card:hover {
+            transform: translateY(-2px);
+            transition: all 0.2s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="max-w-md mx-auto min-h-screen bg-gray-50" style="width: 390px;">
+        <div id="mainView" class="p-4">
+            <h2 class="text-xl font-bold mb-6">Week 5: Building Better Patterns</h2>
+            
+            <div class="grid gap-4">
+                <button onclick="showSection('concepts')" class="section-card p-6 rounded-xl bg-white shadow-md hover:shadow-lg w-full text-left">
+                    <div class="flex items-center">
+                        <span class="text-blue-600 mr-3">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
+                            </svg>
+                        </span>
+                        <div>
+                            <p class="text-lg font-semibold">Core Concepts</p>
+                            <p class="text-sm text-gray-600">Foundation ideas for the week</p>
+                        </div>
+                    </div>
+                </button>
+
+                <button onclick="showSection('meditations')" class="section-card p-6 rounded-xl bg-white shadow-md hover:shadow-lg w-full text-left">
+                    <div class="flex items-center">
+                        <span class="text-green-600 mr-3">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="5 3 19 12 5 21 5 3"/>
+                            </svg>
+                        </span>
+                        <div>
+                            <p class="text-lg font-semibold">Guided Meditations</p>
+                            <p class="text-sm text-gray-600">Audio practices for deeper work</p>
+                        </div>
+                    </div>
+                </button>
+
+                <button onclick="showSection('practices')" class="section-card p-6 rounded-xl bg-white shadow-md hover:shadow-lg w-full text-left">
+                    <div class="flex items-center">
+                        <span class="text-purple-600 mr-3">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                        </span>
+                        <div>
+                            <p class="text-lg font-semibold">Quick Practices</p>
+                            <p class="text-sm text-gray-600">Short exercises for your day</p>
+                        </div>
+                    </div>
+                </button>
+
+                <button onclick="showSection('buddy')" class="section-card p-6 rounded-xl bg-white shadow-md hover:shadow-lg w-full text-left">
+                    <div class="flex items-center">
+                        <span class="text-orange-600 mr-3">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                        </span>
+                        <div>
+                            <p class="text-lg font-semibold">Buddy Circle</p>
+                            <p class="text-sm text-gray-600">Connect and practice together</p>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <div id="sectionView" class="hidden p-4">
+            <div class="flex items-center mb-6">
+                <button onclick="showMain()" class="mr-2 p-2 rounded-full hover:bg-gray-100">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6"/>
+                    </svg>
+                </button>
+                <h2 id="sectionTitle" class="text-xl font-bold"></h2>
+            </div>
+            <div id="sectionContent" class="space-y-4"></div>
+        </div>
+    </div>
+
+    <script>
+        const weekContent = {
+            title: 'Building Better Patterns',
+            sections: {
+                concepts: [
+                    {
+                        title: 'Pattern Recognition',
+                        description: 'Like improving call quality, but for our inner world',
+                        details: [
+                            'Identifying habitual responses',
+                            'Understanding pattern formation',
+                            'Recognizing growth opportunities',
+                            'Building better habits'
+                        ]
+                    },
+                    {
+                        title: 'Conscious Response',
+                        description: 'Creating new positive patterns',
+                        details: [
+                            'Understanding habit loops',
+                            'Creating positive anchors',
+                            'Building new neural pathways',
+                            'Strengthening helpful responses'
+                        ]
+                    }
+                ],
+                meditations: [
+                    {
+                        title: 'Pattern Shift',
+                        duration: '7 mins',
+                        description: 'Recognizing and transforming patterns',
+                        keyPoints: [
+                            'Observing habitual responses',
+                            'Creating new pathways',
+                            'Building positive momentum',
+                            'Strengthening new patterns'
+                        ]
+                    },
+                    {
+                        title: 'Better Way',
+                        duration: '5 mins',
+                        description: 'Installing positive patterns',
+                        keyPoints: [
+                            'Visualizing success',
+                            'Embodying new responses',
+                            'Building confidence',
+                            'Strengthening resilience'
+                        ]
+                    }
+                ],
+                practices: [
+                    {
+                        title: 'Pattern Break',
+                        duration: '1 min',
+                        steps: [
+                            'Notice old pattern',
+                            'Change physical position',
+                            'Take new breath',
+                            'Choose fresh response'
+                        ]
+                    },
+                    {
+                        title: 'Success Anchor',
+                        duration: '30 secs',
+                        steps: [
+                            'Remember recent win',
+                            'Feel that confidence',
+                            'One empowered breath',
+                            'Move forward strong'
+                        ]
+                    },
+                    {
+                        title: 'New Choice',
+                        duration: '1 min',
+                        steps: [
+                            'Pause at pattern trigger',
+                            'Notice habitual response',
+                            'Consider alternatives',
+                            'Choose new response'
+                        ]
+                    },
+                    {
+                        title: 'Victory Visualization',
+                        duration: '30 secs',
+                        steps: [
+                            'See yourself handling challenge well',
+                            'Feel the success in your body',
+                            'Take confidence breath',
+                            'Return to present'
+                        ]
+                    }
+                ],
+                buddy: {
+                    title: 'Pattern Support',
+                    duration: '10 mins',
+                    activities: [
+                        'Share pattern insights',
+                        'Practice new responses together',
+                        'Celebrate positive changes',
+                        'Support growth journey'
+                    ],
+                    tips: [
+                        'Focus on progress not perfection',
+                        'Share success strategies',
+                        'Practice together',
+                        'Acknowledge small wins'
+                    ]
+                }
+            }
+        };
+
+        function showSection(sectionId) {
+            document.getElementById('mainView').classList.add('hidden');
+            document.getElementById('sectionView').classList.remove('hidden');
+            
+            const content = weekContent.sections[sectionId];
+            const sectionTitle = document.getElementById('sectionTitle');
+            const sectionContent = document.getElementById('sectionContent');
+            
+            sectionTitle.textContent = {
+                concepts: 'Core Concepts',
+                meditations: 'Guided Meditations',
+                practices: 'Quick Practices',
+                buddy: 'Buddy Circle'
+            }[sectionId];
+
+            sectionContent.innerHTML = '';
+
+            if (Array.isArray(content)) {
+                content.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-white rounded-xl p-4 shadow-md';
+                    card.innerHTML = `
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-semibold">${item.title}</h3>
+                            ${item.duration ? `<span class="text-sm text-gray-500">${item.duration}</span>` : ''}
+                        </div>
+                        <p class="text-gray-600 mb-4">${item.description || ''}</p>
+                        ${item.details ? renderList('Key Points', item.details) : ''}
+                        ${item.keyPoints ? renderList('Key Points', item.keyPoints) : ''}
+                        ${item.steps ? renderList('Steps', item.steps) : ''}
+                        ${sectionId === 'meditations' ? '<button class="w-full p-3 bg-blue-600 text-white rounded-lg mt-2">Start Practice</button>' : ''}
+                    `;
+                    sectionContent.appendChild(card);
+                });
+            } else if (typeof content === 'object') {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-xl p-4 shadow-md';
+                card.innerHTML = `
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="font-semibold">${content.title}</h3>
+                        <span class="text-sm text-gray-500">${content.duration}</span>
+                    </div>
+                    ${content.activities ? renderList('Activities', content.activities) : ''}
+                    ${content.tips ? renderList('Tips for Success', content.tips) : ''}
+                `;
+                sectionContent.appendChild(card);
+            }
+        }
+
+        function renderList(title, items) {
+            return `
+                <div class="mt-4">
+                    <h4 class="font-semibold mb-2">${title}</h4>
+                    <ul class="space-y-2">
+                        ${items.map(item => `<li class="text-gray-600">${item}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+        }
+
+        function showMain() {
+            document.getElementById('sectionView').classList.add('hidden');
+            document.getElementById('mainView').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
