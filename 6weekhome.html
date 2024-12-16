@@ -5,17 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reset & Thrive</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.css" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://unpkg.com/lucide@latest/dist/umd/lucide.css">
 </head>
 <body class="bg-gray-100">
     <div class="max-w-md mx-auto h-[844px] bg-gray-50 relative" style="width: 390px;">
+        <!-- Navigation Header -->
+        <div class="flex items-center justify-between p-4 border-b border-gray-200">
+            <button onclick="window.location.href='login.html#path'" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                <i data-lucide="chevron-left" class="w-6 h-6 text-gray-600"></i>
+            </button>
+            <h1 class="text-xl font-semibold text-gray-800">Reset & Thrive</h1>
+            <button onclick="window.close()" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                <i data-lucide="x" class="w-6 h-6 text-gray-600"></i>
+            </button>
+        </div>
+
+        <!-- Main Content -->
         <div class="p-6">
-            <!-- Header -->
-            <div class="mb-8">
-                <h1 class="text-2xl font-bold text-gray-800 mb-2">Reset & Thrive</h1>
+            <!-- Subtitle -->
+            <div class="mb-6">
                 <p class="text-gray-600">Tools for better call handling</p>
             </div>
-
             <!-- Week Buttons -->
             <div class="grid gap-3">
                 <!-- Week 1 -->
@@ -130,19 +141,18 @@
             <!-- Footer Note -->
             <div class="mt-6 p-4 bg-gray-100 rounded-lg">
                 <p class="text-sm text-gray-600">
-                    Quick practices that fit into your workday. Start anytime.
+                    Quick practices that fit into your workday or at home. Start anytime.
                 </p>
             </div>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js"></script>
     <script>
         // Initialize Lucide icons
         lucide.createIcons();
 
-        // Add click handlers to buttons
-        document.querySelectorAll('button').forEach((button, index) => {
+        // Add click handlers to week buttons only
+        document.querySelectorAll('button[onclick*="window.location"]').forEach((button, index) => {
             button.addEventListener('click', () => {
                 console.log(`Navigating to Week ${index + 1}`);
                 // Add navigation logic here
