@@ -45,7 +45,7 @@
             </nav>
 
             <div class="flex-1 flex flex-col mt-6">
-                <div class="w-12 h-12 bg-green-600 rounded-xl mb-6"></div>
+                <img src="images/focuscubeslogo.png" alt="Focus Cubes Logo" class="w-32 mb-6">
                 
                 <h1 class="text-3xl font-light text-slate-800 mb-8">
                     Welcome to your moment of calm
@@ -221,17 +221,23 @@
             }, 1000);
         }
 
-        function startBreathingPhase() {
-            instructionPhase.classList.add('hidden');
-            breathingPhase.classList.remove('hidden');
-            
-            currentCycle = 1;
-            currentPhase = 'inhale';
-            timeLeft = 4;
-            
-            updateBreathingUI();
-            breathingInterval = setInterval(updateBreathing, 1000);
-        }
+                    function startBreathingPhase() {
+                instructionPhase.classList.add('hidden');
+                breathingPhase.classList.remove('hidden');
+                
+                currentCycle = 1;
+                currentPhase = 'hold2';  // Start with small cube
+                timeLeft = 4;
+                
+                updateBreathingUI();  // This will set the initial small state
+                
+                // Add a small delay before starting the inhale phase
+                setTimeout(() => {
+                    currentPhase = 'inhale';  // Now switch to inhale
+                    updateBreathingUI();  // Update UI to start the expansion
+                    breathingInterval = setInterval(updateBreathing, 1000);
+                }, 100);  // 100ms delay
+            }
 
         function updateBreathing() {
             timeLeft--;
