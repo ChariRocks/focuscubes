@@ -32,39 +32,6 @@
             transform-origin: center;
             transition: transform 4s ease-in-out, background-color 0.3s ease;
         }
-        .confetti {
-            position: absolute;
-            width: 25px;  /* Increased from 10px */
-            height: 25px; /* Increased from 10px */
-            border-radius: 4px; /* Increased from 2px */
-            animation: fall 5s ease-out forwards;
-            opacity: 0;
-        }
-
-        @keyframes fall {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 1;
-            }
-            80% {  
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(300px) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        @keyframes fall {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(300px) rotate(360deg);
-                opacity: 0;
-            }
-        }
     </style>
 </head>
 
@@ -73,88 +40,63 @@
         <!-- Home Screen -->
         <div id="homeScreen" class="p-6 min-h-screen flex flex-col">
             <nav class="flex justify-between items-center">
-                <i class="ph ph-arrow-left text-2xl text-slate-600 cursor-pointer" onclick="goBack()"></i>
+                <i class="ph ph-arrow-left text-2xl text-slate-600"></i>
                 <i class="ph ph-x text-2xl text-slate-600"></i>
             </nav>
 
             <div class="flex-1 flex flex-col mt-6">
-                <div class="flex justify-between items-start mb-8">
-                    <div>
-                        <img src="images/focuscubeslogo.png" alt="Focus Cubes Logo" class="w-32">
-                        <div class="flex items-center gap-4">
-                            <h1 class="text-3xl font-light text-slate-800">Focus and Grow</h1>
-                            <button onclick="window.location.href='rememberyourwhy.html'" class="bg-yellow-50 text-slate-700 rounded-xl px-4 py-2 text-sm hover:bg-yellow-100 transition-colors">
-                                Remember your <span class="font-bold">Why</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <div class="w-12 h-12 bg-green-600 rounded-xl mb-6"></div>
+                
+                <h1 class="text-3xl font-light text-slate-800 mb-8">
+                    Welcome to your moment of calm
+                </h1>
 
                 <button 
-                 id="startButton"
-                    class="w-full bg-green-600 text-white rounded-2xl p-8 mb-8 hover:bg-green-700 transition-colors shadow-lg"
-                   >
-                  <div class="flex items-center justify-between">
-                          <div class="text-left">
-                              <h2 class="text-2xl font-bold mb-2">During Call</h2>
-                             <p class="text-sm opacity-90">Find your calm in this moment</p>
-                          </div>
-                          <i class="ph ph-phone text-3xl opacity-75"></i>
+                    id="startButton"
+                    class="w-full bg-green-600 text-white rounded-2xl p-6 mb-8 hover:bg-green-700 transition-colors"
+                >
+                    <div class="flex items-center justify-between">
+                        <div class="text-left">
+                            <h2 class="text-xl font-light mb-1">During Call</h2>
+                            <p class="text-sm opacity-90">Find your calm in this moment</p>
                         </div>
-                  </button>
-
-                  <button onclick="window.location.href='focusandclarity.html'"
-                        class="w-full bg-slate-50 rounded-xl p-5 hover:bg-slate-100 transition-colors">
-                            <div class="flex items-center justify-between">
-                                <div class="text-left">
-                                    <h3 class="text-lg font-light text-slate-800">Cultivate Clarity & Calm</h3>
-                                    <p class="text-sm text-slate-500">Find your center and sharpen your focus</p>
-                                </div>
-                                <i class="ph ph-brain text-xl text-green-600"></i>
-                            </div>
-                        </button>
-
-                        <button onclick="window.location.href='compassion.html'"
-                        class="w-full bg-slate-50 rounded-xl p-5 hover:bg-slate-100 transition-colors">
-                            <div class="flex items-center justify-between">
-                                <div class="text-left">
-                                    <h3 class="text-lg font-light text-slate-800">Grow Compassion</h3>
-                                    <p class="text-sm text-slate-500">Develop kindness for self and others</p>
-                                </div>
-                                <i class="ph ph-heart text-xl text-green-600"></i>
-                            </div>
-                        </button>
-
-                        <button onclick="window.location.href='DoubleBreathEnergyReset.html'"
-                        class="w-full bg-slate-50 rounded-xl p-5 hover:bg-slate-100 transition-colors">
-                            <div class="flex items-center justify-between">
-                                <div class="text-left">
-                                    <h3 class="text-lg font-light text-slate-800">Quick Energy Reset</h3>
-                                    <p class="text-sm text-slate-500">Boost your vitality and presence</p>
-                                </div>
-                                <i class="ph ph-lightning text-xl text-green-600"></i>
-                            </div>
-                        </button>
-                
-                    <!-- Separate MoodBlocks section -->
-                    <div class="bg-white rounded-2xl p-6 border border-slate-100">
-                        <button onclick="goToMoodBlocks()"
-                            class="w-full bg-amber-100 rounded-xl p-5 hover:bg-amber-200 transition-colors mb-8">
-                            <div class="flex items-center justify-between">
-                                <div class="text-left">
-                                    <h3 class="text-lg font-light text-slate-800 flex items-center gap-1">
-                                        MoodBlocks<span class="text-xs align-top">™</span>
-                                    </h3>
-                                    <p class="text-sm text-slate-500">Track emotions & build awareness</p>
-                                </div>
-                                <i class="ph ph-heart text-xl text-pink-400"></i>
-                            </div>
-                        </button>
+                        <i class="ph ph-phone text-2xl opacity-75"></i>
                     </div>
-                </div>
-                
-                <p class="text-center text-slate-400 text-sm font-light mt-auto pt-8">
+                </button>
 
+                <div class="space-y-4">
+                    <button class="w-full bg-white rounded-xl p-5 border border-slate-100 hover:bg-slate-50 transition-colors">
+                        <div class="flex items-center justify-between">
+                            <div class="text-left">
+                                <h3 class="text-lg font-light text-slate-800">Reset & Release</h3>
+                                <p class="text-sm text-slate-500">Let go and move forward</p>
+                            </div>
+                            <i class="ph ph-battery-charging text-xl text-green-600"></i>
+                        </div>
+                    </button>
+
+                    <button class="w-full bg-white rounded-xl p-5 border border-slate-100 hover:bg-slate-50 transition-colors">
+                        <div class="flex items-center justify-between">
+                            <div class="text-left">
+                                <h3 class="text-lg font-light text-slate-800">Mind Clear</h3>
+                                <p class="text-sm text-slate-500">Sharpen your focus</p>
+                            </div>
+                            <i class="ph ph-brain text-xl text-green-600"></i>
+                        </div>
+                    </button>
+
+                    <button class="w-full bg-white rounded-xl p-5 border border-slate-100 hover:bg-slate-50 transition-colors">
+                        <div class="flex items-center justify-between">
+                            <div class="text-left">
+                                <h3 class="text-lg font-light text-slate-800">Power Up</h3>
+                                <p class="text-sm text-slate-500">Boost your energy</p>
+                            </div>
+                            <i class="ph ph-sparkle text-xl text-green-600"></i>
+                        </div>
+                    </button>
+                </div>
+
+                <p class="text-center text-slate-400 text-sm font-light mt-auto pt-8">
                     12 teammates found their reset today
                 </p>
             </div>
@@ -163,7 +105,7 @@
         <!-- Meditation Screen -->
         <div id="meditationScreen" class="hidden min-h-screen flex flex-col meditation-screen">
             <nav class="flex justify-between items-center p-6">
-                <i class="ph ph-arrow-left text-2xl text-slate-600 cursor-pointer" onclick="goBack()"></i>
+                <i class="ph ph-arrow-left text-2xl text-slate-600 cursor-pointer" onclick="showHomeScreen()"></i>
                 <h2 class="text-xl font-light text-slate-800">Quick Reset</h2>
                 <i class="ph ph-x text-2xl text-slate-600 cursor-pointer" onclick="showHomeScreen()"></i>
             </nav>
@@ -187,21 +129,8 @@
             </div>
 
             <!-- Complete Screen -->
-                    <div id="completePhase" class="hidden flex-1 flex flex-col items-center justify-center p-6">
-                        <div class="text-center">
-                            <button onclick="goToMoodBlocks('meditation-complete')"
-                                class="w-full bg-amber-100 rounded-xl p-5 hover:bg-amber-200 transition-colors mb-8">
-                                <div class="flex items-center justify-between">
-                                    <div class="text-left">
-                                        <h3 class="text-lg font-light text-slate-800 flex items-center gap-1">
-                                            MoodBlocks<span class="text-xs align-top">™</span>
-                                        </h3>
-                                        <p class="text-sm text-slate-500">Track emotions & build awareness</p>
-                                    </div>
-                                    <i class="ph ph-heart text-xl text-pink-400"></i>
-                                </div>
-                            </button>
-                    
+            <div id="completePhase" class="hidden flex-1 flex flex-col items-center justify-center p-6">
+                <div class="text-center">
                     <h2 class="text-2xl font-light text-slate-800 mb-6">Well done!</h2>
                     
                     <div class="flex gap-3 mb-8">
@@ -289,23 +218,17 @@
             }, 1000);
         }
 
-                    function startBreathingPhase() {
-                instructionPhase.classList.add('hidden');
-                breathingPhase.classList.remove('hidden');
-                
-                currentCycle = 1;
-                currentPhase = 'hold2';  // Start with small cube
-                timeLeft = 4;
-                
-                updateBreathingUI();  // This will set the initial small state
-                
-                // Add a small delay before starting the inhale phase
-                setTimeout(() => {
-                    currentPhase = 'inhale';  // Now switch to inhale
-                    updateBreathingUI();  // Update UI to start the expansion
-                    breathingInterval = setInterval(updateBreathing, 1000);
-                }, 100);  // 100ms delay
-            }
+        function startBreathingPhase() {
+            instructionPhase.classList.add('hidden');
+            breathingPhase.classList.remove('hidden');
+            
+            currentCycle = 1;
+            currentPhase = 'inhale';
+            timeLeft = 4;
+            
+            updateBreathingUI();
+            breathingInterval = setInterval(updateBreathing, 1000);
+        }
 
         function updateBreathing() {
             timeLeft--;
@@ -363,7 +286,6 @@
         function showCompletePhase() {
             breathingPhase.classList.add('hidden');
             completePhase.classList.remove('hidden');
-            createConfetti();
         }
 
         function restartBreathing() {
@@ -415,29 +337,6 @@
             document.getElementById('uploadText').textContent = 'Add a calming background';
             document.getElementById('removeBackground').classList.add('hidden');
             document.getElementById('imageUpload').value = '';
-        }
-        function createConfetti() {
-            const colors = ['#86efac', '#fef9c3', '#e5e7eb'];
-            for (let i = 0; i < 40; i++) { // Increased from 30
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.left = Math.random() * 100 + '%';
-                confetti.style.animationDelay = Math.random() * 1.5 + 's'; // Increased from 0.5s
-                meditationScreen.appendChild(confetti);
-                setTimeout(() => confetti.remove(), 5500); // Increased to ensure visibility
-            }
-        }
-        function goBack() {
-    window.location.href = 'index.html#path';
-}
-        function goToMoodBlocks(fromPage) {
-            sessionStorage.setItem('previousPage', fromPage);
-            window.location.href = 'MoodBlocks.html';
-        }
-        function goToMoodBlocks() {
-            sessionStorage.setItem('previousPage', 'meditation-complete');
-            window.location.href = 'MoodBlocks.html';
         }
     </script>
 </body>

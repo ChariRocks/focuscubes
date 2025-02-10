@@ -18,8 +18,9 @@
                 </div>
 
             <!-- Welcome Text -->
-            <h1 class="text-3xl font-light mb-12 text-center text-gray-700 animate__animated animate__fadeIn animate__delay-1s">
-                Welcome to your moment of calm
+            <h1 class="font-light mb-12 text-center text-gray-700 animate__animated animate__fadeIn animate__delay-1s">
+                <span class="block text-3xl font-bold">Welcome</span>
+                <span class="block text-2xl">Find Your Focus, Find Your Best!</span>
             </h1>
 
             <!-- Login Form -->
@@ -62,18 +63,18 @@
                 <div class="space-y-6 max-w-sm mx-auto w-full">
                     <button 
                         class="w-full bg-white/80 backdrop-blur-sm border border-sky-100 text-gray-700 rounded-3xl p-8 text-left transform hover:scale-[1.02] transition-all shadow-sm hover:shadow-md"
-                        onclick="selectPath('now')"
+                        onclick="selectPath('While at Work')"
                     >
-                        <h2 class="text-2xl font-light mb-2 text-sky-700">Now</h2>
-                        <p class="text-sm text-gray-500">Find your calm in this moment</p>
+                        <h2 class="text-2xl font-bold mb-2 text-sky-700">While at Work</h2>
+                        <p class="text-sm text-gray-500">Boost your day. Right here, Right now!</p>
                     </button>
 
                     <button 
                         class="w-full bg-teal-50/80 backdrop-blur-sm border border-teal-100 text-gray-700 rounded-3xl p-8 text-left transform hover:scale-[1.02] transition-all shadow-sm hover:shadow-md"
-                        onclick="selectPath('growth')"
+                        onclick="selectPath('6-Week Shift')"
                     >
-                        <h2 class="text-2xl font-light mb-2 text-teal-700">Growth</h2>
-                        <p class="text-sm text-gray-500">Nurture your journey forward</p>
+                        <h2 class="text-2xl font-bold mb-2 text-teal-700">6-Week Transformation</h2>
+                        <p class="text-sm text-gray-500">Build lasting Resilience and Focus for Life!</p>
                     </button>
                 </div>
             </div>
@@ -135,9 +136,9 @@
     button.classList.add('scale-95');
     setTimeout(() => {
         button.classList.remove('scale-95');
-        if (path === 'growth') {
-            window.location.href = '6weekhome.html';
-        } else if (path === 'now') {
+        if (path === '6-Week Shift') {
+            window.location.href = '6weekhomeNEW.html';
+        } else if (path === 'While at Work') {
             window.location.href = 'during&between.html';
         }
     }, 200);

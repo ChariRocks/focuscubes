@@ -3,262 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reset & Thrive - Week 1</title>
+    <title>Video Learning Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js" rel="stylesheet">
-    <style>
-        .section-card:hover {
-            transform: translateY(-2px);
-            transition: all 0.2s ease;
-        }
-    </style>
 </head>
 <body class="bg-gray-50">
-    <div class="max-w-md mx-auto min-h-screen bg-gray-50" style="width: 390px;">
-        <div class="p-2">
-            <div class="flex items-center mb-6">
-                <button onclick="window.location.href='6weekhome.html'"
-                class="mr-2 p-2 rounded-full hover:bg-gray-100">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="15 18 9 12 15 6"/>
-                    </svg>
-                </button>
-                <h2 id="sectionTitle" class="text-xl font-bold">Week 1: Introduction to Mindfulness</h2>
-            </div>
+    <div class="max-w-2xl mx-auto min-h-screen bg-gray-50">
+        <div class="flex justify-between items-center p-4 border-b">
+            <button onclick="history.back()" class="p-2 rounded-full hover:bg-gray-100">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"/>
+                </svg>
+            </button>
+            <button onclick="location.href='6weekhome.html'" class="p-2 rounded-full hover:bg-gray-100">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
         </div>
-        <div id="mainView" class="p-4">
-            <!-- <h2 class="text-xl font-bold mb-6">Introduction to Mindfulness</h2> -->
-            
-            <div class="grid gap-4">
-                <button onclick="showSection('concepts')" class="section-card p-6 rounded-xl bg-white shadow-md hover:shadow-lg w-full text-left">
-                    <div class="flex items-center">
-                        <span class="text-blue-600 mr-3">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
-                            </svg>
-                        </span>
-                        <div>
-                            <p class="text-lg font-semibold">Core Concepts</p>
-                            <p class="text-sm text-gray-600">Foundation ideas for the week</p>
-                        </div>
-                    </div>
-                </button>
 
-                <button onclick="showSection('meditations')" class="section-card p-6 rounded-xl bg-white shadow-md hover:shadow-lg w-full text-left">
-                    <div class="flex items-center">
-                        <span class="text-green-600 mr-3">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <div class="p-4">
+            <h2 class="text-xl font-bold mb-6">Mindful Awareness Practice</h2>
+
+            <div class="mb-4">
+                <div class="relative bg-black aspect-video rounded-xl overflow-hidden">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <button id="playButton" class="p-4 rounded-full bg-white/20 hover:bg-white/30 transition-colors">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
                                 <polygon points="5 3 19 12 5 21 5 3"/>
                             </svg>
-                        </span>
-                        <div>
-                            <p class="text-lg font-semibold">Guided Meditations</p>
-                            <p class="text-sm text-gray-600">Audio practices for deeper work</p>
-                        </div>
+                        </button>
                     </div>
-                </button>
-
-                <button onclick="showSection('practices')" class="section-card p-6 rounded-xl bg-white shadow-md hover:shadow-lg w-full text-left">
-                    <div class="flex items-center">
-                        <span class="text-purple-600 mr-3">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"/>
-                                <polyline points="12 6 12 12 16 14"/>
-                            </svg>
-                        </span>
-                        <div>
-                            <p class="text-lg font-semibold">Quick Practices</p>
-                            <p class="text-sm text-gray-600">Short exercises for your day</p>
-                        </div>
-                    </div>
-                </button>
-
-                <button onclick="showSection('buddy')" class="section-card p-6 rounded-xl bg-white shadow-md hover:shadow-lg w-full text-left">
-                    <div class="flex items-center">
-                        <span class="text-orange-600 mr-3">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                                <circle cx="9" cy="7" r="4"/>
-                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                            </svg>
-                        </span>
-                        <div>
-                            <p class="text-lg font-semibold">Buddy Circle</p>
-                            <p class="text-sm text-gray-600">Connect and practice together</p>
-                        </div>
-                    </div>
-                </button>
+                    <img src="/api/placeholder/640/360" alt="Video thumbnail" class="w-full h-full object-cover opacity-50">
+                </div>
             </div>
-        </div>
 
-        <div id="sectionView" class="hidden p-4">
-            <div class="flex items-center mb-6">
-                <button onclick="showMain()" class="mr-2 p-2 rounded-full hover:bg-gray-100">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="15 18 9 12 15 6"/>
+            <button onclick="goToMoodBlocks()"
+                class="w-full bg-amber-100 rounded-xl p-5 hover:bg-amber-200 transition-colors mb-8">
+                <div class="flex items-center justify-between">
+                    <div class="text-left">
+                        <h3 class="text-lg font-light text-slate-800 flex items-center gap-1">
+                            MoodBlocks<span class="text-xs align-top">™</span>
+                        </h3>
+                        <p class="text-sm text-slate-500">Track emotions & build awareness</p>
+                    </div>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
                     </svg>
-                </button>
-                <h2 id="sectionTitle" class="text-xl font-bold"></h2>
+                </div>
+            </button>
+
+            <div class="bg-white rounded-xl p-6 shadow-md">
+                <h3 class="text-lg font-semibold mb-4">Practice Instructions</h3>
+                <ol class="space-y-4 text-gray-600">
+                    <li class="flex gap-3">
+                        <span class="font-medium text-gray-900">1.</span>
+                        <span>Find a comfortable seated position at your desk where you can feel grounded and alert</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="font-medium text-gray-900">2.</span>
+                        <span>Take three deep breaths to center yourself before beginning the practice</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="font-medium text-gray-900">3.</span>
+                        <span>Follow along with the guided instructions in the video, maintaining a gentle focus</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="font-medium text-gray-900">4.</span>
+                        <span>If your mind wanders, simply notice and gently return your attention to the practice</span>
+                    </li>
+                </ol>
             </div>
-            <div id="sectionContent" class="space-y-4"></div>
         </div>
     </div>
 
     <script>
-        const weekContent = {
-            title: 'Introduction to Mindfulness',
-            sections: {
-                concepts: [
-                    {
-                        title: 'Mindful Awareness',
-                        description: 'Think of this like adjusting your headset - but for your mind',
-                        details: [
-                            'Just like you tune your equipment to serve customers better, this practice helps tune your mind and heart',
-                            'Learn to notice what\'s happening in your mind, just like you notice call quality',
-                            'Simple way to check if you\'re present and ready',
-                            'Practice noticing your state between calls'
-                        ]
-                    },
-                    {
-                        title: 'Thought-Feeling Patterns',
-                        description: 'Understanding how different calls affect our mind',
-                        details: [
-                            'Notice how different types of calls create different feelings',
-                            'Like waves in our mind - they come and go',
-                            'Learn to recognize your patterns without getting caught in them',
-                            'Build awareness of your emotional responses'
-                        ]
-                    }
-                ],
-                meditations: [
-                    {
-                        title: 'Mindful Breath',
-                        duration: '7 mins',
-                        description: 'Gentle introduction to being present',
-                        keyPoints: [
-                            'Uses the breath as your anchor during busy shifts',
-                            'Like having a reliable headset - your breath is always there',
-                            'Includes gentle guidance for staying present',
-                            'Perfect for starting your day'
-                        ]
-                    },
-                    {
-                        title: 'Day\'s Setup',
-                        duration: '5 mins',
-                        description: 'Morning routine to start fresh',
-                        keyPoints: [
-                            'Set your inner environment up for success',
-                            'Just like preparing your workstation',
-                            'Create a mindful start to your day',
-                            'Build confidence before calls'
-                        ]
-                    }
-                ],
-                practices: [
-                    {
-                        title: 'Desk Anchor',
-                        duration: '1 min',
-                        steps: [
-                            'Place both hands flat on your desk',
-                            'Feel its solid support beneath you',
-                            'Take three normal breaths',
-                            'Let its steadiness ground you'
-                        ]
-                    },
-                    {
-                        title: 'Call Reset',
-                        duration: '30 secs',
-                        steps: [
-                            'Between calls, feel your feet on the floor',
-                            'One conscious breath',
-                            'Feel the texture of your desk',
-                            'Fresh start for your next customer'
-                        ]
-                    }
-                ],
-                buddy: {
-                    title: 'Connection & Support',
-                    duration: '10 mins',
-                    activities: [
-                        'Share what brought you to customer service',
-                        'Practice desk anchor technique together',
-                        'Connect over common experiences',
-                        'Support each other\'s learning'
-                    ],
-                    tips: [
-                        'Keep it light and supportive',
-                        'Share what works for you',
-                        'Listen without judgment',
-                        'Celebrate small wins'
-                    ]
-                }
-            }
-        };
+        document.getElementById('playButton').addEventListener('click', function() {
+            console.log('Video play clicked');
+        });
 
-        function showSection(sectionId) {
-            document.getElementById('mainView').classList.add('hidden');
-            document.getElementById('sectionView').classList.remove('hidden');
-            
-            const content = weekContent.sections[sectionId];
-            const sectionTitle = document.getElementById('sectionTitle');
-            const sectionContent = document.getElementById('sectionContent');
-            
-            sectionTitle.textContent = {
-                concepts: 'Core Concepts',
-                meditations: 'Guided Meditations',
-                practices: 'Quick Practices',
-                buddy: 'Buddy Circle'
-            }[sectionId];
-
-            sectionContent.innerHTML = '';
-
-            if (Array.isArray(content)) {
-                content.forEach(item => {
-                    const card = document.createElement('div');
-                    card.className = 'bg-white rounded-xl p-4 shadow-md';
-                    card.innerHTML = `
-                        <div class="flex justify-between items-center mb-2">
-                            <h3 class="font-semibold">${item.title}</h3>
-                            ${item.duration ? `<span class="text-sm text-gray-500">${item.duration}</span>` : ''}
-                        </div>
-                        <p class="text-gray-600 mb-4">${item.description || ''}</p>
-                        ${item.details ? renderList('Key Points', item.details) : ''}
-                        ${item.keyPoints ? renderList('Key Points', item.keyPoints) : ''}
-                        ${item.steps ? renderList('Steps', item.steps) : ''}
-                        ${sectionId === 'meditations' ? '<button class="w-full p-3 bg-blue-600 text-white rounded-lg mt-2">Start Practice</button>' : ''}
-                    `;
-                    sectionContent.appendChild(card);
-                });
-            } else if (typeof content === 'object') {
-                const card = document.createElement('div');
-                card.className = 'bg-white rounded-xl p-4 shadow-md';
-                card.innerHTML = `
-                    <div class="flex justify-between items-center mb-2">
-                        <h3 class="font-semibold">${content.title}</h3>
-                        <span class="text-sm text-gray-500">${content.duration}</span>
-                    </div>
-                    ${content.activities ? renderList('Activities', content.activities) : ''}
-                    ${content.tips ? renderList('Tips for Success', content.tips) : ''}
-                `;
-                sectionContent.appendChild(card);
-            }
-        }
-
-        function renderList(title, items) {
-            return `
-                <div class="mt-4">
-                    <h4 class="font-semibold mb-2">${title}</h4>
-                    <ul class="space-y-2">
-                        ${items.map(item => `<li class="text-gray-600">${item}</li>`).join('')}
-                    </ul>
-                </div>
-            `;
-        }
-
-        function showMain() {
-            document.getElementById('sectionView').classList.add('hidden');
-            document.getElementById('mainView').classList.remove('hidden');
+        function goToMoodBlocks() {
+            sessionStorage.setItem('previousPage', 'video-page');
+            window.location.href = 'MoodBlocks.html';
         }
     </script>
 </body>

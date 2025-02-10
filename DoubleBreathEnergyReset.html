@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Energy Reset Breathing Exercise</title>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- Dependencies -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.css" rel="stylesheet">
+
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif;
+        }
+
+        .breathe-animation {
+            transition: all 4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes firstInhale {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.25); }
+        }
+        
+        @keyframes secondInhale {
+            0% { transform: scale(1.25); }
+            100% { transform: scale(1.5); }
+        }
+        
+        @keyframes exhale {
+            0% { transform: scale(1.5); }
+            100% { transform: scale(1); }
+        }
+        
+        .animate-first-inhale {
+            animation: firstInhale 3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        
+        .animate-second-inhale {
+            animation: secondInhale 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        
+        .animate-exhale {
+            animation: exhale 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        #breathingCube {
+            transform-origin: center;
+            transition: transform 4s ease-in-out, background-color 0.3s ease;
+        }
+
+        .screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            z-index: 10;
+        }
+
+        .nav-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            z-index: 20;
+            border-bottom: 1px solid #e5e7eb;
+        }
+    </style>
+</head>
+
+<body class="bg-white">
+    <main>
+        <!-- Common Navigation - Always visible -->
+        <nav class="nav-fixed flex justify-between items-center p-6">
+            <button onclick="history.back()" class="w-8 h-8 flex items-center justify-center text-slate-600 hover:text-slate-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <h1 class="text-xl font-medium text-slate-800">Energy Reset</h1>
+            <button onclick="history.back()" class="w-8 h-8 flex items-center justify-center text-slate-600 hover:text-slate-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </nav>
+
+        <!-- Welcome Screen -->
+        <div id="welcomeScreen" class="screen">
+            <div class="max-w-md mx-auto pt-24 px-6">
+                <div class="space-y-8 text-center">
+                    <h2 class="text-3xl font-medium text-slate-800">Quick Energy Reset</h2>
+                    <p class="text-lg text-slate-600">Use the power of double-breath to boost your energy in minutes</p>
+                    <p class="text-base text-slate-500">Perfect after lunch or during afternoon slump</p>
+                    
+                    <div class="flex gap-4 justify-center">
+                        <button onclick="handleDurationSelect(0.5)" 
+                            class="px-6 py-4 bg-green-100 rounded-xl hover:bg-green-200 
+                                   active:bg-green-300 transition-colors text-lg font-medium">
+                            30 Seconds
+                        </button>
+                        <button onclick="handleDurationSelect(1)"
+                            class="px-6 py-4 bg-green-100 rounded-xl hover:bg-green-200 
+                                   active:bg-green-300 transition-colors text-lg font-medium">
+                            1 Minute
+                        </button>
+                        <button onclick="handleDurationSelect(2)"
+                            class="px-6 py-4 bg-green-100 rounded-xl hover:bg-green-200 
+                                   active:bg-green-300 transition-colors text-lg font-medium">
+                            2 Minutes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Preparation Screen -->
+        <div id="preparationScreen" class="screen hidden">
+            <div class="max-w-md mx-auto pt-24 px-6">
+                <div class="space-y-8 text-center">
+                    <h2 class="text-2xl font-medium text-slate-800">Quick Tips</h2>
+                    <div class="space-y-4 text-lg text-slate-600">
+                        <p>1. Sit comfortably, back straight</p>
+                        <p>2. First breath fills lungs 80%</p>
+                        <p>3. Quick second breath tops off</p>
+                        <p>4. Strong exhale energizes</p>
+                    </div>
+                    <div class="space-y-4">
+                        <button onclick="handleStartPractice()"
+                            class="w-full px-6 py-4 bg-green-100 rounded-xl hover:bg-green-200 
+                                   active:bg-green-300 transition-colors text-lg font-medium">
+                            Practice Breath
+                        </button>
+                        <button onclick="handleStartSession()"
+                            class="w-full px-6 py-4 bg-green-600 text-white rounded-xl 
+                                   hover:bg-green-700 active:bg-green-800 transition-colors text-lg font-medium">
+                            Start Full Session
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Breathing Screen -->
+        <div id="breathingScreen" class="screen hidden">
+            <div class="max-w-md mx-auto pt-24 px-6">
+                <div class="flex-1 flex flex-col">
+                    <div class="text-center mb-8">
+                        <p id="cycleCount" class="text-xl text-slate-600"></p>
+                    </div>
+                    
+                    <div class="flex-1 flex items-center justify-center min-h-[400px]">
+                        <div id="breathingCube" class="w-48 h-48 rounded-3xl flex items-center justify-center shadow-xl bg-green-50">
+                            <p id="instruction" class="text-xl font-medium text-slate-700"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Complete Screen -->
+        <div id="completeScreen" class="screen hidden">
+            <div class="max-w-md mx-auto pt-24 px-6">
+                <div class="space-y-8 text-center">
+                    <button onclick="goToMoodBlocks('meditation-complete')"
+                        class="w-full bg-amber-100 rounded-xl p-5 hover:bg-amber-200 transition-colors mb-8">
+                        <div class="flex items-center justify-between">
+                            <div class="text-left">
+                                <h3 class="text-lg font-light text-slate-800 flex items-center gap-1">
+                                    MoodBlocks<span class="text-xs align-top">™</span>
+                                </h3>
+                                <p class="text-sm text-slate-500">Track emotions & build awareness</p>
+                            </div>
+                            <i class="ph ph-heart text-xl text-pink-400"></i>
+                        </div>
+                    </button>
+                    <h2 class="text-3xl font-medium text-slate-800">Great work!</h2>
+                    <p class="text-xl text-slate-600">Your body is naturally energized and ready to go</p>
+                    <button onclick="handleReset()"
+                        class="px-8 py-4 bg-green-600 text-white rounded-xl hover:bg-green-700 
+                               active:bg-green-800 transition-colors text-lg font-medium">
+                        Another Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // State management
+        let currentPhase = 'welcome';
+        let currentCycle = 1;
+        let totalCycles = 0;
+        let isPracticeRound = false;
+        let timeoutRef = null;
+
+        // DOM Elements
+        const screens = {
+            welcome: document.getElementById('welcomeScreen'),
+            preparation: document.getElementById('preparationScreen'),
+            breathing: document.getElementById('breathingScreen'),
+            complete: document.getElementById('completeScreen')
+        };
+
+        const breathingCube = document.getElementById('breathingCube');
+        const instruction = document.getElementById('instruction');
+        const cycleCount = document.getElementById('cycleCount');
+
+        // Helper functions
+        function showScreen(screenName) {
+            Object.values(screens).forEach(screen => screen.classList.add('hidden'));
+            screens[screenName].classList.remove('hidden');
+            currentPhase = screenName;
+        }
+
+        function updateCycleCount() {
+            cycleCount.textContent = isPracticeRound ? '' : `Breath ${currentCycle} of ${totalCycles}`;
+        }
+
+        function getInstructions(phase) {
+            switch (phase) {
+                case 'firstInhale': return "Deep breath in";
+                case 'secondInhale': return "Quick top-off!";
+                case 'hold': return "Hold";
+                case 'exhale': return "Release";
+                case 'bottomHold': return "Reset";
+                default: return "";
+            }
+        }
+
+        // Event handlers
+        function handleDurationSelect(minutes) {
+            const cyclesPerMinute = Math.floor(60 / 7.5);
+            totalCycles = Math.floor(minutes * cyclesPerMinute);
+            showScreen('preparation');
+        }
+
+        function handleStartPractice() {
+            currentCycle = 1;
+            isPracticeRound = true;
+            showScreen('breathing');
+            startBreathingCycle();
+        }
+
+        function handleStartSession() {
+            currentCycle = 1;
+            isPracticeRound = false;
+            showScreen('breathing');
+            startBreathingCycle();
+        }
+
+        function handleReset() {
+            if (timeoutRef) {
+                clearTimeout(timeoutRef);
+            }
+            currentCycle = 1;
+            totalCycles = 0;
+            isPracticeRound = false;
+            showScreen('welcome');
+            breathingCube.className = 'w-48 h-48 rounded-3xl flex items-center justify-center shadow-xl bg-green-50';
+            instruction.textContent = '';
+            cycleCount.textContent = '';
+        }
+
+        async function startBreathingCycle() {
+            if (timeoutRef) {
+                clearTimeout(timeoutRef);
+            }
+
+            // Check if we should stop
+            if (!isPracticeRound && currentCycle > totalCycles) {
+                showScreen('complete');
+                return;
+            }
+
+            updateCycleCount();
+
+            try {
+                // First inhale
+                instruction.textContent = getInstructions('firstInhale');
+                breathingCube.className = 'w-48 h-48 rounded-3xl flex items-center justify-center shadow-xl bg-green-100 animate-first-inhale';
+                await new Promise(r => { timeoutRef = setTimeout(r, 3000); });
+
+                // Second inhale
+                instruction.textContent = getInstructions('secondInhale');
+                breathingCube.className = 'w-48 h-48 rounded-3xl flex items-center justify-center shadow-xl bg-yellow-200 animate-second-inhale';
+                await new Promise(r => { timeoutRef = setTimeout(r, 1000); });
+
+                // Hold
+                instruction.textContent = getInstructions('hold');
+                breathingCube.className = 'w-48 h-48 rounded-3xl flex items-center justify-center shadow-xl bg-yellow-200 scale-150 animate-pulse';
+                await new Promise(r => { timeoutRef = setTimeout(r, 1500); });
+
+                // Exhale
+                instruction.textContent = getInstructions('exhale');
+                breathingCube.className = 'w-48 h-48 rounded-3xl flex items-center justify-center shadow-xl bg-green-50 animate-exhale';
+                await new Promise(r => { timeoutRef = setTimeout(r, 2000); });
+
+                // Bottom hold
+                instruction.textContent = getInstructions('bottomHold');
+                breathingCube.className = 'w-48 h-48 rounded-3xl flex items-center justify-center shadow-xl bg-green-50';
+                await new Promise(r => { timeoutRef = setTimeout(r, 1000); });
+
+                // Handle completion
+                if (isPracticeRound) {
+                    showScreen('preparation');
+                    isPracticeRound = false;
+                } else if (currentCycle >= totalCycles) {
+                    showScreen('complete');
+                } else {
+                    currentCycle++;
+                    timeoutRef = setTimeout(startBreathingCycle, 500);
+                }
+            } catch (error) {
+                console.error('Breathing cycle interrupted:', error);
+            }
+        }
+        function goToMoodBlocks(fromPage) {
+            sessionStorage.setItem('previousPage', fromPage);
+            window.location.href = 'MoodBlocks.html';
+        }
+
+        // Initial setup
+        showScreen('welcome');
+    </script>
+</body>
+</html>

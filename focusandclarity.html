@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clarity Reset</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.css" rel="stylesheet">
+
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif;
+        }
+
+        @keyframes expand {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.3); }
+        }
+        
+        @keyframes contract {
+            0% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+        
+        .expand-animation {
+            animation: expand 4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        
+        .contract-animation {
+            animation: contract 4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            z-index: 10;
+        }
+
+        .nav-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            z-index: 20;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+        .confetti {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            border-radius: 4px;
+            animation: fall 5s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(300px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-white">
+    <main>
+        <!-- Navigation -->
+        <nav class="nav-fixed flex justify-between items-center p-6">
+            <button onclick="handleReset()" class="w-8 h-8 flex items-center justify-center text-slate-600 hover:text-slate-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <h1 class="text-xl font-medium text-slate-800">Clarity Reset</h1>
+            <button onclick="handleReset()" class="w-8 h-8 flex items-center justify-center text-slate-600 hover:text-slate-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </nav>
+
+        <!-- Welcome Screen -->
+        <div id="welcomeScreen" class="screen">
+            <div class="max-w-md mx-auto pt-24 px-6">
+                <div class="space-y-8 text-center">
+                    <h2 class="text-3xl font-medium text-slate-800">Clarity Reset</h2>
+                    <p class="text-lg text-slate-600">Choose your 2-minute practice</p>
+                    
+                    <div class="flex flex-col gap-4">
+                        <button onclick="handleMeditationSelect('bodyScan')" 
+                            class="px-6 py-4 bg-emerald-50 rounded-xl hover:bg-emerald-100 
+                                   active:bg-emerald-200 transition-colors text-lg font-medium">
+                            Body Scan
+                            <p class="text-sm text-slate-600 mt-1">Feel and relax each part of your body</p>
+                        </button>
+                        <button onclick="handleMeditationSelect('breathAwareness')"
+                            class="px-6 py-4 bg-green-50 rounded-xl hover:bg-green-100 
+                                   active:bg-green-200 transition-colors text-lg font-medium">
+                            Breath Awareness
+                            <p class="text-sm text-slate-600 mt-1">Focus on the sensations of breathing</p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Meditation Screen -->
+        <div id="meditationScreen" class="screen hidden">
+            <div class="max-w-md mx-auto pt-24 px-6">
+                <div class="flex-1 flex flex-col items-center">
+                    <div class="text-center mb-8">
+                        <p id="cycleCount" class="text-xl text-slate-600"></p>
+                    </div>
+                    
+                    <div class="flex-1 flex items-center justify-center min-h-[400px]">
+                        <div id="meditationCube" class="w-48 h-48 rounded-xl flex items-center justify-center shadow-xl bg-emerald-50 text-center p-6">
+                            <p id="instruction" class="text-xl font-medium text-slate-700"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Complete Screen -->
+        <<div id="completeScreen" class="screen hidden">
+            <div class="max-w-md mx-auto pt-24 px-6">
+                <div class="space-y-8 text-center">
+                    <button onclick="goToMoodBlocks('meditation-complete')"
+                        class="w-full bg-amber-100 rounded-xl p-5 hover:bg-amber-200 transition-colors mb-8">
+                        <div class="flex items-center justify-between">
+                            <div class="text-left">
+                                <h3 class="text-lg font-light text-slate-800 flex items-center gap-1">
+                                    MoodBlocks<span class="text-xs align-top">™</span>
+                                </h3>
+                                <p class="text-sm text-slate-500">Track emotions & build awareness</p>
+                            </div>
+                            <i class="ph ph-heart text-xl text-pink-400"></i>
+                        </div>
+                    </button>
+                    <h2 class="text-3xl font-medium text-slate-800">Well Done!</h2>
+                    <p id="completionMessage" class="text-xl text-slate-600"></p>
+                    <button onclick="handleReset()"
+                        class="px-8 py-4 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 
+                               active:bg-emerald-800 transition-colors text-lg font-medium">
+                        Another Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Constants
+        const BREATH_DURATION = 4000; // 4 seconds per breath phase
+        
+        // DOM Elements
+        const screens = {
+            welcome: document.getElementById('welcomeScreen'),
+            meditation: document.getElementById('meditationScreen'),
+            complete: document.getElementById('completeScreen')
+        };
+
+        const meditationCube = document.getElementById('meditationCube');
+        const instruction = document.getElementById('instruction');
+        const cycleCount = document.getElementById('cycleCount');
+        const completionMessage = document.getElementById('completionMessage');
+
+        // Breathing patterns
+        const bodyScanBreaths = [
+            // Start with feet and legs
+            {
+                inhale: "Feel your toes and feet",
+                exhale: "Let them soften and relax"
+            },
+            {
+                inhale: "Aware of your ankles and calves",
+                exhale: "Release any tension there"
+            },
+            {
+                inhale: "Notice your knees and thighs",
+                exhale: "Allow them to relax completely"
+            },
+            // Torso and arms
+            {
+                inhale: "Feel your hips and lower back",
+                exhale: "Let them sink into the chair"
+            },
+            {
+                inhale: "Aware of your stomach and chest",
+                exhale: "Feel them release with the breath"
+            },
+            {
+                inhale: "Notice your shoulders and arms",
+                exhale: "Let them drop and soften"
+            },
+            // Head and neck
+            {
+                inhale: "Feel your neck and throat",
+                exhale: "Allow any tension to dissolve"
+            },
+            {
+                inhale: "Aware of your face and jaw",
+                exhale: "Let your expression soften"
+            },
+            // Whole body
+            {
+                inhale: "Feel your whole body",
+                exhale: "Letting everything relax"
+            },
+            {
+                inhale: "Present with your entire body",
+                exhale: "Resting in awareness"
+            }
+        ];
+
+        const breathAwarenessBreaths = [
+            // Initial settling
+            {
+                inhale: "Notice the breath coming in",
+                exhale: "Follow the breath flowing out"
+            },
+            {
+                inhale: "Feel where the breath is clearest",
+                exhale: "Stay with that sensation"
+            },
+            // Detailed awareness
+            {
+                inhale: "Notice the beginning of the breath",
+                exhale: "Notice the end of the breath"
+            },
+            {
+                inhale: "Feel the cool air entering",
+                exhale: "Feel the warm air leaving"
+            },
+            // Depth and quality
+            {
+                inhale: "Notice the depth of the breath",
+                exhale: "Notice the length of the breath"
+            },
+            {
+                inhale: "Feel the expansion",
+                exhale: "Feel the release"
+            },
+            // Subtle sensations
+            {
+                inhale: "Notice the subtle sensations",
+                exhale: "Let them come and go"
+            },
+            {
+                inhale: "Feel the natural rhythm",
+                exhale: "Rest in the flow of breath"
+            },
+            // Integration
+            {
+                inhale: "Breath flowing in",
+                exhale: "Breath flowing out"
+            },
+            {
+                inhale: "Present with each breath",
+                exhale: "Clear and calm"
+            }
+        ];
+
+        // State management
+        let currentPhase = 'welcome';
+        let meditationType = null;
+        let timeoutRef = null;
+
+        // Helper functions
+        function showScreen(screenName) {
+            Object.values(screens).forEach(screen => screen.classList.add('hidden'));
+            screens[screenName].classList.remove('hidden');
+            currentPhase = screenName;
+        }
+
+        async function startMeditation(type, breaths) {
+            const totalBreaths = breaths.length;
+            
+            for (let currentBreath = 0; currentBreath < totalBreaths; currentBreath++) {
+                if (timeoutRef) clearTimeout(timeoutRef);
+                
+                cycleCount.textContent = `Breath ${currentBreath + 1} of ${totalBreaths}`;
+                
+                instruction.textContent = breaths[currentBreath].inhale;
+                meditationCube.className = 'w-48 h-48 rounded-xl flex items-center justify-center shadow-xl bg-emerald-100 expand-animation text-center p-6';
+                await new Promise(r => { timeoutRef = setTimeout(r, BREATH_DURATION); });
+                
+                instruction.textContent = breaths[currentBreath].exhale;
+                meditationCube.className = 'w-48 h-48 rounded-xl flex items-center justify-center shadow-xl bg-emerald-50 contract-animation text-center p-6';
+                await new Promise(r => { timeoutRef = setTimeout(r, BREATH_DURATION); });
+            }
+            
+            completionMessage.textContent = type === 'bodyScan' 
+                ? 'Your body is relaxed and your mind is clear'
+                : 'Your breath has brought you clarity and calm';
+
+            createConfetti();
+            showScreen('complete');
+        }
+
+        function handleReset() {
+            if (timeoutRef) {
+                clearTimeout(timeoutRef);
+            }
+            window.history.back();
+        }
+
+        function handleMeditationSelect(type) {
+            window.history.pushState({}, '');
+            meditationType = type;
+            showScreen('meditation');
+            const breaths = type === 'bodyScan' ? bodyScanBreaths : breathAwarenessBreaths;
+            startMeditation(type, breaths);
+        }
+        function createConfetti() {
+            const colors = ['#86efac', '#fef9c3', '#e5e7eb'];
+            for (let i = 0; i < 40; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.animationDelay = Math.random() * 1.5 + 's';
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 5500);
+            }
+        }
+        function goToMoodBlocks(fromPage) {
+            sessionStorage.setItem('previousPage', fromPage);
+            window.location.href = 'MoodBlocks.html';
+        }
+
+        function showCompleteScreen() {
+            screens.meditation.classList.add('hidden');
+            screens.complete.classList.remove('hidden');
+            createConfetti();
+        }
+                window.addEventListener('popstate', () => {
+            if (timeoutRef) clearTimeout(timeoutRef);
+            showScreen('welcome');
+        });
+        // Initial setup
+        showScreen('welcome');
+    </script>
+</body>
+</html>
