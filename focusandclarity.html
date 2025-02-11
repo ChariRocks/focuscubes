@@ -55,13 +55,36 @@
             display: none !important;
         }
         .confetti {
-            position: absolute;
-            width: 25px;
+            position: fixed;  
+            width: 25px;     /* Back to original size */
             height: 25px;
-            border-radius: 4px;
-            animation: fall 5s ease-out forwards;
+            border-radius: 4px;  /* Back to slight rounding for cubes */
+            animation: fall 3s ease-out forwards;
             opacity: 0;
+            z-index: 30;
         }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+@keyframes fall {
+    0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
 
         @keyframes fall {
             0% {
@@ -136,7 +159,7 @@
         </div>
 
         <!-- Complete Screen -->
-        <<div id="completeScreen" class="screen hidden">
+        <div id="completeScreen" class="screen hidden">
             <div class="max-w-md mx-auto pt-24 px-6">
                 <div class="space-y-8 text-center">
                     <button onclick="goToMoodBlocks('meditation-complete')"
@@ -148,7 +171,9 @@
                                 </h3>
                                 <p class="text-sm text-slate-500">Track emotions & build awareness</p>
                             </div>
-                            <i class="ph ph-heart text-xl text-pink-400"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-pink-400">
+                                <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                            </svg>
                         </div>
                     </button>
                     <h2 class="text-3xl font-medium text-slate-800">Well Done!</h2>
@@ -304,12 +329,16 @@
                 await new Promise(r => { timeoutRef = setTimeout(r, BREATH_DURATION); });
             }
             
+            // Set completion message
             completionMessage.textContent = type === 'bodyScan' 
                 ? 'Your body is relaxed and your mind is clear'
                 : 'Your breath has brought you clarity and calm';
-
-            createConfetti();
+            
+            // Show complete screen immediately
             showScreen('complete');
+            
+            // Create confetti after a tiny delay
+            setTimeout(createConfetti, 50);
         }
 
         function handleReset() {
@@ -327,15 +356,19 @@
             startMeditation(type, breaths);
         }
         function createConfetti() {
-            const colors = ['#86efac', '#fef9c3', '#e5e7eb'];
-            for (let i = 0; i < 40; i++) {
+            const colors = ['#86efac', '#fef9c3', '#e5e7eb']; // Original colors from your code
+            const confettiCount = 50; // Adjusted for larger pieces
+            
+            for (let i = 0; i < confettiCount; i++) {
                 const confetti = document.createElement('div');
                 confetti.className = 'confetti';
                 confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.left = Math.random() * 100 + '%';
-                confetti.style.animationDelay = Math.random() * 1.5 + 's';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = (Math.random() * 20 - 20) + 'vh'; // Start above viewport
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
                 document.body.appendChild(confetti);
-                setTimeout(() => confetti.remove(), 5500);
+                setTimeout(() => confetti.remove(), 5000);
             }
         }
         function goToMoodBlocks(fromPage) {
