@@ -78,33 +78,35 @@
             </nav>
 
             <div class="flex-1 flex flex-col mt-6">
-                <div class="flex justify-between items-start mb-8">
+                <!-- Header Section -->
+                <div class="flex justify-between items-start mb-10">
                     <div>
-                        <img src="images/focuscubeslogo.png" alt="Focus Cubes Logo" class="w-32">
+                        <img src="images/focuscubeslogo.png" alt="Focus Cubes Logo" class="w-32 mb-4">
                         <div class="flex items-center gap-4">
                             <h1 class="text-3xl font-light text-slate-800">Focus and Grow</h1>
-                            <button onclick="window.location.href='rememberyourwhy.html'" class="bg-yellow-50 text-slate-700 rounded-xl px-4 py-2 text-sm hover:bg-yellow-100 transition-colors">
+                            <button onclick="window.location.href='rememberyourwhy.html'" 
+                                class="bg-yellow-50 text-slate-700 rounded-xl px-5 py-2.5 text-sm hover:bg-yellow-100 transition-colors">
                                 Remember your <span class="font-bold">Why</span>
                             </button>
                         </div>
                     </div>
                 </div>
-
-                <button 
-                 id="startButton"
-                    class="w-full bg-green-600 text-white rounded-2xl p-8 mb-8 hover:bg-green-700 transition-colors shadow-lg"
-                   >
-                  <div class="flex items-center justify-between">
-                          <div class="text-left">
-                              <h2 class="text-2xl font-bold mb-2">During Call</h2>
-                             <p class="text-sm opacity-90">Find your calm in this moment</p>
-                          </div>
-                          <i class="ph ph-phone text-3xl opacity-75"></i>
+            
+                <!-- During Call Button -->
+                <button id="startButton"
+                    class="w-full bg-green-600 text-white rounded-2xl p-8 mb-10 hover:bg-green-700 transition-colors shadow-lg">
+                    <div class="flex items-center justify-between">
+                        <div class="text-left">
+                            <h2 class="text-2xl font-bold mb-2">During Call</h2>
+                            <p class="text-sm opacity-90">Find your calm in this moment</p>
                         </div>
-                  </button>
-
-                  <div class="w-full bg-slate-50 text-slate-800 rounded-2xl p-8 mb-8">
-                    <div class="flex items-center justify-between mb-6">
+                        <i class="ph ph-phone text-3xl opacity-75"></i>
+                    </div>
+                </button>
+            
+                <!-- In Between Calls Section -->
+                <div class="w-full rounded-2xl mb-10">
+                    <div class="flex items-center justify-between mb-6 px-2">
                         <div class="text-left">
                             <h2 class="text-2xl font-bold mb-2">In Between Calls</h2>
                             <p class="text-sm text-slate-600">Take a moment to reset</p>
@@ -112,9 +114,9 @@
                         <i class="ph ph-timer text-3xl text-slate-600"></i>
                     </div>
                     
-                    <div class="bg-white rounded-xl p-4">
+                    <div class="space-y-3">
                         <button onclick="window.location.href='focusandclarity.html'"
-                            class="w-full bg-slate-100 rounded-xl p-5 hover:bg-slate-200 transition-colors mb-4">
+                            class="w-full bg-slate-50 rounded-xl p-6 hover:bg-slate-100 transition-colors">
                             <div class="flex items-center justify-between">
                                 <div class="text-left">
                                     <h3 class="text-lg font-light text-slate-800">Cultivate Clarity & Calm</h3>
@@ -123,9 +125,9 @@
                                 <i class="ph ph-brain text-xl text-green-600"></i>
                             </div>
                         </button>
-                
+            
                         <button onclick="window.location.href='compassion.html'"
-                            class="w-full bg-slate-100 rounded-xl p-5 hover:bg-slate-200 transition-colors mb-4">
+                            class="w-full bg-slate-50 rounded-xl p-6 hover:bg-slate-100 transition-colors">
                             <div class="flex items-center justify-between">
                                 <div class="text-left">
                                     <h3 class="text-lg font-light text-slate-800">Grow Compassion</h3>
@@ -134,9 +136,9 @@
                                 <i class="ph ph-heart text-xl text-green-600"></i>
                             </div>
                         </button>
-                
+            
                         <button onclick="window.location.href='DoubleBreathEnergyReset.html'"
-                            class="w-full bg-slate-100 rounded-xl p-5 hover:bg-slate-200 transition-colors">
+                            class="w-full bg-slate-50 rounded-xl p-6 hover:bg-slate-100 transition-colors">
                             <div class="flex items-center justify-between">
                                 <div class="text-left">
                                     <h3 class="text-lg font-light text-slate-800">Quick Energy Reset</h3>
@@ -147,26 +149,22 @@
                         </button>
                     </div>
                 </div>
-                
-                
-                    <!-- MoodBlocks button -->
-                        <button onclick="goToMoodBlocks()"
-                        class="w-full bg-amber-100 rounded-xl p-5 hover:bg-amber-200 transition-colors mb-8">
-                        <div class="flex items-center justify-between">
-                            <div class="text-left">
-                                <h3 class="text-lg font-light text-slate-800 flex items-center gap-1">
-                                    MoodBlocks<span class="text-xs align-top">™</span>
-                                </h3>
-                                <p class="text-sm text-slate-500">Track emotions & build awareness</p>
-                            </div>
-                            <i class="ph ph-heart text-xl text-pink-400"></i>
+            
+                <!-- MoodBlocks button -->
+                <button onclick="goToMoodBlocks()"
+                    class="w-full bg-amber-100 rounded-xl p-6 hover:bg-amber-200 transition-colors">
+                    <div class="flex items-center justify-between">
+                        <div class="text-left">
+                            <h3 class="text-lg font-light text-slate-800 flex items-center gap-1">
+                                MoodBlocks<span class="text-xs align-top">™</span>
+                            </h3>
+                            <p class="text-sm text-slate-500">Track emotions & build awareness</p>
                         </div>
-                        </button>
+                        <i class="ph ph-heart text-xl text-pink-400"></i>
                     </div>
-                </div>
-                
+                </button>
+            
                 <p class="text-center text-slate-400 text-sm font-light mt-auto pt-8">
-
                     12 teammates found their reset today
                 </p>
             </div>
