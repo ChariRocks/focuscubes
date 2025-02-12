@@ -187,7 +187,7 @@
             <!-- Breathing Exercise -->
             <div id="breathingPhase" class="hidden flex-1 flex flex-col items-center justify-center p-6">
                 <p class="text-base text-slate-600 mb-4">Cycle <span id="cycleCount">1</span> of 3</p>
-                <p id="breathingText" class="text-lg text-slate-600 mb-12">Breathe in...</p>
+                <p id="breathingText" class="text-lg text-slate-600 mb-12">Breathe in with the cube...</p>
                 <div id="breathingCube" class="w-48 h-48 rounded-xl flex items-center justify-center shadow-lg bg-green-100">
                     <span id="timer" class="text-4xl font-light text-slate-800">4</span>
                 </div>
@@ -355,9 +355,9 @@
             timer.textContent = timeLeft;
             
             breathingText.textContent = 
-                currentPhase === 'inhale' ? 'Breathe in...' :
+                currentPhase === 'inhale' ? 'Breathe in with the cube...' :
                 currentPhase === 'hold1' || currentPhase === 'hold2' ? 'Hold...' :
-                'Breathe out...';
+                'Breathe out with the cube...';
 
             cube.style.transform = 
                 (currentPhase === 'inhale' || currentPhase === 'hold1') ? 'scale(1.5)' : 'scale(1)';
@@ -436,8 +436,15 @@
             }
         }
         function goBack() {
-    window.location.href = 'index.html#path';
-}
+            // If we're in the meditation screen, go back to home screen
+            if (!meditationScreen.classList.contains('hidden')) {
+                showHomeScreen();
+            } else {
+                // Otherwise go back to the index page
+                window.location.href = 'index.html#path';
+            }
+        }
+
         function goToMoodBlocks(fromPage) {
             sessionStorage.setItem('previousPage', fromPage);
             window.location.href = 'MoodBlocks.html';
