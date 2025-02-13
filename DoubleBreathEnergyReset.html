@@ -127,13 +127,13 @@
     <main>
         <!-- Common Navigation - Always visible -->
         <nav class="nav-fixed flex justify-between items-center p-6">
-            <button onclick="history.back()" class="w-8 h-8 flex items-center justify-center text-slate-600 hover:text-slate-800">
+            <button onclick="handleBack()" class="w-8 h-8 flex items-center justify-center text-slate-600 hover:text-slate-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
             </button>
             <h1 class="text-xl font-medium text-slate-800">Energy Reset</h1>
-            <button onclick="history.back()" class="w-8 h-8 flex items-center justify-center text-slate-600 hover:text-slate-800">
+            <button onclick="handleClose()" class="w-8 h-8 flex items-center justify-center text-slate-600 hover:text-slate-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -146,20 +146,31 @@
                 <div class="space-y-8 text-center">
                     <h2 class="text-3xl font-medium text-slate-800">Quick Energy Reset</h2>
                     <p class="text-lg text-slate-600">Use the power of double-breath to boost your energy in minutes</p>
-                    <p class="text-base text-slate-500">Perfect after lunch or during afternoon slump</p>
+                    
+                    <div class="space-y-4 bg-green-50 p-6 rounded-xl text-left">
+                        <p class="font-medium text-slate-700">How it works:</p>
+                        <ul class="space-y-2 text-slate-600">
+                            <li>1. Take a full breath in</li>
+                            <li>2. Add a little more air</li>
+                            <li>3. Hold briefly</li>
+                            <li>4. Exhale completely</li>
+                        </ul>
+                    </div>
+                    
+                    <p class="text-base text-slate-500">Select your session duration:</p>
                     
                     <div class="flex gap-4 justify-center">
-                        <button onclick="handleDurationSelect(0.5)" 
+                        <button onclick="handleStartSession(0.5)" 
                             class="px-6 py-4 bg-green-100 rounded-xl hover:bg-green-200 
                                    active:bg-green-300 transition-colors text-lg font-medium">
                             30 Seconds
                         </button>
-                        <button onclick="handleDurationSelect(1)"
+                        <button onclick="handleStartSession(1)"
                             class="px-6 py-4 bg-green-100 rounded-xl hover:bg-green-200 
                                    active:bg-green-300 transition-colors text-lg font-medium">
                             1 Minute
                         </button>
-                        <button onclick="handleDurationSelect(2)"
+                        <button onclick="handleStartSession(2)"
                             class="px-6 py-4 bg-green-100 rounded-xl hover:bg-green-200 
                                    active:bg-green-300 transition-colors text-lg font-medium">
                             2 Minutes
@@ -169,26 +180,6 @@
             </div>
         </div>
 
-        <!-- Preparation Screen -->
-        <div id="preparationScreen" class="screen hidden">
-            <div class="max-w-md mx-auto pt-24 px-6">
-                <div class="space-y-8 text-center">
-                    <h2 class="text-2xl font-medium text-slate-800">Quick Tips</h2>
-                    <div class="space-y-4">
-                        <button onclick="handleStartPractice()"
-                            class="w-full px-6 py-4 bg-green-100 rounded-xl hover:bg-green-200 
-                                   active:bg-green-300 transition-colors text-lg font-medium">
-                            Practice Breath
-                        </button>
-                        <button onclick="handleStartSession()"
-                            class="w-full px-6 py-4 bg-green-600 text-white rounded-xl 
-                                   hover:bg-green-700 active:bg-green-800 transition-colors text-lg font-medium">
-                            Start Full Session
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- Breathing Screen -->
         <div id="breathingScreen" class="screen hidden">
@@ -250,7 +241,6 @@
         // DOM Elements
         const screens = {
             welcome: document.getElementById('welcomeScreen'),
-            preparation: document.getElementById('preparationScreen'),
             breathing: document.getElementById('breathingScreen'),
             complete: document.getElementById('completeScreen')
         };
@@ -264,6 +254,45 @@
             Object.values(screens).forEach(screen => screen.classList.add('hidden'));
             screens[screenName].classList.remove('hidden');
             currentPhase = screenName;
+        }
+        
+        function handleBack() {
+            if (timeoutRef) {
+                clearTimeout(timeoutRef);
+            }
+            
+            // Logic for handling different screens
+            switch (currentPhase) {
+                case 'breathing':
+                    handleReset(); // This already goes back to welcome screen
+                    break;
+                case 'complete':
+                    handleReset();
+                    break;
+                case 'welcome':
+                    // If we're on welcome screen, then actually go back in browser history
+                    if (window.history.length > 1) {
+                        window.history.back();
+                    } else {
+                        handleClose();
+                    }
+                    break;
+            }
+        }
+
+        function handleClose() {
+            if (timeoutRef) {
+                clearTimeout(timeoutRef);
+            }
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                // If we can't go back, we should try to close the window
+                window.close();
+                // Note: window.close() only works if the window was opened by JavaScript
+                // In many cases it won't work due to browser security restrictions
+                // As a fallback, you might want to redirect to a specific page in your app
+            }
         }
 
         function updateCycleCount() {
@@ -305,20 +334,9 @@
         }
 
         // Event handlers
-        function handleDurationSelect(minutes) {
+        function handleStartSession(minutes) {
             const cyclesPerMinute = Math.floor(60 / 7.5);
             totalCycles = Math.floor(minutes * cyclesPerMinute);
-            showScreen('preparation');
-        }
-
-        function handleStartPractice() {
-            currentCycle = 1;
-            isPracticeRound = true;
-            showScreen('breathing');
-            startBreathingCycle();
-        }
-
-        function handleStartSession() {
             currentCycle = 1;
             isPracticeRound = false;
             showScreen('breathing');
