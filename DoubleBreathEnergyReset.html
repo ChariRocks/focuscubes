@@ -21,29 +21,35 @@
 
         @keyframes firstInhale {
             0% { transform: scale(1); }
+            25% { transform: scale(1.06); }
+            50% { transform: scale(1.12); }
+            75% { transform: scale(1.18); }
             100% { transform: scale(1.25); }
         }
-        
+
         @keyframes secondInhale {
             0% { transform: scale(1.25); }
+            50% { transform: scale(1.375); }
             100% { transform: scale(1.5); }
         }
-        
+
         @keyframes exhale {
             0% { transform: scale(1.5); }
+            33% { transform: scale(1.33); }
+            66% { transform: scale(1.16); }
             100% { transform: scale(1); }
         }
-        
+
         .animate-first-inhale {
-            animation: firstInhale 3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation: firstInhale 4s linear forwards;
         }
-        
+
         .animate-second-inhale {
-            animation: secondInhale 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation: secondInhale 2s linear forwards;
         }
-        
+
         .animate-exhale {
-            animation: exhale 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation: exhale 3s linear forwards;
         }
 
         .hidden {
@@ -51,6 +57,7 @@
         }
 
         #breathingCube {
+            position: relative;
             transform-origin: center;
             transition: transform 4s ease-in-out, background-color 0.3s ease;
         }
@@ -93,6 +100,25 @@
                 transform: translateY(100vh) rotate(360deg);
                 opacity: 0;
             }
+        }
+            
+        .time-squares {
+            display: flex;
+            gap: 4px;
+            justify-content: center;
+            margin-top: 8px;
+        }
+
+        .time-square {
+            width: 8px;
+            height: 8px;
+            border-radius: 2px;
+            background-color: #16a34a;
+            transition: background-color 0.2s ease;
+        }
+
+        .time-square.empty {
+            background-color: #e5e7eb;
         }
     </style>
 </head>
@@ -180,8 +206,9 @@
                     </div>
                     
                     <div class="flex-1 flex items-center justify-center min-h-[400px]">
-                        <div id="breathingCube" class="w-48 h-48 rounded-3xl flex items-center justify-center shadow-xl bg-green-50">
+                        <div id="breathingCube" class="w-48 h-48 rounded-3xl flex flex-col items-center justify-center shadow-xl bg-green-50">
                             <div id="instruction" class="text-xl font-medium text-slate-700 text-center w-full px-4"></div>
+                            <div class="time-squares"></div>
                         </div>
                     </div>
                 </div>
@@ -249,15 +276,38 @@
             cycleCount.textContent = isPracticeRound ? '' : `Breath ${currentCycle} of ${totalCycles}`;
         }
 
-        function getInstructions(phase, count) {
-            const baseText = {
+        function getInstructions(phase) {
+            return {
                 'firstInhale': "Take a full<br>breath in",
-                'secondInhale': "Now add a little<br>bit more air",
+                'secondInhale': "Now breathe in <br>some more air",
                 'hold': "Hold your<br>breath",
-                'exhale': "Strong<br>exhale",
-                'bottomHold': "Pause before<br>next breath"
-            };
-            return count ? `${baseText[phase]}<br><br>${count}` : baseText[phase];
+                'exhale': "Strong exhale!<br>Empty your lungs!",
+                'bottomHold': "Keep your<br>lungs empty"
+            }[phase];
+        }
+
+        function updateTimeSquares(container, count) {
+            container.innerHTML = '';
+            for (let i = 0; i < count; i++) {
+                const square = document.createElement('div');
+                square.className = 'time-square';
+                container.appendChild(square);
+            }
+        }
+
+        function updateActiveSquares(container, activeCount) {
+            const squares = container.querySelectorAll('.time-square');
+            squares.forEach((square, index) => {
+                square.classList.remove('empty'); // First make all squares green
+            });
+            
+            const totalSquares = squares.length;
+            const emptyCount = totalSquares - activeCount;
+            
+            // Empty squares from right to left
+            for (let i = totalSquares - 1; i >= totalSquares - emptyCount; i--) {
+                squares[i].classList.add('empty');
+            }
         }
 
         // Event handlers
@@ -307,45 +357,67 @@
 
             updateCycleCount();
             const breatheText = document.getElementById('breatheText');
+            const timeSquaresContainer = breathingCube.querySelector('.time-squares');
 
             try {
                 // First inhale (4 seconds)
                 breatheText.textContent = "Inhale as the cube expands";
-                breathingCube.className = 'w-48 h-48 rounded-3xl flex items-center justify-center shadow-xl bg-green-100 animate-first-inhale';
-                for (let i = 4; i > 0; i--) {
-                    instruction.innerHTML = getInstructions('firstInhale', i);
+                breathingCube.className = 'w-48 h-48 rounded-3xl flex flex-col items-center justify-center shadow-xl bg-green-50';
+                instruction.innerHTML = getInstructions('firstInhale');
+                updateTimeSquares(timeSquaresContainer, 4);
+                updateActiveSquares(timeSquaresContainer, 4);
+                breathingCube.classList.add('animate-first-inhale');
+                for (let i = 3; i >= 0; i--) {
+                    updateActiveSquares(timeSquaresContainer, i);
                     await new Promise(r => { timeoutRef = setTimeout(r, 1000); });
                 }
 
+                // Brief pause between inhales
+                await new Promise(r => { timeoutRef = setTimeout(r, 500); });
+
                 // Second inhale (2 seconds)
                 breatheText.textContent = "Inhale a bit more";
-                breathingCube.className = 'w-48 h-48 rounded-3xl flex items-center justify-center shadow-xl bg-yellow-100 animate-second-inhale';
-                for (let i = 2; i > 0; i--) {
-                    instruction.innerHTML = getInstructions('secondInhale', i);
+                breathingCube.className = 'w-48 h-48 rounded-3xl flex flex-col items-center justify-center shadow-xl bg-yellow-100';
+                breathingCube.classList.add('animate-second-inhale');
+                instruction.innerHTML = getInstructions('secondInhale');
+                updateTimeSquares(timeSquaresContainer, 2);
+                updateActiveSquares(timeSquaresContainer, 2);
+                for (let i = 1; i >= 0; i--) {
+                    updateActiveSquares(timeSquaresContainer, i);
                     await new Promise(r => { timeoutRef = setTimeout(r, 1000); });
                 }
 
                 // Hold (2 seconds)
                 breatheText.textContent = "Hold your breath";
-                breathingCube.className = 'w-48 h-48 rounded-3xl flex items-center justify-center shadow-xl bg-yellow-100 scale-150 animate-pulse';
-                for (let i = 2; i > 0; i--) {
-                    instruction.innerHTML = getInstructions('hold', i);
+                breathingCube.className = 'w-48 h-48 rounded-3xl flex flex-col items-center justify-center shadow-xl bg-yellow-100 scale-150';
+                instruction.innerHTML = getInstructions('hold');
+                updateTimeSquares(timeSquaresContainer, 2);
+                updateActiveSquares(timeSquaresContainer, 2);
+                for (let i = 1; i >= 0; i--) {
+                    updateActiveSquares(timeSquaresContainer, i);
                     await new Promise(r => { timeoutRef = setTimeout(r, 1000); });
                 }
 
                 // Exhale (3 seconds)
                 breatheText.textContent = "Exhale as the cube shrinks";
-                breathingCube.className = 'w-48 h-48 rounded-3xl flex items-center justify-center shadow-xl bg-green-50 animate-exhale';
-                for (let i = 3; i > 0; i--) {
-                    instruction.innerHTML = getInstructions('exhale', i);
+                breathingCube.className = 'w-48 h-48 rounded-3xl flex flex-col items-center justify-center shadow-xl bg-green-50';
+                breathingCube.classList.add('animate-exhale');
+                instruction.innerHTML = getInstructions('exhale');
+                updateTimeSquares(timeSquaresContainer, 3);
+                updateActiveSquares(timeSquaresContainer, 3);
+                for (let i = 2; i >= 0; i--) {
+                    updateActiveSquares(timeSquaresContainer, i);
                     await new Promise(r => { timeoutRef = setTimeout(r, 1000); });
                 }
 
                 // Bottom hold (2 seconds)
                 breatheText.textContent = "Brief hold";
-                breathingCube.className = 'w-48 h-48 rounded-3xl flex items-center justify-center shadow-xl bg-yellow-100';
-                for (let i = 2; i > 0; i--) {
-                    instruction.innerHTML = getInstructions('bottomHold', i);
+                breathingCube.className = 'w-48 h-48 rounded-3xl flex flex-col items-center justify-center shadow-xl bg-yellow-100';
+                instruction.innerHTML = getInstructions('bottomHold');
+                updateTimeSquares(timeSquaresContainer, 2);
+                updateActiveSquares(timeSquaresContainer, 2);
+                for (let i = 1; i >= 0; i--) {
+                    updateActiveSquares(timeSquaresContainer, i);
                     await new Promise(r => { timeoutRef = setTimeout(r, 1000); });
                 }
 
@@ -366,7 +438,6 @@
                 console.error('Breathing cycle interrupted:', error);
             }
         }
-
         function goToMoodBlocks(fromPage) {
             sessionStorage.setItem('previousPage', fromPage);
             window.location.href = 'MoodBlocks.html';
