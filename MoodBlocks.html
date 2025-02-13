@@ -34,7 +34,7 @@
         <!-- Main Card -->
         <div class="bg-white rounded-lg shadow-sm overflow-hidden">
             <div class="p-6">
-                <h2 id="headerText" class="text-xl font-bold text-center mb-2">How were you feeling?</h2>
+                <h2 id="headerText" class="text-xl font-bold text-center mb-2">How were you feeling before?</h2>
                 <p id="previousMood" class="text-center text-gray-600 text-sm mb-4 hidden"></p>
                 <div id="moodGrid" class="space-y-2"></div>
             </div>
@@ -245,14 +245,14 @@
             const prev = document.getElementById('previousMood');
             
             if (!selectedMood) {
-                header.textContent = 'How were you feeling?';
+                header.textContent = 'How were you feeling before?';
                 prev.classList.add('hidden');
             } else if (previousMood) {
                 header.textContent = 'How are you feeling now?';
                 prev.textContent = `Previous: ${previousMood.name}`;
                 prev.classList.remove('hidden');
             } else {
-                header.textContent = 'How are you feeling?';
+                header.textContent = 'How are you feeling now?';
                 prev.classList.add('hidden');
             }
         }
