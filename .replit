@@ -4,6 +4,7 @@ modules = ["nodejs-20", "web"]
 channel = "stable-24_05"
 
 [workflows]
+runButton = "Run"
 
 [[workflows.workflow]]
 name = "Run"
@@ -11,7 +12,7 @@ author = 39624637
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "npx http-server -p 3000 -a 0.0.0.0 -o /index.html"
+args = "npx http-server -p 3000 -a 0.0.0.0 --proxy http://0.0.0.0:3000?"
 
 [[workflows.workflow]]
 name = "Web Server"
