@@ -80,21 +80,41 @@
                     <span class="text-sky-700 font-semibold">Focus Cubes</span>
                 </div>
                 
-                <div class="bar-mode-buttons">
+                <!-- Home Screen Buttons -->
+                <div id="homeScreenButtons" class="bar-mode-buttons">
                     <button class="bar-mode-button" onclick="window.location.href='index.html'">
                         Home
                     </button>
-                    <button class="bar-mode-button" onclick="window.location.href='during&between.html'">
-                        While at Work
+                    <button class="bar-mode-button" id="duringCallBtn">
+                        During Call
                     </button>
-                    <button class="bar-mode-button" onclick="window.location.href='6weekhomeNEW.html'">
-                        6-Week Program
+                    <button class="bar-mode-button" onclick="window.location.href='focusandclarity.html'">
+                        Focus & Clarity
+                    </button>
+                    <button class="bar-mode-button" onclick="window.location.href='compassion.html'">
+                        Compassion
+                    </button>
+                    <button class="bar-mode-button" onclick="window.location.href='DoubleBreathEnergyReset.html'">
+                        Energy Reset
                     </button>
                     <button class="bar-mode-button" onclick="window.location.href='MoodBlocks.html'">
                         MoodBlocks
                     </button>
                     <button class="bar-mode-button" onclick="window.location.href='rememberyourwhy.html'">
                         Remember Why
+                    </button>
+                </div>
+                
+                <!-- Meditation Screen Buttons -->
+                <div id="meditationScreenButtons" class="bar-mode-buttons hidden">
+                    <button class="bar-mode-button" onclick="showHomeScreen()">
+                        Back to Home
+                    </button>
+                    <button class="bar-mode-button" onclick="restartBreathing()">
+                        Restart
+                    </button>
+                    <button class="bar-mode-button" onclick="goToMoodBlocks()">
+                        MoodBlocks
                     </button>
                 </div>
                 
@@ -307,10 +327,18 @@
         // Event Listeners
         document.getElementById('startButton').addEventListener('click', startMeditation);
         toggleViewMode.addEventListener('click', toggleBarMode);
+        document.getElementById('duringCallBtn').addEventListener('click', startMeditation);
 
         function startMeditation() {
             homeScreen.classList.add('hidden');
             meditationScreen.classList.remove('hidden');
+            
+            // Update bar mode buttons if in bar mode
+            if (document.body.classList.contains('bar-mode-active')) {
+                document.getElementById('homeScreenButtons').classList.add('hidden');
+                document.getElementById('meditationScreenButtons').classList.remove('hidden');
+            }
+            
             startInstructionPhase();
         }
 
@@ -423,6 +451,12 @@
             completePhase.classList.add('hidden');
             instructionPhase.classList.remove('hidden');
             homeScreen.classList.remove('hidden');
+            
+            // Update bar mode buttons if in bar mode
+            if (document.body.classList.contains('bar-mode-active')) {
+                document.getElementById('meditationScreenButtons').classList.add('hidden');
+                document.getElementById('homeScreenButtons').classList.remove('hidden');
+            }
         }
 
         // Background Image Handling
@@ -495,6 +529,9 @@
             toggleViewMode.classList.add('hidden');
             document.body.classList.add('bar-mode-active');
             
+            // Show the appropriate buttons based on current screen
+            updateBarModeButtons();
+            
             // Make sure buttons are visible
             const barModeButtons = document.querySelectorAll('.bar-mode-button');
             barModeButtons.forEach(button => {
@@ -516,12 +553,29 @@
             localStorage.setItem('viewMode', 'normal');
         }
         
+        // Helper function to update bar mode buttons based on current screen
+        function updateBarModeButtons() {
+            const isHomeVisible = !homeScreen.classList.contains('hidden');
+            const isMeditationVisible = !meditationScreen.classList.contains('hidden');
+            
+            if (isHomeVisible) {
+                document.getElementById('homeScreenButtons').classList.remove('hidden');
+                document.getElementById('meditationScreenButtons').classList.add('hidden');
+            } else if (isMeditationVisible) {
+                document.getElementById('homeScreenButtons').classList.add('hidden');
+                document.getElementById('meditationScreenButtons').classList.remove('hidden');
+            }
+        }
+        
         // Check saved preference on load
         document.addEventListener('DOMContentLoaded', function() {
             const savedViewMode = localStorage.getItem('viewMode');
             if (savedViewMode === 'bar') {
                 toggleBarMode();
             }
+            
+            // Make sure the bar mode buttons match the current screen
+            updateBarModeButtons();
         });
     </script>
 </body>
