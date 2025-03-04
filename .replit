@@ -4,7 +4,7 @@ modules = ["nodejs-20", "web"]
 channel = "stable-24_05"
 
 [workflows]
-runButton = "Run"
+runButton = "Web Server"
 
 [[workflows.workflow]]
 name = "Run"
@@ -12,7 +12,15 @@ author = 39624637
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "npx http-server -p 3000 -o"
+args = "npx http-server -p 3000 -a 0.0.0.0 -o /index.html"
+
+[[workflows.workflow]]
+name = "Web Server"
+author = 39624637
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npx http-server -a 0.0.0.0 -p 3000"
 
 [[ports]]
 localPort = 3000
@@ -29,3 +37,6 @@ externalPort = 8080
 [[ports]]
 localPort = 9000
 externalPort = 9000
+
+[deployment]
+run = ["sh", "-c", "npx http-server -p 3000 -a 0.0.0.0"]
