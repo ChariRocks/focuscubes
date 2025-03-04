@@ -140,10 +140,25 @@
   border-color: #059669;
 }
 
-.bar-mode-button[onclick*="MoodBlocks.html"]:hover {
+.bar-mode-button[onclick*="MoodBlocks.html"]:hover,
+.bar-mode-button-primary:hover {
   background-color: #f59e0b;
   color: #1f2937;
   border-color: #f59e0b;
+}
+
+/* Primary button (During Call) styling */
+.bar-mode-button-primary {
+  background-color: #10b981;
+  color: white;
+  border-color: #10b981;
+  font-weight: 600;
+}
+
+.bar-mode-button-primary:hover {
+  background-color: #059669;
+  color: white !important;
+  border-color: #059669;
 }
 
 .bar-mode-button[onclick*="rememberyourwhy.html"]:hover {
