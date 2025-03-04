@@ -1,4 +1,3 @@
-
 .bar-mode {
   position: fixed;
   top: 0;
@@ -233,21 +232,26 @@ body.bar-mode-active nav {
   position: relative;
 }
 
-/* Hide bar mode completely on login screen */
-#loginScreen ~ #barMode,
-body.bar-mode-active #loginScreen ~ #barMode {
-  display: none;
+/* Hide all bar mode elements on login screen */
+#loginScreen:not(.hidden) ~ #barMode,
+body.bar-mode-active #loginScreen:not(.hidden) ~ #barMode,
+#loginScreen:not(.hidden) ~ * #barMode,
+#loginScreen:not(.hidden) + * #barMode {
+  display: none !important;
+}
+
+/* Hide all bar mode buttons on login screen */
+#loginScreen:not(.hidden) ~ * .bar-mode-buttons,
+#loginScreen:not(.hidden) ~ * .bar-mode-buttons button,
+body.bar-mode-active #loginScreen:not(.hidden) ~ * .bar-mode-buttons,
+body.bar-mode-active #loginScreen:not(.hidden) ~ * .bar-mode-buttons button {
+  display: none !important;
 }
 
 /* Hide toggle button on login screen */
-#loginScreen ~ #toggleViewMode,
-body.bar-mode-active #loginScreen ~ #toggleViewMode {
-  display: none;
-}
-
-/* Completely hide all buttons in bar mode on login screen */
-body.bar-mode-active #loginScreen ~ #barMode .bar-mode-buttons,
-#loginScreen ~ #barMode .bar-mode-buttons {
+#loginScreen:not(.hidden) ~ #toggleViewMode,
+body.bar-mode-active #loginScreen:not(.hidden) ~ #toggleViewMode,
+#loginScreen:not(.hidden) + * #toggleViewMode {
   display: none !important;
 }
 
