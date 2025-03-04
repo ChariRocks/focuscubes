@@ -93,7 +93,8 @@
 }
 
 /* Button variants based on functionality */
-.bar-mode-button[onclick*="during&between.html"] {
+.bar-mode-button[onclick*="during&between.html"],
+.bar-mode-button[id="duringCallBtn"] {
   background-color: #10b981;
   color: white;
   border-color: #10b981;
@@ -105,14 +106,35 @@
   border-color: #fbbf24;
 }
 
+.bar-mode-button[onclick*="focusandclarity.html"] {
+  background-color: #f3f4f6;
+  border-color: #e5e7eb;
+}
+
+.bar-mode-button[onclick*="compassion.html"] {
+  background-color: #f3f4f6;
+  border-color: #e5e7eb;
+}
+
+.bar-mode-button[onclick*="DoubleBreathEnergyReset.html"] {
+  background-color: #f3f4f6;
+  border-color: #e5e7eb;
+}
+
+.bar-mode-button[onclick*="rememberyourwhy.html"] {
+  background-color: #fef9c3;
+  color: #1f2937;
+  border-color: #fef08a;
+}
+
 .bar-mode-button:hover {
-  background-color: #e0e7ff;
   transform: translateY(-1px);
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }
 
 /* Maintain colors on hover for specific buttons */
-.bar-mode-button[onclick*="during&between.html"]:hover {
+.bar-mode-button[onclick*="during&between.html"]:hover,
+.bar-mode-button[id="duringCallBtn"]:hover {
   background-color: #059669;
   color: white;
   border-color: #059669;
@@ -122,6 +144,18 @@
   background-color: #f59e0b;
   color: #1f2937;
   border-color: #f59e0b;
+}
+
+.bar-mode-button[onclick*="rememberyourwhy.html"]:hover {
+  background-color: #fde68a;
+  color: #1f2937;
+  border-color: #fbbf24;
+}
+
+.bar-mode-button[onclick*="focusandclarity.html"]:hover,
+.bar-mode-button[onclick*="compassion.html"]:hover,
+.bar-mode-button[onclick*="DoubleBreathEnergyReset.html"]:hover {
+  background-color: #e5e7eb;
 }
 
 .bar-mode-button:active {
