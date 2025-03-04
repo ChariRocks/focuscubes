@@ -72,18 +72,20 @@
 
 .normal-view-toggle {
   position: fixed;
-  top: 15px;
+  top: 20px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 999;
   background-color: #0ea5e9;
   color: white;
   border: none;
-  border-radius: 4px;
-  padding: 4px 12px;
-  font-size: 12px;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .normal-view-toggle:hover {
@@ -91,5 +93,17 @@
 }
 
 body.bar-mode-active {
-  padding-top: 60px;
+  /* Increased padding to ensure content is visible below the bar */
+  padding-top: 80px;
+  /* Add transition for smooth movement */
+  transition: padding-top 0.3s ease;
+}
+
+/* Make sure all page content is properly positioned */
+body.bar-mode-active main,
+body.bar-mode-active #homeScreen,
+body.bar-mode-active #meditationScreen,
+body.bar-mode-active .min-h-screen,
+body.bar-mode-active #app {
+  padding-top: 20px;
 }

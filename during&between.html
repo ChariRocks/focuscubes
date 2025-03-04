@@ -79,6 +79,25 @@
                     <img src="images/focuscubeslogo.png" alt="Focus Cubes Logo" class="h-8 mr-4">
                     <span class="text-sky-700 font-semibold">Focus Cubes</span>
                 </div>
+                
+                <div class="bar-mode-buttons">
+                    <button class="bar-mode-button" onclick="window.location.href='index.html'">
+                        Home
+                    </button>
+                    <button class="bar-mode-button" onclick="window.location.href='during&between.html'">
+                        While at Work
+                    </button>
+                    <button class="bar-mode-button" onclick="window.location.href='6weekhomeNEW.html'">
+                        6-Week Program
+                    </button>
+                    <button class="bar-mode-button" onclick="window.location.href='MoodBlocks.html'">
+                        MoodBlocks
+                    </button>
+                    <button class="bar-mode-button" onclick="window.location.href='rememberyourwhy.html'">
+                        Remember Why
+                    </button>
+                </div>
+                
                 <button class="bar-mode-toggle" onclick="switchToNormalMode()">Switch to Normal View</button>
             </div>
         </div>
@@ -472,14 +491,30 @@
         }
 
         function toggleBarMode() {
-            barMode.classList.toggle('hidden');
-            toggleViewMode.classList.toggle('hidden');
+            barMode.classList.remove('hidden');
+            toggleViewMode.classList.add('hidden');
+            document.body.classList.add('bar-mode-active');
+            
+            // Save preference
+            localStorage.setItem('viewMode', 'bar');
         }
 
         function switchToNormalMode() {
             barMode.classList.add('hidden');
             toggleViewMode.classList.remove('hidden');
+            document.body.classList.remove('bar-mode-active');
+            
+            // Save preference
+            localStorage.setItem('viewMode', 'normal');
         }
+        
+        // Check saved preference on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedViewMode = localStorage.getItem('viewMode');
+            if (savedViewMode === 'bar') {
+                toggleBarMode();
+            }
+        });
     </script>
 </body>
 </html>
