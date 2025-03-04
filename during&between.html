@@ -495,8 +495,16 @@
             toggleViewMode.classList.add('hidden');
             document.body.classList.add('bar-mode-active');
             
+            // Make sure buttons are visible
+            const barModeButtons = document.querySelectorAll('.bar-mode-button');
+            barModeButtons.forEach(button => {
+                button.style.display = 'block';
+            });
+            
             // Save preference
             localStorage.setItem('viewMode', 'bar');
+            
+            console.log("Bar mode activated");
         }
 
         function switchToNormalMode() {
