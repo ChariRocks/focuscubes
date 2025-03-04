@@ -12,7 +12,7 @@ author = 39624637
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "npx http-server -p 3000 -o -a 0.0.0.0"
+args = "npx http-server -p 3000 -a 0.0.0.0 -c-1"
 
 [[workflows.workflow]]
 name = "Web Server"
