@@ -245,6 +245,12 @@ body.bar-mode-active #loginScreen ~ #toggleViewMode {
   display: none;
 }
 
+/* Completely hide all buttons in bar mode on login screen */
+body.bar-mode-active #loginScreen ~ #barMode .bar-mode-buttons,
+#loginScreen ~ #barMode .bar-mode-buttons {
+  display: none !important;
+}
+
 /* Remove padding when bar mode is active but we're on login screen */
 body.bar-mode-active #loginScreen {
   padding-top: 0;

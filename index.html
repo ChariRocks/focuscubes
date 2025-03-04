@@ -251,11 +251,21 @@
                 switchToBarMode();
             }
             
-            // Show/hide login button in bar mode based on current screen
+            // Hide all bar mode buttons on login screen
             if (loginScreen && !loginScreen.classList.contains('hidden')) {
-                document.getElementById('barModeLoginBtn').style.display = 'block';
+                // Hide all buttons in bar mode on login screen
+                document.querySelectorAll('.bar-mode-buttons button').forEach(button => {
+                    button.style.display = 'none';
+                });
             } else {
-                document.getElementById('barModeLoginBtn').style.display = 'none';
+                // Show all buttons except login button on other screens
+                document.querySelectorAll('.bar-mode-buttons button').forEach(button => {
+                    if (button.id === 'barModeLoginBtn') {
+                        button.style.display = 'none';
+                    } else {
+                        button.style.display = 'inline-flex';
+                    }
+                });
             }
         });
     </script>
