@@ -17,3 +17,7 @@ args = "npx http-server -p 3000 -o"
 [[ports]]
 localPort = 3000
 externalPort = 80
+
+[[ports]]
+localPort = 3001
+externalPort = 3001
