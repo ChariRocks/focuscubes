@@ -9,8 +9,9 @@ npm_config_prefix = "/home/runner/$REPL_SLUG/.config/npm/node_global"
 channel = "stable-22_11"
 
 [deployment]
-run = ["sh", "-c", "npx http-server -p 3000 -a 0.0.0.0"]
+run = ["sh", "-c", "npm start"]
 deploymentTarget = "cloudrun"
+build = ["sh", "-c", "npm run build"]
 
 [[deployment.rewrites]]
 from = "/*"
