@@ -243,7 +243,11 @@
         // Check saved preference on load
         document.addEventListener('DOMContentLoaded', function() {
             const savedViewMode = localStorage.getItem('viewMode');
-            if (savedViewMode === 'bar') {
+            const isLoginScreen = document.getElementById('loginScreen') && 
+                                !document.getElementById('loginScreen').classList.contains('hidden');
+            
+            // Only activate bar mode if we're not on the login screen
+            if (savedViewMode === 'bar' && !isLoginScreen) {
                 switchToBarMode();
             }
             

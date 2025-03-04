@@ -233,12 +233,19 @@ body.bar-mode-active nav {
   position: relative;
 }
 
-/* Make login screen work with bar mode */
-body.bar-mode-active #loginScreen .bar-mode-buttons {
+/* Hide bar mode completely on login screen */
+#loginScreen ~ #barMode,
+body.bar-mode-active #loginScreen ~ #barMode {
   display: none;
 }
 
-/* Hide bar mode toggle on login screen */
-#loginScreen .normal-view-toggle {
+/* Hide toggle button on login screen */
+#loginScreen ~ #toggleViewMode,
+body.bar-mode-active #loginScreen ~ #toggleViewMode {
   display: none;
+}
+
+/* Remove padding when bar mode is active but we're on login screen */
+body.bar-mode-active #loginScreen {
+  padding-top: 0;
 }
