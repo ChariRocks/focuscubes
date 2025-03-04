@@ -108,16 +108,19 @@
 
 .bar-mode-button[onclick*="focusandclarity.html"] {
   background-color: #f3f4f6;
+  color: #000000; /* Black text for Focus and Clarity */
   border-color: #e5e7eb;
 }
 
 .bar-mode-button[onclick*="compassion.html"] {
   background-color: #f3f4f6;
+  color: #000000; /* Black text */
   border-color: #e5e7eb;
 }
 
 .bar-mode-button[onclick*="DoubleBreathEnergyReset.html"] {
   background-color: #f3f4f6;
+  color: #000000; /* Black text */
   border-color: #e5e7eb;
 }
 
