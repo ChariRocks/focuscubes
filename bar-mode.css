@@ -208,3 +208,19 @@ body.bar-mode-active .min-h-screen,
 body.bar-mode-active #app {
   padding-top: 20px;
 }
+
+/* Ensure back and close buttons are visible in bar mode */
+body.bar-mode-active nav {
+  z-index: 10;
+  position: relative;
+}
+
+/* Make login screen work with bar mode */
+body.bar-mode-active #loginScreen .bar-mode-buttons {
+  display: none;
+}
+
+/* Hide bar mode toggle on login screen */
+#loginScreen .normal-view-toggle {
+  display: none;
+}
