@@ -1,0 +1,7 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import your custom CSS files here */
+@import 'bar-mode.css';

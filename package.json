@@ -1,0 +1,11 @@
+{
+  "name": "focus-cubes",
+  "version": "1.0.0",
+  "description": "Focus Cubes code repo",
+  "scripts": {
+    "dev": "http-server -p 3000 -a 0.0.0.0",
+    "build": "node build.js",
+    "start": "http-server ./dist -p 3000 -a 0.0.0.0"
+  },
+  // ...rest of package.json
+}
