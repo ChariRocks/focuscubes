@@ -251,19 +251,23 @@
                 switchToBarMode();
             }
 
-            // Handle login screen - completely hide bar mode buttons
+            // Handle login screen - show only login button in bar mode
             if (loginScreen && !loginScreen.classList.contains('hidden')) {
-                // Hide all bar mode elements on login screen
-                document.getElementById('barMode').classList.add('hidden');
-                document.getElementById('toggleViewMode').classList.add('hidden');
+                // Show bar mode but only with login button
+                document.getElementById('barMode').classList.remove('hidden');
+                document.getElementById('toggleViewMode').classList.remove('hidden');
 
-                // Force hide any bar mode buttons that might be visible
+                // Show only login button, hide all others
                 const barModeButtons = document.querySelectorAll('.bar-mode-buttons button');
                 barModeButtons.forEach(button => {
-                    button.style.display = 'none';
+                    if (button.id === 'barModeLoginBtn') {
+                        button.style.display = 'inline-flex';
+                    } else {
+                        button.style.display = 'none';
+                    }
                 });
             } else {
-                // Only show other buttons when not on login screen
+                // Hide login button when not on login screen
                 document.getElementById('barModeLoginBtn').style.display = 'none';
             }
         });

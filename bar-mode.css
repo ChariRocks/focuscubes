@@ -232,26 +232,8 @@ body.bar-mode-active nav {
   position: relative;
 }
 
-/* Hide all bar mode elements on login screen */
-#loginScreen:not(.hidden) ~ #barMode,
-body.bar-mode-active #loginScreen:not(.hidden) ~ #barMode,
-#loginScreen:not(.hidden) ~ * #barMode,
-#loginScreen:not(.hidden) + * #barMode {
-  display: none !important;
-}
-
-/* Hide all bar mode buttons on login screen */
-#loginScreen:not(.hidden) ~ * .bar-mode-buttons,
-#loginScreen:not(.hidden) ~ * .bar-mode-buttons button,
-body.bar-mode-active #loginScreen:not(.hidden) ~ * .bar-mode-buttons,
-body.bar-mode-active #loginScreen:not(.hidden) ~ * .bar-mode-buttons button {
-  display: none !important;
-}
-
-/* Hide toggle button on login screen */
-#loginScreen:not(.hidden) ~ #toggleViewMode,
-body.bar-mode-active #loginScreen:not(.hidden) ~ #toggleViewMode,
-#loginScreen:not(.hidden) + * #toggleViewMode {
+/* Show only login button in bar mode on login screen */
+body.bar-mode-active #loginScreen:not(.hidden) ~ * .bar-mode-buttons button:not(#barModeLoginBtn) {
   display: none !important;
 }
 
