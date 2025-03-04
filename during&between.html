@@ -79,7 +79,7 @@
                     <img src="images/focuscubeslogo.png" alt="Focus Cubes Logo" class="h-8 mr-4">
                     <span class="text-sky-700 font-semibold">Focus Cubes</span>
                 </div>
-                
+
                 <!-- Home Screen Buttons -->
                 <div id="homeScreenButtons" class="bar-mode-buttons">
                     <button class="bar-mode-button" onclick="window.location.href='index.html'">
@@ -104,7 +104,7 @@
                         Remember Why
                     </button>
                 </div>
-                
+
                 <!-- Meditation Screen Buttons -->
                 <div id="meditationScreenButtons" class="bar-mode-buttons hidden">
                     <button class="bar-mode-button" onclick="showHomeScreen()">
@@ -117,7 +117,7 @@
                         MoodBlocks
                     </button>
                 </div>
-                
+
                 <button class="bar-mode-toggle" onclick="switchToNormalMode()">Switch to Normal View</button>
             </div>
         </div>
@@ -332,13 +332,13 @@
         function startMeditation() {
             homeScreen.classList.add('hidden');
             meditationScreen.classList.remove('hidden');
-            
+
             // Update bar mode buttons if in bar mode
             if (document.body.classList.contains('bar-mode-active')) {
                 document.getElementById('homeScreenButtons').classList.add('hidden');
                 document.getElementById('meditationScreenButtons').classList.remove('hidden');
             }
-            
+
             startInstructionPhase();
         }
 
@@ -451,7 +451,7 @@
             completePhase.classList.add('hidden');
             instructionPhase.classList.remove('hidden');
             homeScreen.classList.remove('hidden');
-            
+
             // Update bar mode buttons if in bar mode
             if (document.body.classList.contains('bar-mode-active')) {
                 document.getElementById('meditationScreenButtons').classList.add('hidden');
@@ -528,19 +528,19 @@
             barMode.classList.remove('hidden');
             toggleViewMode.classList.add('hidden');
             document.body.classList.add('bar-mode-active');
-            
+
             // Show the appropriate buttons based on current screen
             updateBarModeButtons();
-            
+
             // Make sure buttons are visible
             const barModeButtons = document.querySelectorAll('.bar-mode-button');
             barModeButtons.forEach(button => {
                 button.style.display = 'block';
             });
-            
+
             // Save preference
             localStorage.setItem('viewMode', 'bar');
-            
+
             console.log("Bar mode activated");
         }
 
@@ -548,16 +548,16 @@
             barMode.classList.add('hidden');
             toggleViewMode.classList.remove('hidden');
             document.body.classList.remove('bar-mode-active');
-            
+
             // Save preference
             localStorage.setItem('viewMode', 'normal');
         }
-        
+
         // Helper function to update bar mode buttons based on current screen
         function updateBarModeButtons() {
             const isHomeVisible = !homeScreen.classList.contains('hidden');
             const isMeditationVisible = !meditationScreen.classList.contains('hidden');
-            
+
             if (isHomeVisible) {
                 document.getElementById('homeScreenButtons').classList.remove('hidden');
                 document.getElementById('meditationScreenButtons').classList.add('hidden');
@@ -566,14 +566,14 @@
                 document.getElementById('meditationScreenButtons').classList.remove('hidden');
             }
         }
-        
+
         // Check saved preference on load
         document.addEventListener('DOMContentLoaded', function() {
             const savedViewMode = localStorage.getItem('viewMode');
             if (savedViewMode === 'bar') {
                 toggleBarMode();
             }
-            
+
             // Make sure the bar mode buttons match the current screen
             updateBarModeButtons();
         });
