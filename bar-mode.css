@@ -1,0 +1,95 @@
+
+.bar-mode {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to right, #f0f9ff, #e0f2fe);
+  border-bottom: 1px solid #bae6fd;
+  z-index: 1000;
+  overflow: hidden;
+  transition: height 0.3s ease;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.bar-mode-expanded {
+  height: 100vh;
+  overflow: auto;
+}
+
+.bar-mode-toggle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1010;
+  background-color: #0ea5e9;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.bar-mode-toggle:hover {
+  background-color: #0284c7;
+}
+
+.bar-mode-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.bar-mode-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.bar-mode-button {
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 4px;
+  border: 1px solid #e0e7ff;
+  background-color: white;
+  color: #4f46e5;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.bar-mode-button:hover {
+  background-color: #e0e7ff;
+}
+
+.normal-view-toggle {
+  position: fixed;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+  background-color: #0ea5e9;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.normal-view-toggle:hover {
+  background-color: #0284c7;
+}
+
+body.bar-mode-active {
+  padding-top: 60px;
+}
