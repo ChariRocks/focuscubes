@@ -8,7 +8,9 @@
     <!-- Dependencies -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <link href="bar-mode.css" rel="stylesheet">  <!-- Added link to bar-mode.css -->
+    <link href="bar-mode.css" rel="stylesheet">
+    <link href="popup-meditation.css" rel="stylesheet">
+    <script src="popup-meditation.js" defer></script>
     <style>
         body { 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -84,16 +86,16 @@
                     <button class="bar-mode-button" onclick="window.location.href='index.html'">
                         <i class="ph ph-house mr-2"></i> Home
                     </button>
-                    <button class="bar-mode-button bar-mode-button-primary" id="duringCallBtn" style="min-width: 150px;">
+                    <button class="bar-mode-button bar-mode-button-primary" id="duringCallBtn" style="min-width: 150px;" onclick="document.body.classList.contains('bar-mode-active') ? startPopupMeditation('During Call') : startMeditation()">
                         <i class="ph ph-phone mr-2"></i> During Call
                     </button>
-                    <button class="bar-mode-button" onclick="window.location.href='focusandclarity.html'">
+                    <button class="bar-mode-button" onclick="document.body.classList.contains('bar-mode-active') ? startPopupMeditation('Focus & Clarity') : window.location.href='focusandclarity.html'">
                         <i class="ph ph-brain mr-2"></i> Focus & Clarity
                     </button>
-                    <button class="bar-mode-button" onclick="window.location.href='compassion.html'">
+                    <button class="bar-mode-button" onclick="document.body.classList.contains('bar-mode-active') ? startPopupMeditation('Compassion') : window.location.href='compassion.html'">
                         <i class="ph ph-heart mr-2"></i> Compassion
                     </button>
-                    <button class="bar-mode-button" onclick="window.location.href='DoubleBreathEnergyReset.html'">
+                    <button class="bar-mode-button" onclick="document.body.classList.contains('bar-mode-active') ? startPopupMeditation('Energy Reset') : window.location.href='DoubleBreathEnergyReset.html'">
                         <i class="ph ph-lightning mr-2"></i> Energy Reset
                     </button>
                     <button class="bar-mode-button" onclick="window.location.href='MoodBlocks.html'">
