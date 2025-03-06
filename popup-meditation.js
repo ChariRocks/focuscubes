@@ -1,28 +1,27 @@
-
 // Popup Meditation Window Functions
 function createPopupMeditationWindow(meditationType) {
   // Create overlay
   const overlay = document.createElement('div');
   overlay.className = 'popup-meditation-overlay';
-  
+
   // Create container
   const container = document.createElement('div');
   container.className = 'popup-meditation-container';
-  
+
   // Create header
   const header = document.createElement('div');
   header.className = 'popup-meditation-header';
-  
+
   const title = document.createElement('h3');
   title.className = 'text-lg font-medium text-slate-800';
-  
+
   // Set title and background color based on meditation type
   let headerColor = 'bg-white';
   let mainColor = 'bg-green-100';
   let highlightColor = 'bg-yellow-50';
   let buttonColor = 'border-green-600 text-green-700';
   let primaryButtonColor = 'bg-green-600 text-white hover:bg-green-700';
-  
+
   switch(meditationType) {
     case 'duringCall':
       title.textContent = 'During Call Reset';
@@ -51,19 +50,19 @@ function createPopupMeditationWindow(meditationType) {
     default:
       title.textContent = 'Quick Reset';
   }
-  
+
   const closeButton = document.createElement('button');
   closeButton.className = 'popup-meditation-close';
   closeButton.innerHTML = '<i class="ph ph-x"></i>';
   closeButton.onclick = closePopupMeditation;
-  
+
   header.appendChild(title);
   header.appendChild(closeButton);
-  
+
   // Create content
   const content = document.createElement('div');
   content.className = 'popup-meditation-content';
-  
+
   // Focus & Clarity special content
   if (meditationType === 'focusClarity') {
     content.innerHTML = `
@@ -71,7 +70,7 @@ function createPopupMeditationWindow(meditationType) {
         <div class="space-y-8 text-center">
           <h2 class="text-2xl font-medium text-slate-800">Clarity and Focus</h2>
           <p class="text-lg text-slate-600">Choose your 2-minute practice</p>
-          
+
           <div class="flex flex-col gap-4">
             <button id="popup-body-scan-button" 
               class="px-6 py-4 bg-emerald-50 rounded-xl hover:bg-emerald-100 
@@ -89,17 +88,17 @@ function createPopupMeditationWindow(meditationType) {
         </div>
       </div>
     `;
-    
+
     document.body.appendChild(overlay);
     overlay.appendChild(container);
     container.appendChild(header);
     container.appendChild(content);
-    
+
     // Activate the popup with a slight delay for animation
     setTimeout(() => {
       overlay.classList.add('active');
     }, 10);
-    
+
     // Set up event listeners for the buttons
     document.getElementById('popup-body-scan-button').addEventListener('click', () => {
       closePopupMeditation();
@@ -107,17 +106,17 @@ function createPopupMeditationWindow(meditationType) {
         createFocusClarityMeditationPopup('bodyScan');
       }, 400);
     });
-    
+
     document.getElementById('popup-breath-awareness-button').addEventListener('click', () => {
       closePopupMeditation();
       setTimeout(() => {
         createFocusClarityMeditationPopup('breathAwareness');
       }, 400);
     });
-    
+
     return overlay;
   }
-  
+
   // Compassion special content
   if (meditationType === 'compassion') {
     content.innerHTML = `
@@ -130,7 +129,7 @@ function createPopupMeditationWindow(meditationType) {
             <p>• Breathe out as it contracts</p>
           </div>
           <p class="text-base text-slate-500">Choose your duration:</p>
-          
+
           <div class="flex flex-col gap-4">
             <button id="popup-brief-button" 
               class="px-6 py-4 bg-rose-50 rounded-xl hover:bg-rose-100 
@@ -146,17 +145,17 @@ function createPopupMeditationWindow(meditationType) {
         </div>
       </div>
     `;
-    
+
     document.body.appendChild(overlay);
     overlay.appendChild(container);
     container.appendChild(header);
     container.appendChild(content);
-    
+
     // Activate the popup with a slight delay for animation
     setTimeout(() => {
       overlay.classList.add('active');
     }, 10);
-    
+
     // Set up event listeners for the buttons
     document.getElementById('popup-brief-button').addEventListener('click', () => {
       closePopupMeditation();
@@ -164,17 +163,17 @@ function createPopupMeditationWindow(meditationType) {
         createCompassionMeditationPopup('brief');
       }, 400);
     });
-    
+
     document.getElementById('popup-full-button').addEventListener('click', () => {
       closePopupMeditation();
       setTimeout(() => {
         createCompassionMeditationPopup('full');
       }, 400);
     });
-    
+
     return overlay;
   }
-  
+
   // Energy Reset special content
   if (meditationType === 'energyReset') {
     content.innerHTML = `
@@ -182,7 +181,7 @@ function createPopupMeditationWindow(meditationType) {
         <div class="space-y-8 text-center">
           <h2 class="text-2xl font-medium text-slate-800">Quick Energy Reset</h2>
           <p class="text-lg text-slate-600">Use the power of double-breath to boost your energy in minutes</p>
-          
+
           <div class="space-y-4 bg-green-50 p-6 rounded-xl text-left">
             <p class="font-medium text-slate-700">How it works:</p>
             <ul class="space-y-2 text-slate-600">
@@ -192,9 +191,9 @@ function createPopupMeditationWindow(meditationType) {
               <li>4. Exhale completely</li>
             </ul>
           </div>
-          
+
           <p class="text-base text-slate-500">Select your session duration:</p>
-          
+
           <div class="flex gap-3 justify-center flex-wrap">
             <button id="popup-short-button" 
               class="px-5 py-3 bg-green-100 rounded-xl hover:bg-green-200 
@@ -215,17 +214,17 @@ function createPopupMeditationWindow(meditationType) {
         </div>
       </div>
     `;
-    
+
     document.body.appendChild(overlay);
     overlay.appendChild(container);
     container.appendChild(header);
     container.appendChild(content);
-    
+
     // Activate the popup with a slight delay for animation
     setTimeout(() => {
       overlay.classList.add('active');
     }, 10);
-    
+
     // Set up event listeners for the buttons
     document.getElementById('popup-short-button').addEventListener('click', () => {
       closePopupMeditation();
@@ -233,29 +232,29 @@ function createPopupMeditationWindow(meditationType) {
         createEnergyResetMeditationPopup(0.5);
       }, 400);
     });
-    
+
     document.getElementById('popup-medium-button').addEventListener('click', () => {
       closePopupMeditation();
       setTimeout(() => {
         createEnergyResetMeditationPopup(1);
       }, 400);
     });
-    
+
     document.getElementById('popup-long-button').addEventListener('click', () => {
       closePopupMeditation();
       setTimeout(() => {
         createEnergyResetMeditationPopup(2);
       }, 400);
     });
-    
+
     return overlay;
   }
-  
+
   // Default meditation content (During Call Reset)
   // Create meditation screen
   const meditationScreen = document.createElement('div');
   meditationScreen.className = 'popup-meditation-screen';
-  
+
   // Create instruction phase
   const instructionPhase = document.createElement('div');
   instructionPhase.className = 'popup-instruction-phase';
@@ -266,7 +265,7 @@ function createPopupMeditationWindow(meditationType) {
       <p class="text-lg text-slate-800 mt-8">Starting in <span id="popup-instruction-count">3</span>...</p>
     </div>
   `;
-  
+
   // Create breathing phase
   const breathingPhase = document.createElement('div');
   breathingPhase.className = 'popup-breathing-phase hidden';
@@ -277,7 +276,7 @@ function createPopupMeditationWindow(meditationType) {
       <span id="popup-timer" class="text-4xl font-light text-slate-800">4</span>
     </div>
   `;
-  
+
   // Create complete phase
   const completePhase = document.createElement('div');
   completePhase.className = 'popup-complete-phase hidden';
@@ -301,58 +300,58 @@ function createPopupMeditationWindow(meditationType) {
       </div>
     </div>
   `;
-  
+
   // Append all phases to meditation screen
   meditationScreen.appendChild(instructionPhase);
   meditationScreen.appendChild(breathingPhase);
   meditationScreen.appendChild(completePhase);
-  
+
   // Append meditation screen to content
   content.appendChild(meditationScreen);
-  
+
   // Append header and content to container
   container.appendChild(header);
   container.appendChild(content);
-  
+
   // Append container to overlay
   overlay.appendChild(container);
-  
+
   // Append overlay to body
   document.body.appendChild(overlay);
-  
+
   // Activate the popup with a slight delay for animation
   setTimeout(() => {
     overlay.classList.add('active');
   }, 10);
-  
+
   // Set up event listeners for the complete screen buttons
   document.getElementById('popup-restart-button').addEventListener('click', () => {
     startPopupInstructionPhase();
   });
-  
+
   document.getElementById('popup-close-button').addEventListener('click', () => {
     closePopupMeditation();
   });
-  
+
   // Start the meditation
   startPopupInstructionPhase();
-  
+
   return overlay;
 }
 
 function closePopupMeditation() {
   const overlay = document.querySelector('.popup-meditation-overlay');
-  
+
   if (overlay) {
     // Remove active class to trigger exit animation
     overlay.classList.remove('active');
-    
+
     // Clear any active intervals
     if (window.popupBreathingInterval) {
       clearInterval(window.popupBreathingInterval);
       window.popupBreathingInterval = null;
     }
-    
+
     // Remove the element after animation completes
     setTimeout(() => {
       overlay.remove();
@@ -364,19 +363,19 @@ function startPopupInstructionPhase() {
   const instructionPhase = document.querySelector('.popup-instruction-phase');
   const breathingPhase = document.querySelector('.popup-breathing-phase');
   const completePhase = document.querySelector('.popup-complete-phase');
-  
+
   // Show instruction phase, hide others
   instructionPhase.classList.remove('hidden');
   breathingPhase.classList.add('hidden');
   completePhase.classList.add('hidden');
-  
+
   let timeLeft = 3;
   document.getElementById('popup-instruction-count').textContent = timeLeft;
-  
+
   const countdown = setInterval(() => {
     timeLeft--;
     document.getElementById('popup-instruction-count').textContent = timeLeft;
-    
+
     if (timeLeft <= 0) {
       clearInterval(countdown);
       startPopupBreathingPhase();
@@ -387,28 +386,28 @@ function startPopupInstructionPhase() {
 function startPopupBreathingPhase() {
   const instructionPhase = document.querySelector('.popup-instruction-phase');
   const breathingPhase = document.querySelector('.popup-breathing-phase');
-  
+
   // Show breathing phase, hide instruction
   instructionPhase.classList.add('hidden');
   breathingPhase.classList.remove('hidden');
-  
+
   // Initialize state
   let currentCycle = 1;
   let currentPhase = 'hold2';  // Start with small cube
   let timeLeft = 4;
-  
+
   // Update UI to initial state
   updatePopupBreathingUI();
-  
-  // Add a small delay before starting the inhale phase
+
+  // Add a larger delay before starting the inhale phase
   setTimeout(() => {
     currentPhase = 'inhale';  // Now switch to inhale
     updatePopupBreathingUI();  // Update UI to start the expansion
-    
+
     // Start the interval
     window.popupBreathingInterval = setInterval(() => {
       timeLeft--;
-      
+
       if (timeLeft <= 0) {
         switch(currentPhase) {
           case 'inhale':
@@ -436,27 +435,27 @@ function startPopupBreathingPhase() {
             break;
         }
       }
-      
+
       updatePopupBreathingUI();
     }, 1000);
-  }, 100);
-  
+  }, 500); // 500ms delay (increased from 100ms)
+
   function updatePopupBreathingUI() {
     const cube = document.getElementById('popup-breathing-cube');
     const timer = document.getElementById('popup-timer');
     const breathingText = document.getElementById('popup-breathing-text');
     document.getElementById('popup-cycle-count').textContent = currentCycle;
-    
+
     timer.textContent = timeLeft;
-    
+
     breathingText.textContent = 
       currentPhase === 'inhale' ? 'Breathe in with the cube...' :
       currentPhase === 'hold1' || currentPhase === 'hold2' ? 'Hold...' :
       'Breathe out with the cube...';
-    
+
     cube.style.transform = 
       (currentPhase === 'inhale' || currentPhase === 'hold1') ? 'scale(1.5)' : 'scale(1)';
-    
+
     cube.className = `popup-breathing-cube ${
       currentPhase === 'hold1' || currentPhase === 'hold2' ? 'bg-yellow-50' : 'bg-green-100'
     }`;
@@ -466,7 +465,7 @@ function startPopupBreathingPhase() {
 function showPopupCompletePhase() {
   const breathingPhase = document.querySelector('.popup-breathing-phase');
   const completePhase = document.querySelector('.popup-complete-phase');
-  
+
   // Show complete phase, hide breathing phase
   breathingPhase.classList.add('hidden');
   completePhase.classList.remove('hidden');
@@ -477,31 +476,31 @@ function createFocusClarityMeditationPopup(type) {
   // Create overlay
   const overlay = document.createElement('div');
   overlay.className = 'popup-meditation-overlay';
-  
+
   // Create container
   const container = document.createElement('div');
   container.className = 'popup-meditation-container';
-  
+
   // Create header
   const header = document.createElement('div');
   header.className = 'popup-meditation-header';
-  
+
   const title = document.createElement('h3');
   title.className = 'text-lg font-medium text-slate-800';
   title.textContent = 'Clarity and Focus';
-  
+
   const closeButton = document.createElement('button');
   closeButton.className = 'popup-meditation-close';
   closeButton.innerHTML = '<i class="ph ph-x"></i>';
   closeButton.onclick = closePopupMeditation;
-  
+
   header.appendChild(title);
   header.appendChild(closeButton);
-  
+
   // Create content for the meditation
   const content = document.createElement('div');
   content.className = 'popup-meditation-content';
-  
+
   // Define breath patterns based on selection
   const bodyScanBreaths = [
     // Start with feet and legs
@@ -597,75 +596,75 @@ function createFocusClarityMeditationPopup(type) {
       exhale: "Clear and calm"
     }
   ];
-  
+
   const breaths = type === 'bodyScan' ? bodyScanBreaths : breathAwarenessBreaths;
   const totalBreaths = breaths.length;
   const BREATH_DURATION = 4000; // 4 seconds
-  
+
   // Create the screens
   const meditationDiv = document.createElement('div');
   meditationDiv.className = 'flex-1 flex flex-col items-center p-6';
-  
+
   const cycleCount = document.createElement('p');
   cycleCount.id = 'popup-focus-cycle-count';
   cycleCount.className = 'text-xl text-slate-600 text-center mb-4';
-  
+
   const breatheText = document.createElement('p');
   breatheText.id = 'popup-focus-breathe-text';
   breatheText.className = 'text-base text-slate-600 mt-2 text-center mb-8';
-  
+
   const cubeContainer = document.createElement('div');
   cubeContainer.className = 'flex-1 flex items-center justify-center';
-  
+
   const cube = document.createElement('div');
   cube.id = 'popup-focus-cube';
   cube.className = 'w-36 h-36 rounded-xl flex items-center justify-center shadow-xl bg-emerald-50 text-center p-6';
-  
+
   const instruction = document.createElement('p');
   instruction.id = 'popup-focus-instruction';
   instruction.className = 'text-xl font-medium text-slate-700';
-  
+
   cube.appendChild(instruction);
   cubeContainer.appendChild(cube);
-  
+
   meditationDiv.appendChild(cycleCount);
   meditationDiv.appendChild(breatheText);
   meditationDiv.appendChild(cubeContainer);
-  
+
   content.appendChild(meditationDiv);
-  
+
   // Append components
   container.appendChild(header);
   container.appendChild(content);
   overlay.appendChild(container);
   document.body.appendChild(overlay);
-  
+
   // Activate the popup with a slight delay for animation
   setTimeout(() => {
     overlay.classList.add('active');
   }, 10);
-  
+
   // Define meditation logic
   let currentBreath = 0;
   let phase = 'inhale';
   let timeoutRef;
-  
+
   // Start the meditation sequence
   function startMeditation() {
     updateCycleDisplay();
     animateBreath();
   }
-  
+
   function updateCycleDisplay() {
     cycleCount.textContent = `Breath ${currentBreath + 1} of ${totalBreaths}`;
   }
-  
+
   async function animateBreath() {
     if (currentBreath >= totalBreaths) {
       showComplete();
       return;
     }
-    
+
     // Inhale phase
     phase = 'inhale';
     breatheText.textContent = 'Inhale with the cube';
@@ -673,7 +672,7 @@ function createFocusClarityMeditationPopup(type) {
     cube.className = 'w-36 h-36 rounded-xl flex items-center justify-center shadow-xl bg-emerald-100 text-center p-6';
     cube.style.transition = `all ${BREATH_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)`;
     cube.style.transform = 'scale(1.3)';
-    
+
     timeoutRef = setTimeout(() => {
       // Exhale phase
       phase = 'exhale';
@@ -681,18 +680,18 @@ function createFocusClarityMeditationPopup(type) {
       instruction.textContent = breaths[currentBreath].exhale;
       cube.className = 'w-36 h-36 rounded-xl flex items-center justify-center shadow-xl bg-emerald-50 text-center p-6';
       cube.style.transform = 'scale(1)';
-      
+
       timeoutRef = setTimeout(() => {
         currentBreath++;
         animateBreath();
       }, BREATH_DURATION);
     }, BREATH_DURATION);
   }
-  
+
   function showComplete() {
     // Clear any running timers
     if (timeoutRef) clearTimeout(timeoutRef);
-    
+
     // Replace content with completion message
     content.innerHTML = `
       <div class="flex-1 flex flex-col items-center justify-center p-6">
@@ -721,10 +720,10 @@ function createFocusClarityMeditationPopup(type) {
         </div>
       </div>
     `;
-    
+
     // Create confetti effect
     createConfetti();
-    
+
     // Set up buttons
     document.getElementById('popup-fc-restart-button').addEventListener('click', () => {
       closePopupMeditation();
@@ -732,15 +731,15 @@ function createFocusClarityMeditationPopup(type) {
         createFocusClarityMeditationPopup(type);
       }, 400);
     });
-    
+
     document.getElementById('popup-fc-close-button').addEventListener('click', () => {
       closePopupMeditation();
     });
   }
-  
+
   // Start meditation
   startMeditation();
-  
+
   return overlay;
 }
 
@@ -749,31 +748,31 @@ function createCompassionMeditationPopup(intensity) {
   // Create overlay
   const overlay = document.createElement('div');
   overlay.className = 'popup-meditation-overlay';
-  
+
   // Create container
   const container = document.createElement('div');
   container.className = 'popup-meditation-container';
-  
+
   // Create header
   const header = document.createElement('div');
   header.className = 'popup-meditation-header';
-  
+
   const title = document.createElement('h3');
   title.className = 'text-lg font-medium text-slate-800';
   title.textContent = 'Grow Compassion';
-  
+
   const closeButton = document.createElement('button');
   closeButton.className = 'popup-meditation-close';
   closeButton.innerHTML = '<i class="ph ph-x"></i>';
   closeButton.onclick = closePopupMeditation;
-  
+
   header.appendChild(title);
   header.appendChild(closeButton);
-  
+
   // Create content for the meditation
   const content = document.createElement('div');
   content.className = 'popup-meditation-content';
-  
+
   // Define breath patterns based on selection
   const briefBreaths = [
     // 1. Two sighs (2 breaths)
@@ -814,7 +813,7 @@ function createCompassionMeditationPopup(intensity) {
       exhale: "It's important to be kind to eachother"
     }
   ];
-  
+
   // 2 minutes = 12 breaths total
   const fullBreaths = [
     // 1. Two sighs (2 breaths)
@@ -871,75 +870,75 @@ function createCompassionMeditationPopup(intensity) {
       exhale: "With each breath that I take"
     }
   ];
-  
+
   const breaths = intensity === 'brief' ? briefBreaths : fullBreaths;
   const totalBreaths = breaths.length;
   const BREATH_DURATION = 4000; // 4 seconds
-  
+
   // Create the screens
   const meditationDiv = document.createElement('div');
   meditationDiv.className = 'flex-1 flex flex-col items-center p-6';
-  
+
   const cycleCount = document.createElement('p');
   cycleCount.id = 'popup-compassion-cycle-count';
   cycleCount.className = 'text-xl text-slate-600 text-center mb-4';
-  
+
   const breatheText = document.createElement('p');
   breatheText.id = 'popup-compassion-breathe-text';
   breatheText.className = 'text-base text-slate-600 mt-2 text-center mb-8';
-  
+
   const cubeContainer = document.createElement('div');
   cubeContainer.className = 'flex-1 flex items-center justify-center';
-  
+
   const cube = document.createElement('div');
   cube.id = 'popup-compassion-cube';
   cube.className = 'w-36 h-36 rounded-3xl flex items-center justify-center shadow-xl bg-rose-50 text-center p-6';
-  
+
   const instruction = document.createElement('p');
   instruction.id = 'popup-compassion-instruction';
   instruction.className = 'text-xl font-medium text-slate-700';
-  
+
   cube.appendChild(instruction);
   cubeContainer.appendChild(cube);
-  
+
   meditationDiv.appendChild(cycleCount);
   meditationDiv.appendChild(breatheText);
   meditationDiv.appendChild(cubeContainer);
-  
+
   content.appendChild(meditationDiv);
-  
+
   // Append components
   container.appendChild(header);
   container.appendChild(content);
   overlay.appendChild(container);
   document.body.appendChild(overlay);
-  
+
   // Activate the popup with a slight delay for animation
   setTimeout(() => {
     overlay.classList.add('active');
   }, 10);
-  
+
   // Define meditation logic
   let currentBreath = 0;
   let phase = 'inhale';
   let timeoutRef;
-  
+
   // Start the meditation sequence
   function startMeditation() {
     updateCycleDisplay();
     animateBreath();
   }
-  
+
   function updateCycleDisplay() {
     cycleCount.textContent = `Breath ${currentBreath + 1} of ${totalBreaths}`;
   }
-  
+
   async function animateBreath() {
     if (currentBreath >= totalBreaths) {
       showComplete();
       return;
     }
-    
+
     // Inhale phase
     phase = 'inhale';
     breatheText.textContent = 'Inhale with the cube';
@@ -947,32 +946,32 @@ function createCompassionMeditationPopup(intensity) {
     cube.className = 'w-36 h-36 rounded-3xl flex items-center justify-center shadow-xl bg-rose-100 text-center p-6';
     cube.style.transition = `all ${BREATH_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)`;
     cube.style.transform = 'scale(1.3)';
-    
+
     timeoutRef = setTimeout(() => {
       // Exhale phase
       phase = 'exhale';
       breatheText.textContent = 'Exhale with the cube';
       instruction.textContent = breaths[currentBreath].exhale;
-      
+
       // Add sigh instruction for first two breaths
       if (currentBreath < 2) {
         instruction.textContent += "\n(sigh out)";
       }
-      
+
       cube.className = 'w-36 h-36 rounded-3xl flex items-center justify-center shadow-xl bg-rose-50 text-center p-6';
       cube.style.transform = 'scale(1)';
-      
+
       timeoutRef = setTimeout(() => {
         currentBreath++;
         animateBreath();
       }, BREATH_DURATION);
     }, BREATH_DURATION);
   }
-  
+
   function showComplete() {
     // Clear any running timers
     if (timeoutRef) clearTimeout(timeoutRef);
-    
+
     // Replace content with completion message
     content.innerHTML = `
       <div class="flex-1 flex flex-col items-center justify-center p-6">
@@ -999,10 +998,10 @@ function createCompassionMeditationPopup(intensity) {
         </div>
       </div>
     `;
-    
+
     // Create confetti effect
     createConfetti();
-    
+
     // Set up buttons
     document.getElementById('popup-comp-restart-button').addEventListener('click', () => {
       closePopupMeditation();
@@ -1010,15 +1009,15 @@ function createCompassionMeditationPopup(intensity) {
         createCompassionMeditationPopup(intensity);
       }, 400);
     });
-    
+
     document.getElementById('popup-comp-close-button').addEventListener('click', () => {
       closePopupMeditation();
     });
   }
-  
+
   // Start meditation
   startMeditation();
-  
+
   return overlay;
 }
 
@@ -1027,88 +1026,88 @@ function createEnergyResetMeditationPopup(minutes) {
   // Create overlay
   const overlay = document.createElement('div');
   overlay.className = 'popup-meditation-overlay';
-  
+
   // Create container
   const container = document.createElement('div');
   container.className = 'popup-meditation-container';
-  
+
   // Create header
   const header = document.createElement('div');
   header.className = 'popup-meditation-header';
-  
+
   const title = document.createElement('h3');
   title.className = 'text-lg font-medium text-slate-800';
   title.textContent = 'Energy Reset';
-  
+
   const closeButton = document.createElement('button');
   closeButton.className = 'popup-meditation-close';
   closeButton.innerHTML = '<i class="ph ph-x"></i>';
   closeButton.onclick = closePopupMeditation;
-  
+
   header.appendChild(title);
   header.appendChild(closeButton);
-  
+
   // Create content for the meditation
   const content = document.createElement('div');
   content.className = 'popup-meditation-content';
-  
+
   // Create meditation screen
   const meditationDiv = document.createElement('div');
   meditationDiv.className = 'flex-1 flex flex-col items-center p-6';
-  
+
   const cycleCount = document.createElement('p');
   cycleCount.id = 'popup-energy-cycle-count';
   cycleCount.className = 'text-xl text-slate-600 text-center mb-4';
-  
+
   const breatheText = document.createElement('p');
   breatheText.id = 'popup-energy-breathe-text';
   breatheText.className = 'text-base text-slate-600 mt-2 text-center mb-8';
-  
+
   const cubeContainer = document.createElement('div');
   cubeContainer.className = 'flex-1 flex items-center justify-center';
-  
+
   const cube = document.createElement('div');
   cube.id = 'popup-energy-cube';
   cube.className = 'w-36 h-36 rounded-3xl flex flex-col items-center justify-center shadow-xl bg-green-50';
-  
+
   const instruction = document.createElement('p');
   instruction.id = 'popup-energy-instruction';
   instruction.className = 'text-xl font-medium text-slate-700 text-center w-full mb-2';
-  
+
   const timeSquares = document.createElement('div');
   timeSquares.className = 'time-squares';
-  
+
   cube.appendChild(instruction);
   cube.appendChild(timeSquares);
   cubeContainer.appendChild(cube);
-  
+
   meditationDiv.appendChild(cycleCount);
   meditationDiv.appendChild(breatheText);
   meditationDiv.appendChild(cubeContainer);
-  
+
   content.appendChild(meditationDiv);
-  
+
   // Append components
   container.appendChild(header);
   container.appendChild(content);
   overlay.appendChild(container);
   document.body.appendChild(overlay);
-  
+
   // Activate the popup with a slight delay for animation
   setTimeout(() => {
     overlay.classList.add('active');
   }, 10);
-  
+
   // Set up the meditation parameters
   const cyclesPerMinute = Math.floor(60 / 7.5);
   const totalCycles = Math.floor(minutes * cyclesPerMinute);
   let currentCycle = 1;
   let timeoutRef;
-  
+
   function updateCycleDisplay() {
     cycleCount.textContent = `Breath ${currentCycle} of ${totalCycles}`;
   }
-  
+
   function updateTimeSquares(count) {
     timeSquares.innerHTML = '';
     for (let i = 0; i < count; i++) {
@@ -1117,110 +1116,110 @@ function createEnergyResetMeditationPopup(minutes) {
       timeSquares.appendChild(square);
     }
   }
-  
+
   function updateActiveSquares(activeCount) {
     const squares = timeSquares.querySelectorAll('.time-square');
     squares.forEach((square) => square.classList.remove('empty'));
-    
+
     const totalSquares = squares.length;
     const emptyCount = totalSquares - activeCount;
-    
+
     for (let i = totalSquares - 1; i >= totalSquares - emptyCount; i--) {
       if (squares[i]) squares[i].classList.add('empty');
     }
   }
-  
+
   async function startBreathingCycle() {
     if (timeoutRef) clearTimeout(timeoutRef);
-    
+
     if (currentCycle > totalCycles) {
       showComplete();
       return;
     }
-    
+
     updateCycleDisplay();
-    
+
     // First inhale (4 seconds)
     breatheText.textContent = "Inhale as the cube expands";
     cube.className = 'w-36 h-36 rounded-3xl flex flex-col items-center justify-center shadow-xl bg-green-50';
     instruction.innerHTML = "Take a full<br>breath in";
     updateTimeSquares(4);
     updateActiveSquares(4);
-    
+
     cube.style.transition = 'all 4s cubic-bezier(0.4, 0, 0.2, 1)';
     cube.style.transform = 'scale(1.25)';
-    
+
     for (let i = 3; i >= 0; i--) {
       await new Promise(r => { timeoutRef = setTimeout(r, 1000); });
       updateActiveSquares(i);
     }
-    
+
     // Brief pause between inhales
     await new Promise(r => { timeoutRef = setTimeout(r, 500); });
-    
+
     // Second inhale (2 seconds)
     breatheText.textContent = "Inhale a bit more";
     cube.className = 'w-36 h-36 rounded-3xl flex flex-col items-center justify-center shadow-xl bg-yellow-100';
     instruction.innerHTML = "Now breathe in <br>some more air";
     updateTimeSquares(2);
     updateActiveSquares(2);
-    
+
     cube.style.transition = 'all 2s cubic-bezier(0.4, 0, 0.2, 1)';
     cube.style.transform = 'scale(1.5)';
-    
+
     for (let i = 1; i >= 0; i--) {
       await new Promise(r => { timeoutRef = setTimeout(r, 1000); });
       updateActiveSquares(i);
     }
-    
+
     // Hold (2 seconds)
     breatheText.textContent = "Hold your breath";
     cube.className = 'w-36 h-36 rounded-3xl flex flex-col items-center justify-center shadow-xl bg-yellow-100';
     instruction.innerHTML = "Hold your<br>breath";
     updateTimeSquares(2);
     updateActiveSquares(2);
-    
+
     for (let i = 1; i >= 0; i--) {
       await new Promise(r => { timeoutRef = setTimeout(r, 1000); });
       updateActiveSquares(i);
     }
-    
+
     // Exhale (3 seconds)
     breatheText.textContent = "Exhale as the cube shrinks";
     cube.className = 'w-36 h-36 rounded-3xl flex flex-col items-center justify-center shadow-xl bg-green-50';
     instruction.innerHTML = "Strong exhale!<br>Empty your lungs!";
     updateTimeSquares(3);
     updateActiveSquares(3);
-    
+
     cube.style.transition = 'all 3s cubic-bezier(0.4, 0, 0.2, 1)';
     cube.style.transform = 'scale(1)';
-    
+
     for (let i = 2; i >= 0; i--) {
       await new Promise(r => { timeoutRef = setTimeout(r, 1000); });
       updateActiveSquares(i);
     }
-    
+
     // Bottom hold (2 seconds)
     breatheText.textContent = "Brief hold";
     cube.className = 'w-36 h-36 rounded-3xl flex flex-col items-center justify-center shadow-xl bg-yellow-100';
     instruction.innerHTML = "Keep your<br>lungs empty";
     updateTimeSquares(2);
     updateActiveSquares(2);
-    
+
     for (let i = 1; i >= 0; i--) {
       await new Promise(r => { timeoutRef = setTimeout(r, 1000); });
       updateActiveSquares(i);
     }
-    
+
     // Move to next cycle
     currentCycle++;
     timeoutRef = setTimeout(startBreathingCycle, 500);
   }
-  
+
   function showComplete() {
     // Clear any running timers
     if (timeoutRef) clearTimeout(timeoutRef);
-    
+
     // Replace content with completion message
     content.innerHTML = `
       <div class="flex-1 flex flex-col items-center justify-center p-6">
@@ -1247,10 +1246,10 @@ function createEnergyResetMeditationPopup(minutes) {
         </div>
       </div>
     `;
-    
+
     // Create confetti effect
     createConfetti();
-    
+
     // Set up buttons
     document.getElementById('popup-energy-restart-button').addEventListener('click', () => {
       closePopupMeditation();
@@ -1258,15 +1257,15 @@ function createEnergyResetMeditationPopup(minutes) {
         createEnergyResetMeditationPopup(minutes);
       }, 400);
     });
-    
+
     document.getElementById('popup-energy-close-button').addEventListener('click', () => {
       closePopupMeditation();
     });
   }
-  
+
   // Start the sequence
   startBreathingCycle();
-  
+
   return overlay;
 }
 
@@ -1284,52 +1283,52 @@ function openMoodBlocksPopup() {
   if (!document.body.classList.contains('bar-mode-active')) {
     return false; // Only open popup in bar mode
   }
-  
+
   // Create overlay
   const overlay = document.createElement('div');
   overlay.className = 'popup-meditation-overlay';
-  
+
   // Create container
   const container = document.createElement('div');
   container.className = 'popup-meditation-container';
-  
+
   // Create header
   const header = document.createElement('div');
   header.className = 'popup-meditation-header';
-  
+
   const title = document.createElement('h3');
   title.className = 'text-lg font-medium text-slate-800';
   title.textContent = 'Mood Tracker';
-  
+
   const closeButton = document.createElement('button');
   closeButton.className = 'popup-meditation-close';
   closeButton.innerHTML = '<i class="ph ph-x"></i>';
   closeButton.onclick = closePopupMeditation;
-  
+
   header.appendChild(title);
   header.appendChild(closeButton);
-  
+
   // Create iframe to load the MoodBlocks content
   const content = document.createElement('div');
   content.className = 'popup-meditation-content';
-  
+
   const iframe = document.createElement('iframe');
   iframe.src = 'MoodBlocks.html';
   iframe.className = 'w-full h-full border-none';
-  
+
   content.appendChild(iframe);
-  
+
   // Append components
   container.appendChild(header);
   container.appendChild(content);
   overlay.appendChild(container);
   document.body.appendChild(overlay);
-  
+
   // Activate the popup with a slight delay for animation
   setTimeout(() => {
     overlay.classList.add('active');
   }, 10);
-  
+
   return true;
 }
 
@@ -1338,51 +1337,51 @@ function openRememberWhyPopup() {
   if (!document.body.classList.contains('bar-mode-active')) {
     return false; // Only open popup in bar mode
   }
-  
+
   // Create overlay
   const overlay = document.createElement('div');
   overlay.className = 'popup-meditation-overlay';
-  
+
   // Create container
   const container = document.createElement('div');
   container.className = 'popup-meditation-container';
-  
+
   // Create header
   const header = document.createElement('div');
   header.className = 'popup-meditation-header';
-  
+
   const title = document.createElement('h3');
   title.className = 'text-lg font-medium text-slate-800';
   title.textContent = 'Remember Your Why';
-  
+
   const closeButton = document.createElement('button');
   closeButton.className = 'popup-meditation-close';
   closeButton.innerHTML = '<i class="ph ph-x"></i>';
   closeButton.onclick = closePopupMeditation;
-  
+
   header.appendChild(title);
   header.appendChild(closeButton);
-  
+
   // Create iframe to load the Remember Your Why content
   const content = document.createElement('div');
   content.className = 'popup-meditation-content';
-  
+
   const iframe = document.createElement('iframe');
   iframe.src = 'rememberyourwhy.html';
   iframe.className = 'w-full h-full border-none';
-  
+
   content.appendChild(iframe);
-  
+
   // Append components
   container.appendChild(header);
   container.appendChild(content);
   overlay.appendChild(container);
   document.body.appendChild(overlay);
-  
+
   // Activate the popup with a slight delay for animation
   setTimeout(() => {
     overlay.classList.add('active');
   }, 10);
-  
+
   return true;
 }
