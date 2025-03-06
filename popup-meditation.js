@@ -699,13 +699,26 @@ function startFocusClarityMeditation(content, type) {
       return;
     }
 
-    // Inhale phase
+    // First ensure cube is small with no transition
+    cube.style.transition = 'none';
+    cube.style.transform = 'scale(1)';
+    
+    // Force a reflow to ensure small size is applied
+    cube.offsetHeight;
+    
+    // Inhale phase - setup appearance
     phase = 'inhale';
     breatheText.textContent = 'Inhale with the cube';
     instruction.textContent = breaths[currentBreath].inhale;
     cube.className = 'w-36 h-36 rounded-xl flex items-center justify-center shadow-xl bg-emerald-100 text-center p-6';
+    
+    // Set up transition property
     cube.style.transition = `all ${BREATH_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)`;
-    cube.style.transform = 'scale(1.3)';
+    
+    // Use timeout to ensure browser registers initial state before animating
+    setTimeout(() => {
+      cube.style.transform = 'scale(1.3)';
+    }, 50);
 
     timeoutRef = setTimeout(() => {
       // Exhale phase
@@ -1008,13 +1021,26 @@ function startCompassionMeditation(content, intensity) {
       return;
     }
 
-    // Inhale phase
+    // First reset cube to small size with no transition
+    cube.style.transition = 'none';
+    cube.style.transform = 'scale(1)';
+    
+    // Force a reflow to ensure small size is applied
+    cube.offsetHeight;
+    
+    // Inhale phase - setup appearance
     phase = 'inhale';
     breatheText.textContent = 'Inhale with the cube';
     instruction.textContent = breaths[currentBreath].inhale;
     cube.className = 'w-36 h-36 rounded-3xl flex items-center justify-center shadow-xl bg-rose-100 text-center p-6';
+    
+    // Set up transition property
     cube.style.transition = `all ${BREATH_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)`;
-    cube.style.transform = 'scale(1.3)';
+    
+    // Use timeout to ensure browser registers initial state before animating
+    setTimeout(() => {
+      cube.style.transform = 'scale(1.3)';
+    }, 50);
 
     timeoutRef = setTimeout(() => {
       // Exhale phase
@@ -1243,6 +1269,13 @@ function startEnergyResetMeditation(content, minutes) {
 
     updateCycleDisplay();
 
+    // Reset the cube state first without transition
+    cube.style.transition = 'none';
+    cube.style.transform = 'scale(1)';
+    
+    // Force a reflow to ensure the browser applies this state immediately
+    cube.offsetHeight;
+    
     // First inhale (4 seconds)
     breatheText.textContent = "Inhale as the cube expands";
     cube.className = 'w-36 h-36 rounded-3xl flex flex-col items-center justify-center shadow-xl bg-green-50';
@@ -1250,8 +1283,13 @@ function startEnergyResetMeditation(content, minutes) {
     updateTimeSquares(4);
     updateActiveSquares(4);
 
+    // Now set the transition and start the expansion after a small delay
     cube.style.transition = 'all 4s cubic-bezier(0.4, 0, 0.2, 1)';
-    cube.style.transform = 'scale(1.25)';
+    
+    // Use a small timeout to ensure the browser registers the initial state
+    setTimeout(() => {
+      cube.style.transform = 'scale(1.25)';
+    }, 50);
 
     for (let i = 3; i >= 0; i--) {
       await new Promise(r => { timeoutRef = setTimeout(r, 1000); });
