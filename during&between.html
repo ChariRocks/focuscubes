@@ -528,14 +528,12 @@
             toggleViewMode.classList.add('hidden');
             document.body.classList.add('bar-mode-active');
 
-            // Show the appropriate buttons based on current screen
-            updateBarModeButtons();
+            // Hide the main app content when in bar mode
+            homeScreen.classList.add('hidden');
+            meditationScreen.classList.add('hidden');
 
-            // Make sure buttons are visible
-            const barModeButtons = document.querySelectorAll('.bar-mode-button');
-            barModeButtons.forEach(button => {
-                button.style.display = 'block';
-            });
+            // Update bar mode buttons if in bar mode
+            updateBarModeButtons();
 
             // Save preference
             localStorage.setItem('viewMode', 'bar');
@@ -547,6 +545,8 @@
             barMode.classList.add('hidden');
             toggleViewMode.classList.remove('hidden');
             document.body.classList.remove('bar-mode-active');
+            homeScreen.classList.remove('hidden'); // Show home screen when exiting bar mode
+            meditationScreen.classList.remove('hidden'); // Show meditation screen when exiting bar mode
 
             // Save preference
             localStorage.setItem('viewMode', 'normal');
