@@ -16,11 +16,12 @@
       // Intercept clicks on special links to open popups in bar mode
       document.addEventListener('click', function(event) {
         if (document.body.classList.contains('bar-mode-active')) {
-          // Check if the clicked element is a link
+          // Check if the clicked element is a link or button
           let targetElement = event.target;
           
-          // Navigate up to find parent links if needed
+          // Navigate up to find parent links or buttons if needed
           while (targetElement != null && targetElement !== document) {
+            // Check for links (A tags)
             if (targetElement.tagName === 'A') {
               // Check the href of the link
               const href = targetElement.getAttribute('href');
@@ -47,6 +48,27 @@
                 event.preventDefault();
                 if (startPopupMeditationFromBarMode('energyReset')) {
                   return;
+                }
+              }
+              break;
+            }
+            // Check for buttons with onclick attributes
+            else if (targetElement.tagName === 'BUTTON') {
+              const onclickAttr = targetElement.getAttribute('onclick');
+              if (onclickAttr) {
+                // Check for MoodBlocks button
+                if (onclickAttr.includes('MoodBlocks.html') || onclickAttr.includes('goToMoodBlocks()')) {
+                  event.preventDefault();
+                  if (openMoodBlocksPopup()) {
+                    return;
+                  }
+                }
+                // Check for Remember Why button
+                else if (onclickAttr.includes('rememberyourwhy.html')) {
+                  event.preventDefault();
+                  if (openRememberWhyPopup()) {
+                    return;
+                  }
                 }
               }
               break;
@@ -143,10 +165,10 @@
                     <button class="bar-mode-button" id="energyResetBtn">
                         <i class="ph ph-lightning mr-2"></i> Energy Reset
                     </button>
-                    <button class="bar-mode-button" onclick="window.location.href='MoodBlocks.html'">
+                    <button class="bar-mode-button" id="moodBlocksBtn">
                         <i class="ph ph-heart-straight mr-2"></i> MoodBlocks
                     </button>
-                    <button class="bar-mode-button" onclick="window.location.href='rememberyourwhy.html'">
+                    <button class="bar-mode-button" id="rememberWhyBtn">
                         <i class="ph ph-question mr-2"></i> Remember Why
                     </button>
                 </div>
@@ -377,6 +399,8 @@
         document.getElementById('focusClarityBtn').addEventListener('click', handleFocusClarityButton);
         document.getElementById('compassionBtn').addEventListener('click', handleCompassionButton);
         document.getElementById('energyResetBtn').addEventListener('click', handleEnergyResetButton);
+        document.getElementById('moodBlocksBtn').addEventListener('click', handleMoodBlocksButton);
+        document.getElementById('rememberWhyBtn').addEventListener('click', handleRememberWhyButton);
         
         // Handler functions for meditation buttons in bar mode
         function handleDuringCallButton() {
@@ -400,6 +424,18 @@
         function handleEnergyResetButton() {
             if (!startPopupMeditationFromBarMode('energyReset')) {
                 window.location.href = 'DoubleBreathEnergyReset.html';
+            }
+        }
+        
+        function handleMoodBlocksButton() {
+            if (!openMoodBlocksPopup()) {
+                window.location.href = 'MoodBlocks.html';
+            }
+        }
+        
+        function handleRememberWhyButton() {
+            if (!openRememberWhyPopup()) {
+                window.location.href = 'rememberyourwhy.html';
             }
         }
 
