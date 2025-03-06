@@ -11,6 +11,51 @@
     <link href="bar-mode.css" rel="stylesheet">  <!-- Added link to bar-mode.css -->
     <link href="popup-meditation.css" rel="stylesheet">  <!-- Added link to popup-meditation.css -->
     <script src="popup-meditation.js"></script>  <!-- Added popup meditation JavaScript -->
+    
+    <script>
+      // Intercept clicks on special links to open popups in bar mode
+      document.addEventListener('click', function(event) {
+        if (document.body.classList.contains('bar-mode-active')) {
+          // Check if the clicked element is a link
+          let targetElement = event.target;
+          
+          // Navigate up to find parent links if needed
+          while (targetElement != null && targetElement !== document) {
+            if (targetElement.tagName === 'A') {
+              // Check the href of the link
+              const href = targetElement.getAttribute('href');
+              
+              if (href === 'MoodBlocks.html') {
+                event.preventDefault();
+                openMoodBlocksPopup();
+                return;
+              } else if (href === 'rememberyourwhy.html') {
+                event.preventDefault();
+                openRememberWhyPopup();
+                return;
+              } else if (href === 'focusandclarity.html') {
+                event.preventDefault();
+                if (startPopupMeditationFromBarMode('focusClarity')) {
+                  return;
+                }
+              } else if (href === 'compassion.html') {
+                event.preventDefault();
+                if (startPopupMeditationFromBarMode('compassion')) {
+                  return;
+                }
+              } else if (href === 'DoubleBreathEnergyReset.html') {
+                event.preventDefault();
+                if (startPopupMeditationFromBarMode('energyReset')) {
+                  return;
+                }
+              }
+              break;
+            }
+            targetElement = targetElement.parentElement;
+          }
+        }
+      }, false);
+    </script>
     <style>
         body { 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;

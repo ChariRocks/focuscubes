@@ -1278,3 +1278,111 @@ function startPopupMeditationFromBarMode(meditationType) {
   }
   return false;
 }
+
+// Function to open MoodBlocks in a popup window
+function openMoodBlocksPopup() {
+  if (!document.body.classList.contains('bar-mode-active')) {
+    return false; // Only open popup in bar mode
+  }
+  
+  // Create overlay
+  const overlay = document.createElement('div');
+  overlay.className = 'popup-meditation-overlay';
+  
+  // Create container
+  const container = document.createElement('div');
+  container.className = 'popup-meditation-container';
+  
+  // Create header
+  const header = document.createElement('div');
+  header.className = 'popup-meditation-header';
+  
+  const title = document.createElement('h3');
+  title.className = 'text-lg font-medium text-slate-800';
+  title.textContent = 'Mood Tracker';
+  
+  const closeButton = document.createElement('button');
+  closeButton.className = 'popup-meditation-close';
+  closeButton.innerHTML = '<i class="ph ph-x"></i>';
+  closeButton.onclick = closePopupMeditation;
+  
+  header.appendChild(title);
+  header.appendChild(closeButton);
+  
+  // Create iframe to load the MoodBlocks content
+  const content = document.createElement('div');
+  content.className = 'popup-meditation-content';
+  
+  const iframe = document.createElement('iframe');
+  iframe.src = 'MoodBlocks.html';
+  iframe.className = 'w-full h-full border-none';
+  
+  content.appendChild(iframe);
+  
+  // Append components
+  container.appendChild(header);
+  container.appendChild(content);
+  overlay.appendChild(container);
+  document.body.appendChild(overlay);
+  
+  // Activate the popup with a slight delay for animation
+  setTimeout(() => {
+    overlay.classList.add('active');
+  }, 10);
+  
+  return true;
+}
+
+// Function to open Remember Your Why in a popup window
+function openRememberWhyPopup() {
+  if (!document.body.classList.contains('bar-mode-active')) {
+    return false; // Only open popup in bar mode
+  }
+  
+  // Create overlay
+  const overlay = document.createElement('div');
+  overlay.className = 'popup-meditation-overlay';
+  
+  // Create container
+  const container = document.createElement('div');
+  container.className = 'popup-meditation-container';
+  
+  // Create header
+  const header = document.createElement('div');
+  header.className = 'popup-meditation-header';
+  
+  const title = document.createElement('h3');
+  title.className = 'text-lg font-medium text-slate-800';
+  title.textContent = 'Remember Your Why';
+  
+  const closeButton = document.createElement('button');
+  closeButton.className = 'popup-meditation-close';
+  closeButton.innerHTML = '<i class="ph ph-x"></i>';
+  closeButton.onclick = closePopupMeditation;
+  
+  header.appendChild(title);
+  header.appendChild(closeButton);
+  
+  // Create iframe to load the Remember Your Why content
+  const content = document.createElement('div');
+  content.className = 'popup-meditation-content';
+  
+  const iframe = document.createElement('iframe');
+  iframe.src = 'rememberyourwhy.html';
+  iframe.className = 'w-full h-full border-none';
+  
+  content.appendChild(iframe);
+  
+  // Append components
+  container.appendChild(header);
+  container.appendChild(content);
+  overlay.appendChild(container);
+  document.body.appendChild(overlay);
+  
+  // Activate the popup with a slight delay for animation
+  setTimeout(() => {
+    overlay.classList.add('active');
+  }, 10);
+  
+  return true;
+}
