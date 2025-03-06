@@ -500,7 +500,52 @@ function createFocusClarityMeditationPopup(type) {
   // Create content for the meditation
   const content = document.createElement('div');
   content.className = 'popup-meditation-content';
+  
+  // Create instruction screen first
+  const instructionScreen = document.createElement('div');
+  instructionScreen.className = 'flex-1 flex flex-col items-center justify-center p-6';
+  instructionScreen.innerHTML = `
+    <div class="text-center">
+      <p class="text-xl text-slate-800 mb-4">Find a comfortable position</p>
+      <p class="text-base text-slate-600">Follow the guided breathing practice</p>
+      <p class="text-lg text-slate-800 mt-8">Starting in <span id="popup-fc-instruction-count">3</span>...</p>
+    </div>
+  `;
+  
+  content.appendChild(instructionScreen);
+  
+  // Append components
+  container.appendChild(header);
+  container.appendChild(content);
+  overlay.appendChild(container);
+  document.body.appendChild(overlay);
+  
+  // Activate the popup with a slight delay for animation
+  setTimeout(() => {
+    overlay.classList.add('active');
+  }, 10);
+  
+  // Start the 3-second countdown
+  let timeLeft = 3;
+  const countdownElement = document.getElementById('popup-fc-instruction-count');
+  countdownElement.textContent = timeLeft;
+  
+  const countdown = setInterval(() => {
+    timeLeft--;
+    countdownElement.textContent = timeLeft;
+    
+    if (timeLeft <= 0) {
+      clearInterval(countdown);
+      // Replace instruction screen with meditation content
+      content.innerHTML = '';
+      startFocusClarityMeditation(content, type);
+    }
+  }, 1000);
+  
+  return overlay;
+}
 
+function startFocusClarityMeditation(content, type) {
   // Define breath patterns based on selection
   const bodyScanBreaths = [
     // Start with feet and legs
@@ -633,17 +678,6 @@ function createFocusClarityMeditationPopup(type) {
 
   content.appendChild(meditationDiv);
 
-  // Append components
-  container.appendChild(header);
-  container.appendChild(content);
-  overlay.appendChild(container);
-  document.body.appendChild(overlay);
-
-  // Activate the popup with a slight delay for animation
-  setTimeout(() => {
-    overlay.classList.add('active');
-  }, 10);
-
   // Define meditation logic
   let currentBreath = 0;
   let phase = 'inhale';
@@ -772,6 +806,52 @@ function createCompassionMeditationPopup(intensity) {
   // Create content for the meditation
   const content = document.createElement('div');
   content.className = 'popup-meditation-content';
+  
+  // Create instruction screen first
+  const instructionScreen = document.createElement('div');
+  instructionScreen.className = 'flex-1 flex flex-col items-center justify-center p-6';
+  instructionScreen.innerHTML = `
+    <div class="text-center">
+      <p class="text-xl text-slate-800 mb-4">Find a comfortable position</p>
+      <p class="text-base text-slate-600">Follow the compassion practice</p>
+      <p class="text-lg text-slate-800 mt-8">Starting in <span id="popup-comp-instruction-count">3</span>...</p>
+    </div>
+  `;
+  
+  content.appendChild(instructionScreen);
+  
+  // Append components
+  container.appendChild(header);
+  container.appendChild(content);
+  overlay.appendChild(container);
+  document.body.appendChild(overlay);
+  
+  // Activate the popup with a slight delay for animation
+  setTimeout(() => {
+    overlay.classList.add('active');
+  }, 10);
+  
+  // Start the 3-second countdown
+  let timeLeft = 3;
+  const countdownElement = document.getElementById('popup-comp-instruction-count');
+  countdownElement.textContent = timeLeft;
+  
+  const countdown = setInterval(() => {
+    timeLeft--;
+    countdownElement.textContent = timeLeft;
+    
+    if (timeLeft <= 0) {
+      clearInterval(countdown);
+      // Replace instruction screen with meditation content
+      content.innerHTML = '';
+      startCompassionMeditation(content, intensity);
+    }
+  }, 1000);
+  
+  return overlay;
+}
+
+function startCompassionMeditation(content, intensity) {
 
   // Define breath patterns based on selection
   const briefBreaths = [
@@ -907,17 +987,6 @@ function createCompassionMeditationPopup(intensity) {
 
   content.appendChild(meditationDiv);
 
-  // Append components
-  container.appendChild(header);
-  container.appendChild(content);
-  overlay.appendChild(container);
-  document.body.appendChild(overlay);
-
-  // Activate the popup with a slight delay for animation
-  setTimeout(() => {
-    overlay.classList.add('active');
-  }, 10);
-
   // Define meditation logic
   let currentBreath = 0;
   let phase = 'inhale';
@@ -1050,6 +1119,52 @@ function createEnergyResetMeditationPopup(minutes) {
   // Create content for the meditation
   const content = document.createElement('div');
   content.className = 'popup-meditation-content';
+  
+  // Create instruction screen first
+  const instructionScreen = document.createElement('div');
+  instructionScreen.className = 'flex-1 flex flex-col items-center justify-center p-6';
+  instructionScreen.innerHTML = `
+    <div class="text-center">
+      <p class="text-xl text-slate-800 mb-4">Find a comfortable position</p>
+      <p class="text-base text-slate-600">Follow the double-breath practice</p>
+      <p class="text-lg text-slate-800 mt-8">Starting in <span id="popup-energy-instruction-count">3</span>...</p>
+    </div>
+  `;
+  
+  content.appendChild(instructionScreen);
+  
+  // Append components
+  container.appendChild(header);
+  container.appendChild(content);
+  overlay.appendChild(container);
+  document.body.appendChild(overlay);
+  
+  // Activate the popup with a slight delay for animation
+  setTimeout(() => {
+    overlay.classList.add('active');
+  }, 10);
+  
+  // Start the 3-second countdown
+  let timeLeft = 3;
+  const countdownElement = document.getElementById('popup-energy-instruction-count');
+  countdownElement.textContent = timeLeft;
+  
+  const countdown = setInterval(() => {
+    timeLeft--;
+    countdownElement.textContent = timeLeft;
+    
+    if (timeLeft <= 0) {
+      clearInterval(countdown);
+      // Replace instruction screen with meditation content
+      content.innerHTML = '';
+      startEnergyResetMeditation(content, minutes);
+    }
+  }, 1000);
+  
+  return overlay;
+}
+
+function startEnergyResetMeditation(content, minutes) {
 
   // Create meditation screen
   const meditationDiv = document.createElement('div');
@@ -1086,17 +1201,6 @@ function createEnergyResetMeditationPopup(minutes) {
   meditationDiv.appendChild(cubeContainer);
 
   content.appendChild(meditationDiv);
-
-  // Append components
-  container.appendChild(header);
-  container.appendChild(content);
-  overlay.appendChild(container);
-  document.body.appendChild(overlay);
-
-  // Activate the popup with a slight delay for animation
-  setTimeout(() => {
-    overlay.classList.add('active');
-  }, 10);
 
   // Set up the meditation parameters
   const cyclesPerMinute = Math.floor(60 / 7.5);
