@@ -1,4 +1,3 @@
-
 .popup-meditation-overlay {
   position: fixed;
   top: 0;
@@ -93,15 +92,36 @@
 
 .popup-breathing-phase {
   justify-content: space-around;
+  padding: 1.5rem;
 }
 
 .popup-breathing-cube {
-  width: 150px;
-  height: 150px;
-  border-radius: 16px;
+  width: 140px;
+  height: 140px;
+  border-radius: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   transition: transform 4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+}
+
+/* Time squares styling */
+.time-squares {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.time-square {
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
+  background-color: #16a34a;
+  transition: background-color 0.2s ease;
+}
+
+.time-square.empty {
+  background-color: #e5e7eb;
 }
