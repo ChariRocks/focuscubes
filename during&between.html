@@ -396,15 +396,13 @@
         document.getElementById('startButton').addEventListener('click', startMeditation);
         toggleViewMode.addEventListener('click', toggleBarMode);
         
-        // Initialize bar mode if needed - only bind these events once
-        if (!document.body.classList.contains('bar-mode-active')) {
-            document.getElementById('duringCallBtn').addEventListener('click', handleDuringCallButton);
-            document.getElementById('focusClarityBtn').addEventListener('click', handleFocusClarityButton);
-            document.getElementById('compassionBtn').addEventListener('click', handleCompassionButton);
-            document.getElementById('energyResetBtn').addEventListener('click', handleEnergyResetButton);
-            document.getElementById('moodBlocksBtn').addEventListener('click', handleMoodBlocksButton);
-            document.getElementById('rememberWhyBtn').addEventListener('click', handleRememberWhyButton);
-        }
+        // Initialize event handlers for regular view (non-bar mode)
+        document.getElementById('duringCallBtn').addEventListener('click', handleDuringCallButton);
+        document.getElementById('focusClarityBtn').addEventListener('click', handleFocusClarityButton);
+        document.getElementById('compassionBtn').addEventListener('click', handleCompassionButton);
+        document.getElementById('energyResetBtn').addEventListener('click', handleEnergyResetButton);
+        document.getElementById('moodBlocksBtn').addEventListener('click', handleMoodBlocksButton);
+        document.getElementById('rememberWhyBtn').addEventListener('click', handleRememberWhyButton);
 
         // Handler functions for meditation buttons in bar mode
         function handleDuringCallButton() {
@@ -696,52 +694,65 @@
     <script src="popup-meditation.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        // Apply direct click handlers when the page loads
+        window.addEventListener('load', function() {
+            console.log("Setting up button handlers");
+            
             const duringCallBtn = document.getElementById('duringCallBtn');
             const focusClarityBtn = document.getElementById('focusClarityBtn');
             const compassionBtn = document.getElementById('compassionBtn');
             const energyResetBtn = document.getElementById('energyResetBtn');
             const moodBlocksBtn = document.getElementById('moodBlocksBtn');
             const rememberWhyBtn = document.getElementById('rememberWhyBtn');
-
-            // Remove the previously added event listeners
-            duringCallBtn.removeEventListener('click', handleDuringCallButton);
-            focusClarityBtn.removeEventListener('click', handleFocusClarityButton);
-            compassionBtn.removeEventListener('click', handleCompassionButton);
-            energyResetBtn.removeEventListener('click', handleEnergyResetButton);
-            moodBlocksBtn.removeEventListener('click', handleMoodBlocksButton);
-            rememberWhyBtn.removeEventListener('click', handleRememberWhyButton);
-
-            // Create direct click handlers without setting onclick attributes
-            duringCallBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                createPopupMeditationWindow('duringCall');
-            });
-
-            focusClarityBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                createPopupMeditationWindow('focusClarity');
-            });
-
-            compassionBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                createPopupMeditationWindow('compassion');
-            });
-
-            energyResetBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                createPopupMeditationWindow('energyReset');
-            });
-
-            moodBlocksBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                openMoodBlocksPopup();
-            });
-
-            rememberWhyBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                openRememberWhyPopup();
-            });
+            
+            // Set up direct click handlers using onclick properties
+            if (duringCallBtn) {
+                duringCallBtn.onclick = function(e) {
+                    console.log("During Call button clicked");
+                    e.preventDefault();
+                    createPopupMeditationWindow('duringCall');
+                };
+            }
+            
+            if (focusClarityBtn) {
+                focusClarityBtn.onclick = function(e) {
+                    console.log("Focus & Clarity button clicked");
+                    e.preventDefault();
+                    createPopupMeditationWindow('focusClarity');
+                };
+            }
+            
+            if (compassionBtn) {
+                compassionBtn.onclick = function(e) {
+                    console.log("Compassion button clicked");
+                    e.preventDefault();
+                    createPopupMeditationWindow('compassion');
+                };
+            }
+            
+            if (energyResetBtn) {
+                energyResetBtn.onclick = function(e) {
+                    console.log("Energy Reset button clicked");
+                    e.preventDefault();
+                    createPopupMeditationWindow('energyReset');
+                };
+            }
+            
+            if (moodBlocksBtn) {
+                moodBlocksBtn.onclick = function(e) {
+                    console.log("MoodBlocks button clicked");
+                    e.preventDefault();
+                    openMoodBlocksPopup();
+                };
+            }
+            
+            if (rememberWhyBtn) {
+                rememberWhyBtn.onclick = function(e) {
+                    console.log("Remember Why button clicked");
+                    e.preventDefault();
+                    openRememberWhyPopup();
+                };
+            }
         });
     </script>
 </body>

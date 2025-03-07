@@ -1426,6 +1426,7 @@ function startEnergyResetMeditation(content, minutes) {
 // Function to start meditation in popup from bar mode
 function startPopupMeditationFromBarMode(meditationType) {
   if (document.body.classList.contains('bar-mode-active')) {
+    console.log("Creating popup meditation window for:", meditationType);
     createPopupMeditationWindow(meditationType);
     return true;
   }
