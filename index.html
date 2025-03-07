@@ -72,6 +72,18 @@
         </div>
         
         <div id="options-screen" class="hidden w-full">
+            <div class="flex justify-between items-center mb-4">
+                <button onclick="goBack()" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m15 18-6-6 6-6"/>
+                    </svg>
+                </button>
+                <button onclick="closePage()" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                    </svg>
+                </button>
+            </div>
             <div class="space-y-6 w-full">
                 <a href="during&between.html" class="block">
                     <div class="card bg-white rounded-xl p-6 w-full">
@@ -106,6 +118,21 @@
                 document.getElementById('options-screen').classList.remove('hidden');
             }
         });
+
+        function goBack() {
+            // If we came from the #path URL, show login screen
+            document.getElementById('options-screen').classList.add('hidden');
+            document.getElementById('login-screen').classList.remove('hidden');
+            // Remove the hash from the URL
+            history.pushState("", document.title, window.location.pathname);
+        }
+
+        function closePage() {
+            // For web apps, this would typically close the app or navigate to a parent page
+            // Since we can't actually close the browser tab programmatically for security reasons,
+            // we'll just go back to the login screen
+            goBack();
+        }
     </script>
 </body>
 </html>
