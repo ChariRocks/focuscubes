@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Remember Your Why</title>
+    <link href="css/styles.css" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100vh;
+            margin: 0;
+            background: #f8faf9;
+            -webkit-overflow-scrolling: touch;
+        }
+        .container {
+            max-width: 430px;
+            margin: 0 auto;
+            min-height: 100%;
+            background: #f8faf9;
+        }
+        textarea {
+            color: #6B7280;
+        }
+        textarea::placeholder {
+            color: #9CA3AF;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="flex items-center justify-between p-4 bg-white">
+            <div class="flex items-center gap-3">
+                <button class="p-1" onclick="history.back()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </button>
+                <span class="text-lg font-medium">Remember Your Why</span>
+            </div>
+            <button class="p-1" onclick="history.back()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2"/>
+                </svg>
+            </button>
+        </div>
+
+        <div class="p-4 space-y-4">
+            <div class="flex justify-center">
+                <input type="file" accept="image/*" id="image-upload" class="hidden">
+                <label for="image-upload" 
+                    class="inline-flex items-center px-4 py-2 bg-white rounded-lg text-sm text-gray-600 gap-2 shadow-sm">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                    </svg>
+                    Upload Inspirational Photo
+                </label>
+            </div>
+
+            <div id="image-preview" class="hidden w-full aspect-video rounded-lg overflow-hidden">
+                <img id="preview-img" class="w-full h-full object-cover">
+            </div>
+
+            <div class="rounded-xl overflow-hidden bg-white">
+                <div class="bg-emerald-100 px-4 py-3">
+                    <h2 class="text-lg font-medium text-emerald-800">My Greater Purpose</h2>
+                </div>
+                <div class="p-4">
+                    <textarea 
+                        class="w-full min-h-[100px] p-3 bg-gray-50 rounded-lg resize-none border-0 focus:ring-1 focus:ring-emerald-200"
+                        placeholder="What drives you to grow? What kind of life are you creating for yourself and loved ones? What lasting impact do you want to have in your role and beyond?"></textarea>
+                </div>
+            </div>
+
+            <div class="rounded-xl overflow-hidden bg-white">
+                <div class="bg-amber-50 px-4 py-3">
+                    <h2 class="text-lg font-medium text-amber-800">Ripple Effect</h2>
+                </div>
+                <div class="p-4">
+                    <textarea 
+                        class="w-full min-h-[100px] p-3 bg-gray-50 rounded-lg resize-none border-0 focus:ring-1 focus:ring-amber-200"
+                        placeholder="How does being your best self ripple out to your family, work, and community? What possibilities do you create for them?"></textarea>
+                </div>
+            </div>
+
+            <div class="rounded-xl overflow-hidden bg-white">
+                <div class="bg-lime-50 px-4 py-3">
+                    <h2 class="text-lg font-medium text-lime-800">Daily Reminders & Practices</h2>
+                </div>
+                <div class="p-4">
+                    <textarea 
+                        class="w-full min-h-[100px] p-3 bg-gray-50 rounded-lg resize-none border-0 focus:ring-1 focus:ring-lime-200"
+                        placeholder="What core principles, vaules, practices guide your decisions in moments of challenge? What helps you stay connected to your larger mission?"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('image-upload').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onloadend = function() {
+                    const previewDiv = document.getElementById('image-preview');
+                    const previewImg = document.getElementById('preview-img');
+                    previewDiv.classList.remove('hidden');
+                    previewImg.src = reader.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>

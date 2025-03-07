@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus Cubes</title>
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@radix-ui/themes@2.0.0/styles.css" rel="stylesheet" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+
+        .card-hover {
+            transition: all 0.2s ease-in-out;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="min-h-screen p-8">
+    <div class="w-full max-w-2xl mx-auto">
+        <!-- Main Card -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <!-- Header -->
+            <div class="px-6 py-4 flex justify-between items-center border-b border-gray-100 bg-white/80 backdrop-blur-sm">
+                <a href="during&between.html#path">
+                    <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m15 18-6-6 6-6"/>
+                        </svg>
+                    </button>
+                </a>
+                <h1 class="text-xl font-medium text-gray-800">Focus Cubes</h1>
+                <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Content -->
+            <div class="p-6 space-y-6">
+                <!-- Reset & Release Section -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3 mb-4">
+                        <svg class="h-6 w-6 text-rose-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                        </svg>
+                        <h2 class="text-xl font-medium text-gray-800">Reset & Release</h2>
+                    </div>
+                    <div class="space-y-4">
+                        <!-- Gentle Reset -->
+                        <a href="between1gentlereset.html" class="block">
+                            <div class="p-6 bg-gradient-to-br from-green-50 to-blue-50 hover:from-green-100 hover:to-blue-100 
+                                        rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer border border-green-100 card-hover">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="text-lg font-medium text-gray-800">Gentle Reset</h3>
+                                    <span class="text-sm text-gray-600">120 sec</span>
+                                </div>
+                                <p class="text-gray-600">Release tension and find calm</p>
+                            </div>
+                        </a>
+                        <!-- Compassion Break -->
+                        <a href="between2compassionbreak.html" class="block">
+                            <div class="p-6 bg-gradient-to-br from-green-50 to-blue-50 hover:from-green-100 hover:to-blue-100 
+                                        rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer border border-green-100 card-hover">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="text-lg font-medium text-gray-800">Compassion Break</h3>
+                                    <span class="text-sm text-gray-600">90 sec</span>
+                                </div>
+                                <p class="text-gray-600">Cultivate kindness for yourself and others</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Mind Clear Section -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3 mb-4">
+                        <svg class="h-6 w-6 text-blue-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+                        </svg>
+                        <h2 class="text-xl font-medium text-gray-800">Mind Clear</h2>
+                    </div>
+                    <div class="space-y-4">
+                        <!-- Present Moment Reset -->
+                        <a href="between3presentmomentreset.html" class="block">
+                            <div class="p-6 bg-gradient-to-br from-green-50 to-blue-50 hover:from-green-100 hover:to-blue-100 
+                                        rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer border border-green-100 card-hover">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="text-lg font-medium text-gray-800">Present Moment Reset</h3>
+                                    <span class="text-sm text-gray-600">90 sec</span>
+                                </div>
+                                <p class="text-gray-600">Ground yourself in the here and now</p>
+                            </div>
+                        </a>
+                        <!-- Gratitude Break -->
+                        <a href="between4gratitudebreak.html" class="block">
+                            <div class="p-6 bg-gradient-to-br from-green-50 to-blue-50 hover:from-green-100 hover:to-blue-100 
+                                        rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer border border-green-100 card-hover">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="text-lg font-medium text-gray-800">Gratitude Break</h3>
+                                    <span class="text-sm text-gray-600">90 sec</span>
+                                </div>
+                                <p class="text-gray-600">Find appreciation in your day</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Power Up Section -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3 mb-4">
+                        <svg class="h-6 w-6 text-yellow-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+                            <path d="M5 3v4"/>
+                            <path d="M19 17v4"/>
+                            <path d="M3 5h4"/>
+                            <path d="M17 19h4"/>
+                        </svg>
+                        <h2 class="text-xl font-medium text-gray-800">Power Up</h2>
+                    </div>
+                    <div class="space-y-4">
+                        <!-- Energy Boost -->
+                        <a href="between5energyboost.html" class="block">
+                            <div class="p-6 bg-gradient-to-br from-green-50 to-blue-50 hover:from-green-100 hover:to-blue-100 
+                                        rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer border border-green-100 card-hover">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="text-lg font-medium text-gray-800">Energy Boost</h3>
+                                    <span class="text-sm text-gray-600">90 sec</span>
+                                </div>
+                                <p class="text-gray-600">Revitalize your body and mind</p>
+                            </div>
+                        </a>
+                        <!-- Quick Revive -->
+                        <a href="between6quickrevive.html" class="block">
+                            <div class="p-6 bg-gradient-to-br from-green-50 to-blue-50 hover:from-green-100 hover:to-blue-100 
+                                        rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer border border-green-100 card-hover">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="text-lg font-medium text-gray-800">Quick Revive</h3>
+                                    <span class="text-sm text-gray-600">90 sec</span>
+                                </div>
+                                <p class="text-gray-600">Awaken your energy through movement</p>
+                            </div>
+                        </a>
+                        <!-- Mindful Movement -->
+                        <a href="between7mindfulmovement.html" class="block">
+                            <div class="p-6 bg-gradient-to-br from-green-50 to-blue-50 hover:from-green-100 hover:to-blue-100 
+                                        rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer border border-green-100 card-hover">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="text-lg font-medium text-gray-800">Mindful Movement</h3>
+                                    <span class="text-sm text-gray-600">90 sec</span>
+                                </div>
+                                <p class="text-gray-600">Energize with gentle, flowing movement</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

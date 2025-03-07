@@ -21,8 +21,12 @@ to = "/index.html"
 localPort = 3000
 externalPort = 80
 
+[[ports]]
+localPort = 3001
+externalPort = 3001
+
 [workflows]
-runButton = "Start Server"
+runButton = "Dev Server"
 
 [[workflows.workflow]]
 name = "Run"
@@ -39,3 +43,11 @@ author = 39624637
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "node server.js"
+
+[[workflows.workflow]]
+name = "Dev Server"
+author = 39624637
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run dev"

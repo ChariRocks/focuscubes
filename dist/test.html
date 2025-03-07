@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meditation Quick Reset</title>
+    
+    <!-- Dependencies -->
+    <link href="css/styles.css" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        .breathe-animation {
+            transition: all 4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .meditation-screen {
+            transition: background-image 0.5s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        #breathingCube {
+            transform-origin: center;
+            transition: transform 4s ease-in-out, background-color 0.3s ease;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-b from-green-50 to-white min-h-screen">
+    <main class="max-w-md mx-auto min-h-screen relative">
+        <!-- Home Screen -->
+        <div id="homeScreen" class="p-6 min-h-screen flex flex-col">
+            <nav class="flex justify-between items-center">
+                <i class="ph ph-arrow-left text-2xl text-slate-600"></i>
+                <i class="ph ph-x text-2xl text-slate-600"></i>
+            </nav>
+
+            <div class="flex-1 flex flex-col mt-6">
+                <div class="w-12 h-12 bg-green-600 rounded-xl mb-6"></div>
+                
+                <h1 class="text-3xl font-light text-slate-800 mb-8">
+                    Welcome to your moment of calm
+                </h1>
+
+                <button 
+                    id="startButton"
+                    class="w-full bg-green-600 text-white rounded-2xl p-6 mb-8 hover:bg-green-700 transition-colors"
+                >
+                    <div class="flex items-center justify-between">
+                        <div class="text-left">
+                            <h2 class="text-xl font-light mb-1">During Call</h2>
+                            <p class="text-sm opacity-90">Find your calm in this moment</p>
+                        </div>
+                        <i class="ph ph-phone text-2xl opacity-75"></i>
+                    </div>
+                </button>
+
+                <div class="space-y-4">
+                    <button class="w-full bg-white rounded-xl p-5 border border-slate-100 hover:bg-slate-50 transition-colors">
+                        <div class="flex items-center justify-between">
+                            <div class="text-left">
+                                <h3 class="text-lg font-light text-slate-800">Reset & Release</h3>
+                                <p class="text-sm text-slate-500">Let go and move forward</p>
+                            </div>
+                            <i class="ph ph-battery-charging text-xl text-green-600"></i>
+                        </div>
+                    </button>
+
+                    <button class="w-full bg-white rounded-xl p-5 border border-slate-100 hover:bg-slate-50 transition-colors">
+                        <div class="flex items-center justify-between">
+                            <div class="text-left">
+                                <h3 class="text-lg font-light text-slate-800">Mind Clear</h3>
+                                <p class="text-sm text-slate-500">Sharpen your focus</p>
+                            </div>
+                            <i class="ph ph-brain text-xl text-green-600"></i>
+                        </div>
+                    </button>
+
+                    <button class="w-full bg-white rounded-xl p-5 border border-slate-100 hover:bg-slate-50 transition-colors">
+                        <div class="flex items-center justify-between">
+                            <div class="text-left">
+                                <h3 class="text-lg font-light text-slate-800">Power Up</h3>
+                                <p class="text-sm text-slate-500">Boost your energy</p>
+                            </div>
+                            <i class="ph ph-sparkle text-xl text-green-600"></i>
+                        </div>
+                    </button>
+                </div>
+
+                <p class="text-center text-slate-400 text-sm font-light mt-auto pt-8">
+                    12 teammates found their reset today
+                </p>
+            </div>
+        </div>
+
+        <!-- Meditation Screen -->
+        <div id="meditationScreen" class="hidden min-h-screen flex flex-col meditation-screen">
+            <nav class="flex justify-between items-center p-6">
+                <i class="ph ph-arrow-left text-2xl text-slate-600 cursor-pointer" onclick="showHomeScreen()"></i>
+                <h2 class="text-xl font-light text-slate-800">Quick Reset</h2>
+                <i class="ph ph-x text-2xl text-slate-600 cursor-pointer" onclick="showHomeScreen()"></i>
+            </nav>
+
+            <!-- Instructions -->
+            <div id="instructionPhase" class="flex-1 flex items-center justify-center p-6">
+                <div class="text-center">
+                    <p class="text-xl text-slate-800 mb-4">Find a comfortable position</p>
+                    <p class="text-base text-slate-600">Follow the cube's rhythm for breathing</p>
+                    <p class="text-lg text-slate-800 mt-8">Starting in <span id="instructionCount">3</span>...</p>
+                </div>
+            </div>
+
+            <!-- Breathing Exercise -->
+            <div id="breathingPhase" class="hidden flex-1 flex flex-col items-center justify-center p-6">
+                <p class="text-base text-slate-600 mb-4">Cycle <span id="cycleCount">1</span> of 3</p>
+                <p id="breathingText" class="text-lg text-slate-600 mb-12">Breathe in...</p>
+                <div id="breathingCube" class="w-48 h-48 rounded-xl flex items-center justify-center shadow-lg bg-green-100">
+                    <span id="timer" class="text-4xl font-light text-slate-800">4</span>
+                </div>
+            </div>
+
+            <!-- Complete Screen -->
+            <div id="completePhase" class="hidden flex-1 flex flex-col items-center justify-center p-6">
+                <div class="text-center">
+                    <h2 class="text-2xl font-light text-slate-800 mb-6">Well done!</h2>
+                    
+                    <div class="flex gap-3 mb-8">
+                        <button
+                            onclick="restartBreathing()"
+                            class="px-6 py-3 rounded-xl font-light border-2 border-green-600 text-green-700 hover:bg-green-50 transition-colors flex items-center gap-2"
+                        >
+                            <i class="ph ph-arrows-clockwise"></i>
+                            Another Reset
+                        </button>
+                        <button
+                            onclick="showHomeScreen()"
+                            class="px-6 py-3 rounded-xl font-light bg-green-600 text-white hover:bg-green-700 transition-colors"
+                        >
+                            Feel Better
+                        </button>
+                    </div>
+
+                    <div class="inline-block">
+                        <label class="flex flex-col items-center gap-2 text-sm text-slate-600 cursor-pointer hover:text-green-600 transition-colors p-4 border-2 border-dashed border-slate-200 rounded-xl hover:border-green-400">
+                            <i class="ph ph-image-plus text-xl"></i>
+                            <span id="uploadText">Add a calming background</span>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                id="imageUpload"
+                                class="hidden"
+                                onchange="handleImageUpload(event)"
+                            >
+                        </label>
+
+                        <button
+                            id="removeBackground"
+                            onclick="removeBackground()"
+                            class="hidden mt-3 text-sm text-red-500 hover:text-red-600 transition-colors"
+                        >
+                            <i class="ph ph-trash"></i>
+                            Remove background
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // App State
+        let currentPhase = 'instruction';
+        let currentCycle = 1;
+        let timeLeft = 3;
+        let breathingInterval;
+        let backgroundImage = null;
+
+        // DOM Elements
+        const homeScreen = document.getElementById('homeScreen');
+        const meditationScreen = document.getElementById('meditationScreen');
+        const instructionPhase = document.getElementById('instructionPhase');
+        const breathingPhase = document.getElementById('breathingPhase');
+        const completePhase = document.getElementById('completePhase');
+        
+        // Event Listeners
+        document.getElementById('startButton').addEventListener('click', startMeditation);
+
+        function startMeditation() {
+            homeScreen.classList.add('hidden');
+            meditationScreen.classList.remove('hidden');
+            startInstructionPhase();
+        }
+
+        function startInstructionPhase() {
+            instructionPhase.classList.remove('hidden');
+            breathingPhase.classList.add('hidden');
+            completePhase.classList.add('hidden');
+            
+            timeLeft = 3;
+            currentPhase = 'instruction';
+            
+            const countdown = setInterval(() => {
+                document.getElementById('instructionCount').textContent = timeLeft;
+                timeLeft--;
+                if (timeLeft < 0) {
+                    clearInterval(countdown);
+                    startBreathingPhase();
+                }
+            }, 1000);
+        }
+
+        function startBreathingPhase() {
+            instructionPhase.classList.add('hidden');
+            breathingPhase.classList.remove('hidden');
+            
+            currentCycle = 1;
+            currentPhase = 'inhale';
+            timeLeft = 4;
+            
+            updateBreathingUI();
+            breathingInterval = setInterval(updateBreathing, 1000);
+        }
+
+        function updateBreathing() {
+            timeLeft--;
+            if (timeLeft <= 0) {
+                switch(currentPhase) {
+                    case 'inhale':
+                        currentPhase = 'hold1';
+                        timeLeft = 4;
+                        break;
+                    case 'hold1':
+                        currentPhase = 'exhale';
+                        timeLeft = 4;
+                        break;
+                    case 'exhale':
+                        currentPhase = 'hold2';
+                        timeLeft = 4;
+                        break;
+                    case 'hold2':
+                        if (currentCycle < 3) {
+                            currentCycle++;
+                            currentPhase = 'inhale';
+                            timeLeft = 4;
+                        } else {
+                            clearInterval(breathingInterval);
+                            showCompletePhase();
+                            return;
+                        }
+                        break;
+                }
+            }
+            updateBreathingUI();
+        }
+
+        function updateBreathingUI() {
+            const cube = document.getElementById('breathingCube');
+            const timer = document.getElementById('timer');
+            const breathingText = document.getElementById('breathingText');
+            document.getElementById('cycleCount').textContent = currentCycle;
+
+            timer.textContent = timeLeft;
+            
+            breathingText.textContent = 
+                currentPhase === 'inhale' ? 'Breathe in...' :
+                currentPhase === 'hold1' || currentPhase === 'hold2' ? 'Hold...' :
+                'Breathe out...';
+
+            cube.style.transform = 
+                (currentPhase === 'inhale' || currentPhase === 'hold1') ? 'scale(1.5)' : 'scale(1)';
+            
+            cube.className = `w-48 h-48 rounded-xl flex items-center justify-center shadow-lg ${
+                currentPhase === 'hold1' || currentPhase === 'hold2' ? 'bg-yellow-50' : 'bg-green-100'
+            }`;
+        }
+
+        function showCompletePhase() {
+            breathingPhase.classList.add('hidden');
+            completePhase.classList.remove('hidden');
+        }
+
+        function restartBreathing() {
+            completePhase.classList.add('hidden');
+            startInstructionPhase();
+        }
+
+        function showHomeScreen() {
+            if (breathingInterval) {
+                clearInterval(breathingInterval);
+            }
+            meditationScreen.classList.add('hidden');
+            breathingPhase.classList.add('hidden');
+            completePhase.classList.add('hidden');
+            instructionPhase.classList.remove('hidden');
+            homeScreen.classList.remove('hidden');
+        }
+
+        // Background Image Handling
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    backgroundImage = e.target.result;
+                    applyBackground();
+                    document.getElementById('uploadText').textContent = 'Change background';
+                    document.getElementById('removeBackground').classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function applyBackground() {
+            if (backgroundImage) {
+                meditationScreen.style.backgroundImage = `
+                    linear-gradient(to bottom, 
+                        rgba(240, 253, 244, 0.95), 
+                        rgba(255, 255, 255, 0.95)
+                    ),
+                    url(${backgroundImage})
+                `;
+            }
+        }
+
+        function removeBackground() {
+            backgroundImage = null;
+            meditationScreen.style.backgroundImage = '';
+            document.getElementById('uploadText').textContent = 'Add a calming background';
+            document.getElementById('removeBackground').classList.add('hidden');
+            document.getElementById('imageUpload').value = '';
+        }
+    </script>
+</body>
+</html>

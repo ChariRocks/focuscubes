@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus Cubes - Calm Exercises</title>
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .exercise-progress {
+            transition: width 1s linear;
+        }
+
+        .breathing-circle {
+            animation: breathe 4s infinite ease-in-out;
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .exercise-card {
+            transition: all 0.3s ease;
+        }
+
+        .exercise-card:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="p-6 max-w-4xl mx-auto">
+        <!-- Header with Back Button -->
+        <header class="flex items-center mb-8">
+            <button onclick="window.history.back()" class="mr-4 p-2 rounded-full hover:bg-gray-100">
+                <i class="fas fa-arrow-left text-gray-600"></i>
+            </button>
+            <div>
+                <h1 class="text-2xl font-bold text-gray-800">Calm Exercises</h1>
+                <p class="text-gray-600">Choose a 2-minute exercise to restore calm</p>
+            </div>
+        </header>
+
+        <!-- Exercise Cards -->
+        <div class="grid gap-6 mb-8">
+            <!-- Box Breathing Exercise -->
+            <div id="exercise1" class="exercise-card bg-white rounded-xl p-6 shadow-lg cursor-pointer" onclick="startExercise('boxBreathing')">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center space-x-4">
+                        <div class="p-3 rounded-xl bg-blue-100">
+                            <i class="fas fa-square text-blue-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-medium text-gray-800">Box Breathing</h3>
+                            <p class="text-gray-600">Square pattern breathing for instant calm</p>
+                        </div>
+                    </div>
+                    <span class="text-sm text-gray-500">2 min</span>
+                </div>
+            </div>
+
+            <!-- Cube Focus Exercise -->
+            <div id="exercise2" class="exercise-card bg-white rounded-xl p-6 shadow-lg cursor-pointer" onclick="startExercise('cubeFocus')">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center space-x-4">
+                        <div class="p-3 rounded-xl bg-green-100">
+                            <i class="fas fa-cube text-green-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-medium text-gray-800">Cube Focus</h3>
+                            <p class="text-gray-600">Visual focus exercise using your cube</p>
+                        </div>
+                    </div>
+                    <span class="text-sm text-gray-500">2 min</span>
+                </div>
+            </div>
+
+            <!-- Quick Reset Exercise -->
+            <div id="exercise3" class="exercise-card bg-white rounded-xl p-6 shadow-lg cursor-pointer" onclick="startExercise('quickReset')">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center space-x-4">
+                        <div class="p-3 rounded-xl bg-purple-100">
+                            <i class="fas fa-sync text-purple-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-medium text-gray-800">Quick Reset</h3>
+                            <p class="text-gray-600">Rapid technique to clear your mind</p>
+                        </div>
+                    </div>
+                    <span class="text-sm text-gray-500">2 min</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exercise Modal -->
+        <div id="exerciseModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center">
+            <div class="bg-white rounded-xl p-8 max-w-lg w-full mx-4 fade-in">
+                <div class="text-center mb-8">
+                    <h2 id="exerciseTitle" class="text-2xl font-bold text-gray-800 mb-2"></h2>
+                    <p id="exerciseInstruction" class="text-gray-600"></p>
+                </div>
+
+                <!-- Breathing Circle -->
+                <div class="relative w-32 h-32 mx-auto mb-8">
+                    <div class="absolute inset-0 rounded-full bg-blue-100 breathing-circle"></div>
+                    <div class="absolute inset-0 flex items-center justify-center text-gray-600" id="breathingText">
+                        Breathe In
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="bg-gray-200 rounded-full h-2 mb-4">
+                    <div id="progressBar" class="exercise-progress bg-blue-600 h-2 rounded-full" style="width: 0%"></div>
+                </div>
+
+                <!-- Timer -->
+                <div class="text-center mb-8">
+                    <span id="timer" class="text-2xl font-bold text-gray-800">2:00</span>
+                </div>
+
+                <!-- Close Button -->
+                <button onclick="closeExercise()" class="w-full bg-gray-100 text-gray-800 py-3 rounded-lg hover:bg-gray-200">
+                    End Exercise
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const exercises = {
+            boxBreathing: {
+                title: "Box Breathing",
+                instruction: "Breathe in for 4, hold for 4, out for 4, hold for 4",
+                color: "blue"
+            },
+            cubeFocus: {
+                title: "Cube Focus",
+                instruction: "Focus on your cube, letting thoughts drift away",
+                color: "green"
+            },
+            quickReset: {
+                title: "Quick Reset",
+                instruction: "Close your eyes, reset your posture, breathe deeply",
+                color: "purple"
+            }
+        };
+
+        let timerInterval;
+        let progressInterval;
+        let timeLeft;
+
+        function startExercise(exerciseType) {
+            const exercise = exercises[exerciseType];
+            const modal = document.getElementById('exerciseModal');
+            const title = document.getElementById('exerciseTitle');
+            const instruction = document.getElementById('exerciseInstruction');
+            
+            title.textContent = exercise.title;
+            instruction.textContent = exercise.instruction;
+            modal.classList.remove('hidden');
+
+            // Initialize timer
+            timeLeft = 120; // 2 minutes in seconds
+            updateTimer();
+            
+            // Start timer
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimer();
+                if (timeLeft <= 0) {
+                    closeExercise();
+                }
+            }, 1000);
+
+            // Progress bar
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = '0%';
+            progressInterval = setInterval(() => {
+                const progress = ((120 - timeLeft) / 120) * 100;
+                progressBar.style.width = `${progress}%`;
+            }, 1000);
+        }
+
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer').textContent = 
+                `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function closeExercise() {
+            clearInterval(timerInterval);
+            clearInterval(progressInterval);
+            document.getElementById('exerciseModal').classList.add('hidden');
+        }
+
+        // Breathing text update
+        setInterval(() => {
+            const breathingText = document.getElementById('breathingText');
+            breathingText.textContent = 
+                breathingText.textContent === 'Breathe In' ? 'Breathe Out' : 'Breathe In';
+        }, 4000);
+    </script>
+</body>
+</html>

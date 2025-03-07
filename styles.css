@@ -3,5 +3,4 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import your custom CSS files here */
-@import 'bar-mode.css';
+/* Your custom styles below */

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset & Thrive</title>
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@radix-ui/colors/blackA.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@radix-ui/colors/mauve.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@radix-ui/colors/violet.css" rel="stylesheet">
+    <link href="bar-mode.css" rel="stylesheet">
+    <style>
+        .week-card {
+            transition: transform 0.2s ease;
+        }
+        .week-card:hover {
+            transform: translateX(8px);
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Bar Mode Toggle Button -->
+    <button id="toggleViewMode" class="normal-view-toggle">
+        Switch to Bar Mode
+    </button>
+    
+    <!-- Bar Mode Container -->
+    <div id="barMode" class="bar-mode hidden">
+        <div class="bar-mode-content">
+            <div class="flex items-center">
+                <img src="images/focuscubeslogo.png" alt="Focus Cubes Logo" class="h-8 mr-4">
+                <span class="text-sky-700 font-semibold">Focus Cubes</span>
+            </div>
+            
+            <div class="bar-mode-buttons">
+                <button class="bar-mode-button" onclick="window.location.href='during&between.html'">
+                    While at Work
+                </button>
+                <button class="bar-mode-button" onclick="window.location.href='6weekhomeNEW.html'">
+                    6-Week Transformation
+                </button>
+                <button class="bar-mode-button" onclick="window.location.href='index.html'">
+                    Home
+                </button>
+                <button class="bar-mode-button" onclick="toggleBarMode()">
+                    Expand/Collapse
+                </button>
+            </div>
+            
+            <button class="bar-mode-toggle" onclick="switchToNormalMode()">
+                Switch to Normal View
+            </button>
+        </div>
+    </div>
+    <div class="max-w-md mx-auto bg-white min-h-screen">
+        <!-- Header -->
+        <header class="flex items-center justify-between p-4 border-b">
+            <button onclick="history.back()" class="p-2 hover:bg-gray-100 rounded-full">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+            </button>
+            <h1 class="text-xl font-semibold">6-Week Transformation</h1>
+            <button onclick="history.back()" class="p-2 hover:bg-gray-100 rounded-full">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+            </button>
+        </header>
+
+        <main class="p-4">
+            <p class="text-gray-600 mb-6"><strong>Transform Your Life in Just 20 Minutes a Day</strong><br>
+                This research-backed 6-week program gives you the tools to find calm, build resilience, and create lasting positive change. Designed to fit easily into your day.</p>
+        
+            <!-- Rest of your weeks content goes here -->
+            <!-- Week 1 -->
+            <div class="week-card bg-[#E6F4FF] rounded-lg p-4 mb-3" onclick="window.location.href='week1.html'">
+                <div class="flex items-center justify-between">
+                    <div class="flex gap-4 items-center">
+                        <div class="p-2 bg-white/50 rounded-full">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+                                <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">Week 1: Finding Your Center</h3>
+                            <p class="text-sm text-gray-600">Begin with why - discover your path to lasting calm</p>
+                        </div>
+                    </div>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Week 2 -->
+            <div class="week-card bg-[#E7FAF3] rounded-lg p-4 mb-3" onclick="window.location.href='week2.html'">
+                <div class="flex items-center justify-between">
+                    <div class="flex gap-4 items-center">
+                        <div class="p-2 bg-white/50 rounded-full">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">Week 2: The Power of Self-Awareness</h3>
+                            <p class="text-sm text-gray-600">Transform through understanding and acceptance</p>
+                        </div>
+                    </div>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Week 3 -->
+            <div class="week-card bg-[#E6F4FF] rounded-lg p-4 mb-3" onclick="window.location.href='week3.html'">
+                <div class="flex items-center justify-between">
+                    <div class="flex gap-4 items-center">
+                        <div class="p-2 bg-white/50 rounded-full">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="1" y="6" width="18" height="12" rx="2" ry="2"/>
+                                <line x1="4" y1="12" x2="16" y2="12"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">Week 3: Choosing New Paths</h3>
+                            <p class="text-sm text-gray-600">Learn to pivot from old patterns to new responses</p>
+                        </div>
+                    </div>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Week 4 -->
+            <div class="week-card bg-[#E6F4FF] rounded-lg p-4 mb-3" onclick="window.location.href='week4.html'">
+                <div class="flex items-center justify-between">
+                    <div class="flex gap-4 items-center">
+                        <div class="p-2 bg-white/50 rounded-full">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <circle cx="12" cy="12" r="6"/>
+                                <circle cx="12" cy="12" r="2"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">Week 4: Emotional Mastery Practice</h3>
+                            <p class="text-sm text-gray-600">Master your thoughts and emotional responses through repetition</p>
+                        </div>
+                    </div>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Week 5 -->
+            <div class="week-card bg-[#F3F0FF] rounded-lg p-4 mb-3" onclick="window.location.href='week5.html'">
+                <div class="flex items-center justify-between">
+                    <div class="flex gap-4 items-center">
+                        <div class="p-2 bg-white/50 rounded-full">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">Week 5: Growing Through Challenge</h3>
+                            <p class="text-sm text-gray-600">Turn life's pressures into opportunities for growth</p>
+                        </div>
+                    </div>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Week 6 -->
+            <div class="week-card bg-[#F3F0FF] rounded-lg p-4 mb-3" onclick="window.location.href='week6.html'">
+                <div class="flex items-center justify-between">
+                    <div class="flex gap-4 items-center">
+                        <div class="p-2 bg-white/50 rounded-full">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">Week 6: Lasting Change Blueprint</h3>
+                            <p class="text-sm text-gray-600">Anchor your progress with proven strategies for lasting change</p>
+                        </div>
+                    </div>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </div>
+            </div>
+        </main>
+
+        <footer class="p-4">
+            <p class="text-sm text-gray-500 text-center">
+                Join thousands who've transformed their lives in just 20 minutes a day
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
+
+    <!-- Bar Mode JavaScript -->
+    <script>
+        // Elements
+        const toggleViewModeBtn = document.getElementById('toggleViewMode');
+        const barMode = document.getElementById('barMode');
+        
+        // Event Listeners
+        if (toggleViewModeBtn) {
+            toggleViewModeBtn.addEventListener('click', switchToBarMode);
+        }
+        
+        // Functions for view mode switching
+        function switchToBarMode() {
+            barMode.classList.remove('hidden');
+            toggleViewModeBtn.classList.add('hidden');
+            document.body.classList.add('bar-mode-active');
+            
+            // Save preference
+            localStorage.setItem('viewMode', 'bar');
+        }
+        
+        function switchToNormalMode() {
+            barMode.classList.add('hidden');
+            toggleViewModeBtn.classList.remove('hidden');
+            document.body.classList.remove('bar-mode-active');
+            
+            // Save preference
+            localStorage.setItem('viewMode', 'normal');
+        }
+        
+        function toggleBarMode() {
+            barMode.classList.toggle('bar-mode-expanded');
+        }
+        
+        // Check saved preference on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedViewMode = localStorage.getItem('viewMode');
+            if (savedViewMode === 'bar') {
+                switchToBarMode();
+            }
+        });
+    </script>

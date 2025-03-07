@@ -1,4 +1,3 @@
-
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
@@ -37,11 +36,13 @@ if (!fs.existsSync('dist/css')) {
 }
 
 // Build Tailwind CSS
+console.log('Building CSS with Tailwind...');
 try {
-  execSync('npx tailwindcss -i ./styles.css -o ./dist/css/styles.css --minify');
-  console.log('✅ CSS built successfully');
+  execSync('npx tailwindcss -i ./styles.css -o ./dist/css/styles.css --minify', { stdio: 'inherit' });
+  console.log('CSS built successfully!');
 } catch (error) {
-  console.error('❌ Error building CSS:', error);
+  console.error('Error building CSS:', error);
+  process.exit(1);
 }
 
 console.log('✅ Build completed! Files ready in the dist directory');
