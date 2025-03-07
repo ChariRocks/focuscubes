@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clarity and Focus</title>
-    
+
     <link href="css/styles.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.css" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="bar-mode.css" rel="stylesheet">
+    <script src="bar-mode.js"></script>
 
     <style>
         body { 
@@ -17,16 +20,16 @@
             0% { transform: scale(1); }
             100% { transform: scale(1.3); }
         }
-        
+
         @keyframes contract {
             0% { transform: scale(1.3); }
             100% { transform: scale(1); }
         }
-        
+
         .expand-animation {
             animation: expand 4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
-        
+
         .contract-animation {
             animation: contract 4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
@@ -56,9 +59,9 @@
         }
         .confetti {
             position: fixed;  
-            width: 25px;     /* Back to original size */
+            width: 25px;     
             height: 25px;
-            border-radius: 4px;  /* Back to slight rounding for cubes */
+            border-radius: 4px;  
             animation: fall 3s ease-out forwards;
             opacity: 0;
             z-index: 30;
@@ -75,17 +78,6 @@
             }
         }
 
-@keyframes fall {
-    0% {
-        transform: translateY(-100px) rotate(0deg);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0;
-    }
-}
-
         @keyframes fall {
             0% {
                 transform: translateY(0) rotate(0deg);
@@ -99,297 +91,46 @@
     </style>
 </head>
 
-<body class="bg-white">
-    <main>
-        <!-- Navigation -->
-        <nav class="nav-fixed flex justify-between items-center p-6">
-            <button onclick="handleReset()" class="w-8 h-8 flex items-center justify-center text-slate-600 hover:text-slate-800">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                </svg>
-            </button>
-            <h1 class="text-xl font-medium text-slate-800">Clarity and Focus</h1>
-            <button onclick="handleReset()" class="w-8 h-8 flex items-center justify-center text-slate-600 hover:text-slate-800">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-        </nav>
+<body class="min-h-screen">
+    <!-- Bar Mode Toggle Button -->
+    <button id="toggleViewMode" class="normal-view-toggle">Switch to Bar Mode</button>
 
-        <!-- Welcome Screen -->
-        <div id="welcomeScreen" class="screen">
-            <div class="max-w-md mx-auto pt-24 px-6">
-                <div class="space-y-8 text-center">
-                    <h2 class="text-3xl font-medium text-slate-800">Clarity and Focus</h2>
-                    <p class="text-lg text-slate-600">Choose your 2-minute practice</p>
-                    
-                    <div class="flex flex-col gap-4">
-                        <button onclick="handleMeditationSelect('bodyScan')" 
-                            class="px-6 py-4 bg-emerald-50 rounded-xl hover:bg-emerald-100 
-                                   active:bg-emerald-200 transition-colors text-lg font-medium">
-                            Body Scan
-                            <p class="text-sm text-slate-600 mt-1">Feel and relax each part of your body</p>
-                        </button>
-                        <button onclick="handleMeditationSelect('breathAwareness')"
-                            class="px-6 py-4 bg-green-50 rounded-xl hover:bg-green-100 
-                                   active:bg-green-200 transition-colors text-lg font-medium">
-                            Breath Awareness
-                            <p class="text-sm text-slate-600 mt-1">Focus on the sensations of breathing</p>
-                        </button>
-                    </div>
-                </div>
+    <!-- Bar Mode Container -->
+    <div id="barMode" class="bar-mode hidden">
+        <div class="bar-mode-content">
+            <div class="flex items-center">
+                <img src="images/focuscubeslogo.png" alt="Focus Cubes Logo" class="h-8">
             </div>
-        </div>
 
-        <!-- Meditation Screen -->
-        <div id="meditationScreen" class="screen hidden">
-            <div class="max-w-md mx-auto pt-24 px-6">
-                <div class="flex-1 flex flex-col items-center">
-                    <div class="text-center mb-8">
-                        <p id="cycleCount" class="text-xl text-slate-600"></p>
-                        <p id="breatheText" class="text-base text-slate-600 mt-2"></p>
-                    </div>
-                    
-                    <div class="flex-1 flex items-center justify-center min-h-[400px]">
-                        <div id="meditationCube" class="w-48 h-48 rounded-xl flex items-center justify-center shadow-xl bg-emerald-50 text-center p-6">
-                            <p id="instruction" class="text-xl font-medium text-slate-700"></p>
-                        </div>
-                    </div>
-                </div>
+            <div id="homeScreenButtons" class="bar-mode-buttons">
+                <button class="bar-mode-button" onclick="window.location.href='index.html'">
+                    <i class="ph ph-house mr-2"></i> Home
+                </button>
+                <button class="bar-mode-button" onclick="window.location.href='during&between.html'">
+                    <i class="ph ph-phone mr-2"></i> While at Work
+                </button>
+                <button class="bar-mode-button" onclick="window.location.href='6weekhomeNEW.html'">
+                    <i class="ph ph-timer mr-2"></i> 6-Week Transformation
+                </button>
+                <button class="bar-mode-button" id="focusClarityBtn" onclick="window.location.href='focusandclarity.html'">
+                    <i class="ph ph-brain mr-2 text-green-600"></i> Focus & Clarity
+                </button>
+                <button class="bar-mode-button" id="compassionBtn" onclick="window.location.href='compassion.html'">
+                    <i class="ph ph-heart mr-2 text-green-600"></i> Compassion
+                </button>
+                <button class="bar-mode-button" id="energyResetBtn" onclick="window.location.href='DoubleBreathEnergyReset.html'">
+                    <i class="ph ph-lightning mr-2 text-green-600"></i> Energy Reset
+                </button>
+                <button class="bar-mode-button" id="moodBlocksBtn" onclick="window.location.href='MoodBlocks.html'">
+                    <i class="ph ph-heart-straight mr-2 text-pink-400"></i> MoodBlocks
+                </button>
+                <button class="bar-mode-button" id="rememberWhyBtn" onclick="window.location.href='rememberyourwhy.html'">
+                    <i class="ph ph-question mr-2 text-amber-500"></i> Remember Why
+                </button>
             </div>
+
+            <button class="bar-mode-toggle" onclick="switchToNormalMode()">Switch to Normal View</button>
         </div>
-
-        <!-- Complete Screen -->
-        <div id="completeScreen" class="screen hidden">
-            <div class="max-w-md mx-auto pt-24 px-6">
-                <div class="space-y-8 text-center">
-                    <button onclick="goToMoodBlocks('meditation-complete')"
-                        class="w-full bg-amber-100 rounded-xl p-5 hover:bg-amber-200 transition-colors mb-8">
-                        <div class="flex items-center justify-between">
-                            <div class="text-left">
-                                <h3 class="text-lg font-light text-slate-800 flex items-center gap-1">
-                                    MoodBlocks<span class="text-xs align-top">™</span>
-                                </h3>
-                                <p class="text-sm text-slate-500">Track emotions & build awareness</p>
-                            </div>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-pink-400">
-                                <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
-                            </svg>
-                        </div>
-                    </button>
-                    <h2 class="text-3xl font-medium text-slate-800">Well Done!</h2>
-                    <p id="completionMessage" class="text-xl text-slate-600"></p>
-                    <button onclick="handleReset()"
-                        class="px-8 py-4 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 
-                               active:bg-emerald-800 transition-colors text-lg font-medium">
-                        Another Reset
-                    </button>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <script>
-        // Constants
-        const BREATH_DURATION = 4000; // 4 seconds per breath phase
-        
-        // DOM Elements
-        const screens = {
-            welcome: document.getElementById('welcomeScreen'),
-            meditation: document.getElementById('meditationScreen'),
-            complete: document.getElementById('completeScreen')
-        };
-
-        const meditationCube = document.getElementById('meditationCube');
-        const instruction = document.getElementById('instruction');
-        const cycleCount = document.getElementById('cycleCount');
-        const completionMessage = document.getElementById('completionMessage');
-
-        // Breathing patterns
-        const bodyScanBreaths = [
-            // Start with feet and legs
-            {
-                inhale: "Feel your toes and feet",
-                exhale: "Let them soften and relax"
-            },
-            {
-                inhale: "Aware of your ankles and calves",
-                exhale: "Release any tension there"
-            },
-            {
-                inhale: "Notice your knees and thighs",
-                exhale: "Allow them to relax completely"
-            },
-            // Torso and arms
-            {
-                inhale: "Feel your hips and lower back",
-                exhale: "Let them sink into the chair"
-            },
-            {
-                inhale: "Aware of your stomach and chest",
-                exhale: "Feel them release with the breath"
-            },
-            {
-                inhale: "Notice your shoulders and arms",
-                exhale: "Let them drop and soften"
-            },
-            // Head and neck
-            {
-                inhale: "Feel your neck and throat",
-                exhale: "Allow any tension to dissolve"
-            },
-            {
-                inhale: "Aware of your face and jaw",
-                exhale: "Let your expression soften"
-            },
-            // Whole body
-            {
-                inhale: "Feel your whole body",
-                exhale: "Letting everything relax"
-            },
-            {
-                inhale: "Present with your entire body",
-                exhale: "Resting in awareness"
-            }
-        ];
-
-        const breathAwarenessBreaths = [
-            // Initial settling
-            {
-                inhale: "Notice the breath coming in",
-                exhale: "Follow the breath flowing out"
-            },
-            {
-                inhale: "Feel where the breath is clearest",
-                exhale: "Stay with that sensation"
-            },
-            // Detailed awareness
-            {
-                inhale: "Notice the beginning of the breath",
-                exhale: "Notice the end of the breath"
-            },
-            {
-                inhale: "Feel the cool air entering",
-                exhale: "Feel the warm air leaving"
-            },
-            // Depth and quality
-            {
-                inhale: "Notice the depth of the breath",
-                exhale: "Notice the length of the breath"
-            },
-            {
-                inhale: "Feel the expansion",
-                exhale: "Feel the release"
-            },
-            // Subtle sensations
-            {
-                inhale: "Notice the subtle sensations",
-                exhale: "Let them come and go"
-            },
-            {
-                inhale: "Feel the natural rhythm",
-                exhale: "Rest in the flow of breath"
-            },
-            // Integration
-            {
-                inhale: "Breath flowing in",
-                exhale: "Breath flowing out"
-            },
-            {
-                inhale: "Present with each breath",
-                exhale: "Clear and calm"
-            }
-        ];
-
-        // State management
-        let currentPhase = 'welcome';
-        let meditationType = null;
-        let timeoutRef = null;
-
-        // Helper functions
-        function showScreen(screenName) {
-            Object.values(screens).forEach(screen => screen.classList.add('hidden'));
-            screens[screenName].classList.remove('hidden');
-            currentPhase = screenName;
-        }
-
-        async function startMeditation(type, breaths) {
-            const totalBreaths = breaths.length;
-            const breatheText = document.getElementById('breatheText');
-            
-            for (let currentBreath = 0; currentBreath < totalBreaths; currentBreath++) {
-                if (timeoutRef) clearTimeout(timeoutRef);
-                
-                cycleCount.textContent = `Breath ${currentBreath + 1} of ${totalBreaths}`;
-                
-                // Inhale phase
-                breatheText.textContent = 'Inhale with the cube';
-                instruction.textContent = breaths[currentBreath].inhale;
-                meditationCube.className = 'w-48 h-48 rounded-xl flex items-center justify-center shadow-xl bg-emerald-100 expand-animation text-center p-6';
-                await new Promise(r => { timeoutRef = setTimeout(r, BREATH_DURATION); });
-                
-                // Exhale phase
-                breatheText.textContent = 'Exhale with the cube';
-                instruction.textContent = breaths[currentBreath].exhale;
-                meditationCube.className = 'w-48 h-48 rounded-xl flex items-center justify-center shadow-xl bg-emerald-50 contract-animation text-center p-6';
-                await new Promise(r => { timeoutRef = setTimeout(r, BREATH_DURATION); });
-            }
-            
-            // Set completion message
-            completionMessage.textContent = type === 'bodyScan' 
-                ? 'Your body is relaxed and your mind is clear'
-                : 'Your breath has brought you clarity and calm';
-            
-            showScreen('complete');
-            setTimeout(createConfetti, 50);
-        }
-
-        function handleReset() {
-            if (timeoutRef) {
-                clearTimeout(timeoutRef);
-            }
-            window.history.back();
-        }
-
-        function handleMeditationSelect(type) {
-            window.history.pushState({}, '');
-            meditationType = type;
-            showScreen('meditation');
-            const breaths = type === 'bodyScan' ? bodyScanBreaths : breathAwarenessBreaths;
-            startMeditation(type, breaths);
-        }
-        function createConfetti() {
-            const colors = ['#86efac', '#fef9c3', '#e5e7eb']; // Original colors from your code
-            const confettiCount = 50; // Adjusted for larger pieces
-            
-            for (let i = 0; i < confettiCount; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.left = Math.random() * 100 + 'vw';
-                confetti.style.top = (Math.random() * 20 - 20) + 'vh'; // Start above viewport
-                confetti.style.animationDelay = Math.random() * 2 + 's';
-                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                document.body.appendChild(confetti);
-                setTimeout(() => confetti.remove(), 5000);
-            }
-        }
-        function goToMoodBlocks(fromPage) {
-            sessionStorage.setItem('previousPage', fromPage);
-            window.location.href = 'MoodBlocks.html';
-        }
-
-        function showCompleteScreen() {
-            screens.meditation.classList.add('hidden');
-            screens.complete.classList.remove('hidden');
-            createConfetti();
-        }
-                window.addEventListener('popstate', () => {
-            if (timeoutRef) clearTimeout(timeoutRef);
-            showScreen('welcome');
-        });
-        // Initial setup
-        showScreen('welcome');
-    </script>
-</body>
+    </div>
+    </body>
 </html>

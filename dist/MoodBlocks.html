@@ -6,8 +6,104 @@
     <title>Customizable MoodBlocks</title>
     <link href="css/styles.css" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        .bar-mode {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #f0f0f0;
+            padding: 10px;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-around; /* Distribute buttons evenly */
+        }
+        .bar-mode-button {
+            padding: 10px 20px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .normal-view-toggle {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .bar-mode-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center content vertically */
+        }
+        .bar-mode-buttons {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center; /* Center buttons horizontally */
+        }
+    </style>
 </head>
-<body class="bg-gray-100 p-4">
+<body class="bg-slate-50">
+    <!-- Bar Mode Toggle Button -->
+    <button id="toggleViewMode" class="normal-view-toggle">Switch to Bar Mode</button>
+
+    <!-- Bar Mode Container -->
+    <div id="barMode" class="bar-mode hidden">
+        <div class="bar-mode-content">
+            <div class="flex items-center">
+                <img src="images/focuscubeslogo.png" alt="Focus Cubes Logo" class="h-8">
+            </div>
+
+            <div id="homeScreenButtons" class="bar-mode-buttons">
+                <button class="bar-mode-button" onclick="window.location.href='index.html'">
+                    <i class="ph ph-house mr-2"></i> Home
+                </button>
+                <button class="bar-mode-button" onclick="window.location.href='during&between.html'">
+                    <i class="ph ph-phone mr-2"></i> While at Work
+                </button>
+                <button class="bar-mode-button" onclick="window.location.href='6weekhomeNEW.html'">
+                    <i class="ph ph-timer mr-2"></i> 6-Week Transformation
+                </button>
+                <button class="bar-mode-button" id="focusClarityBtn" onclick="window.location.href='focusandclarity.html'">
+                    <i class="ph ph-brain mr-2 text-green-600"></i> Focus & Clarity
+                </button>
+                <button class="bar-mode-button" id="compassionBtn" onclick="window.location.href='compassion.html'">
+                    <i class="ph ph-heart mr-2 text-green-600"></i> Compassion
+                </button>
+                <button class="bar-mode-button" id="energyResetBtn" onclick="window.location.href='DoubleBreathEnergyReset.html'">
+                    <i class="ph ph-lightning mr-2 text-green-600"></i> Energy Reset
+                </button>
+                <button class="bar-mode-button" id="moodBlocksBtn" onclick="window.location.href='MoodBlocks.html'">
+                    <i class="ph ph-heart-straight mr-2 text-pink-400"></i> MoodBlocks
+                </button>
+                <button class="bar-mode-button" id="rememberWhyBtn" onclick="window.location.href='rememberyourwhy.html'">
+                    <i class="ph ph-question mr-2 text-amber-500"></i> Remember Why
+                </button>
+            </div>
+
+            <button class="bar-mode-toggle" onclick="switchToNormalMode()">Switch to Normal View</button>
+        </div>
+    </div>
+
+    <script>
+        function switchToBarMode() {
+            document.getElementById('barMode').classList.remove('hidden');
+            document.getElementById('toggleViewMode').classList.add('hidden');
+        }
+        function switchToNormalMode() {
+            document.getElementById('barMode').classList.add('hidden');
+            document.getElementById('toggleViewMode').classList.remove('hidden');
+        }
+        document.getElementById('toggleViewMode').addEventListener('click', switchToBarMode);
+    </script>
+
+
     <div class="max-w-md mx-auto">
         <!-- Navigation -->
         <nav class="flex justify-between items-center mb-4">
