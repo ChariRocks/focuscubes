@@ -7,6 +7,7 @@ function createPopupMeditationWindow(meditationType) {
   // Create container
   const container = document.createElement('div');
   container.className = 'popup-meditation-container';
+  container.style.zIndex = '1000'; // Increased z-index
 
   // Create header
   const header = document.createElement('div');
@@ -97,9 +98,10 @@ function createPopupMeditationWindow(meditationType) {
     // Activate the popup with a slight delay for animation
     setTimeout(() => {
       overlay.classList.add('active');
-      // Reset the transform to slide in from the right
-      container.style.transform = 'translateY(-50%) translateX(0)';
     }, 10);
+
+    // Make the container draggable
+    makeDraggable(container, header);
 
     // Set up event listeners for the buttons
     document.getElementById('popup-body-scan-button').addEventListener('click', () => {
@@ -156,9 +158,10 @@ function createPopupMeditationWindow(meditationType) {
     // Activate the popup with a slight delay for animation
     setTimeout(() => {
       overlay.classList.add('active');
-      // Reset the transform to slide in from the right
-      container.style.transform = 'translateY(-50%) translateX(0)';
     }, 10);
+
+    // Make the container draggable
+    makeDraggable(container, header);
 
     // Set up event listeners for the buttons
     document.getElementById('popup-brief-button').addEventListener('click', () => {
@@ -227,9 +230,10 @@ function createPopupMeditationWindow(meditationType) {
     // Activate the popup with a slight delay for animation
     setTimeout(() => {
       overlay.classList.add('active');
-      // Reset the transform to slide in from the right
-      container.style.transform = 'translateY(-50%) translateX(0)';
     }, 10);
+
+    // Make the container draggable
+    makeDraggable(container, header);
 
     // Set up event listeners for the buttons
     document.getElementById('popup-short-button').addEventListener('click', () => {
@@ -328,9 +332,10 @@ function createPopupMeditationWindow(meditationType) {
   // Activate the popup with a slight delay for animation
   setTimeout(() => {
     overlay.classList.add('active');
-    // Reset the transform to slide in from the right
-    container.style.transform = 'translateY(-50%) translateX(0)';
   }, 10);
+
+  // Make the container draggable
+  makeDraggable(container, header);
 
   // Set up event listeners for the complete screen buttons
   document.getElementById('popup-restart-button').addEventListener('click', () => {
@@ -488,6 +493,7 @@ function createFocusClarityMeditationPopup(type) {
   // Create container
   const container = document.createElement('div');
   container.className = 'popup-meditation-container';
+  container.style.zIndex = '1000'; // Increased z-index
 
   // Create header
   const header = document.createElement('div');
@@ -531,9 +537,10 @@ function createFocusClarityMeditationPopup(type) {
   // Activate the popup with a slight delay for animation
   setTimeout(() => {
     overlay.classList.add('active');
-    // Reset the transform to slide in from the right
-    container.style.transform = 'translateY(-50%) translateX(0)';
   }, 10);
+
+  // Make the container draggable
+  makeDraggable(container, header);
 
   // Start the 3-second countdown
   let timeLeft = 3;
@@ -809,6 +816,7 @@ function createCompassionMeditationPopup(intensity) {
   // Create container
   const container = document.createElement('div');
   container.className = 'popup-meditation-container';
+  container.style.zIndex = '1000'; // Increased z-index
 
   // Create header
   const header = document.createElement('div');
@@ -852,9 +860,10 @@ function createCompassionMeditationPopup(intensity) {
   // Activate the popup with a slight delay for animation
   setTimeout(() => {
     overlay.classList.add('active');
-    // Reset the transform to slide in from the right
-    container.style.transform = 'translateY(-50%) translateX(0)';
   }, 10);
+
+  // Make the container draggable
+  makeDraggable(container, header);
 
   // Start the 3-second countdown
   let timeLeft = 3;
@@ -904,7 +913,7 @@ function startCompassionMeditation(content, intensity) {
       exhale: "I'm doing my best here"
     },
     {
-      inhale: "I am taking care of myself",
+      inhale: "I amtaking care of myself",
       exhale: "One breath at a time"
     },
     // 4. Understanding others (1 breath)
@@ -1137,6 +1146,7 @@ function createEnergyResetMeditationPopup(minutes) {
   // Create container
   const container = document.createElement('div');
   container.className = 'popup-meditation-container';
+  container.style.zIndex = '1000'; // Increased z-index
 
   // Create header
   const header = document.createElement('div');
@@ -1180,9 +1190,10 @@ function createEnergyResetMeditationPopup(minutes) {
   // Activate the popup with a slight delay for animation
   setTimeout(() => {
     overlay.classList.add('active');
-    // Reset the transform to slide in from the right
-    container.style.transform = 'translateY(-50%) translateX(0)';
   }, 10);
+
+  // Make the container draggable
+  makeDraggable(container, header);
 
   // Start the 3-second countdown
   let timeLeft = 3;
@@ -1447,6 +1458,7 @@ function openMoodBlocksPopup() {
   // Create container
   const container = document.createElement('div');
   container.className = 'popup-meditation-container';
+  container.style.zIndex = '1000'; // Increased z-index
 
   // Create header
   const header = document.createElement('div');
@@ -1483,9 +1495,10 @@ function openMoodBlocksPopup() {
   // Activate the popup with a slight delay for animation
   setTimeout(() => {
     overlay.classList.add('active');
-    // Reset the transform to slide in from the right
-    container.style.transform = 'translateY(-50%) translateX(0)';
   }, 10);
+
+  // Make the container draggable
+  makeDraggable(container, header);
 
   return true;
 }
@@ -1503,6 +1516,7 @@ function openRememberWhyPopup() {
   // Create container
   const container = document.createElement('div');
   container.className = 'popup-meditation-container';
+  container.style.zIndex = '1000'; // Increased z-index
 
   // Create header
   const header = document.createElement('div');
@@ -1539,9 +1553,38 @@ function openRememberWhyPopup() {
   // Activate the popup with a slight delay for animation
   setTimeout(() => {
     overlay.classList.add('active');
-    // Reset the transform to slide in from the right
-    container.style.transform = 'translateY(-50%) translateX(0)';
   }, 10);
 
+  // Make the container draggable
+  makeDraggable(container, header);
+
   return true;
+}
+
+function makeDraggable(container, header) {
+  let isDragging = false;
+  let offsetX, offsetY;
+
+  header.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    offsetX = e.clientX - container.offsetLeft;
+    offsetY = e.clientY - container.offsetTop;
+  });
+
+  document.addEventListener('mouseup', () => {
+    isDragging = false;
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (isDragging) {
+      container.style.left = (e.clientX - offsetX) + 'px';
+      container.style.top = (e.clientY - offsetY) + 'px';
+    }
+  });
+}
+
+
+function createConfetti() {
+  // Add confetti code here if needed.  This is just a placeholder.
+  console.log("Confetti would appear here!");
 }
