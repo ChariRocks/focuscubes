@@ -1,3 +1,4 @@
+
 {
   "name": "focus-cubes",
   "version": "1.0.0",
@@ -6,6 +7,5 @@
     "dev": "http-server -p 3000 -a 0.0.0.0",
     "build": "node build.js",
     "start": "http-server ./dist -p 3000 -a 0.0.0.0"
-  },
-  // ...rest of package.json
+  }
 }
