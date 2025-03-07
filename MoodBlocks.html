@@ -57,7 +57,7 @@
                 </div>
             </div>
         </div>
-        
+
 
         <!-- Other existing dialogs -->
         <div id="improvementDialog" class="fixed inset-0 bg-black bg-opacity-50 hidden">
@@ -234,7 +234,7 @@
                 previousMood = selectedMood;
                 showImprovement(previousMood, mood);
             }
-            
+
             selectedMood = mood;
             updateHeader();
             renderMoods();
@@ -243,7 +243,7 @@
         function updateHeader() {
             const header = document.getElementById('headerText');
             const prev = document.getElementById('previousMood');
-            
+
             if (!selectedMood) {
                 header.textContent = 'How were you feeling before?';
                 prev.classList.add('hidden');
@@ -259,7 +259,7 @@
 
         function renderMoods() {
                 const grid = document.getElementById('moodGrid');
-                
+
                 if (currentView === 'simple') {
                     grid.innerHTML = simpleMoods.map(mood => `
                         <button onclick='selectMood(${JSON.stringify(mood)})' 
@@ -311,7 +311,7 @@
         function showHistory() {
             const content = document.getElementById('historyContent');
             document.getElementById('historyDialog').classList.remove('hidden');
-            
+
             if (history.length === 0) {
                 content.innerHTML = '<p class="text-gray-500 text-center">No improvements recorded yet.</p>';
             } else {
