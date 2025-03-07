@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -396,13 +397,6 @@
         document.getElementById('startButton').addEventListener('click', startMeditation);
         toggleViewMode.addEventListener('click', toggleBarMode);
         
-        // Initialize event handlers for regular view (non-bar mode)
-        document.getElementById('duringCallBtn').addEventListener('click', handleDuringCallButton);
-        document.getElementById('focusClarityBtn').addEventListener('click', handleFocusClarityButton);
-        document.getElementById('compassionBtn').addEventListener('click', handleCompassionButton);
-        document.getElementById('energyResetBtn').addEventListener('click', handleEnergyResetButton);
-        document.getElementById('moodBlocksBtn').addEventListener('click', handleMoodBlocksButton);
-        document.getElementById('rememberWhyBtn').addEventListener('click', handleRememberWhyButton);
 
         // Handler functions for meditation buttons in bar mode
         function handleDuringCallButton() {
@@ -688,16 +682,8 @@
 
             // Make sure the bar mode buttons match the current screen
             updateBarModeButtons();
-        });
-    </script>
-    <script src="https://unpkg.com/phosphor-icons"></script>
-    <script src="popup-meditation.js"></script>
 
-    <script>
-        // Apply direct click handlers when the page loads
-        window.addEventListener('load', function() {
-            console.log("Setting up button handlers");
-            
+            // Set up direct click handlers
             const duringCallBtn = document.getElementById('duringCallBtn');
             const focusClarityBtn = document.getElementById('focusClarityBtn');
             const compassionBtn = document.getElementById('compassionBtn');
@@ -705,54 +691,30 @@
             const moodBlocksBtn = document.getElementById('moodBlocksBtn');
             const rememberWhyBtn = document.getElementById('rememberWhyBtn');
             
-            // Set up direct click handlers using onclick properties
-            if (duringCallBtn) {
-                duringCallBtn.onclick = function(e) {
-                    console.log("During Call button clicked");
-                    e.preventDefault();
-                    createPopupMeditationWindow('duringCall');
-                };
-            }
+            // Use direct click handlers
+            duringCallBtn.addEventListener('click', function() {
+                createPopupMeditationWindow('duringCall');
+            });
             
-            if (focusClarityBtn) {
-                focusClarityBtn.onclick = function(e) {
-                    console.log("Focus & Clarity button clicked");
-                    e.preventDefault();
-                    createPopupMeditationWindow('focusClarity');
-                };
-            }
+            focusClarityBtn.addEventListener('click', function() {
+                createPopupMeditationWindow('focusClarity');
+            });
             
-            if (compassionBtn) {
-                compassionBtn.onclick = function(e) {
-                    console.log("Compassion button clicked");
-                    e.preventDefault();
-                    createPopupMeditationWindow('compassion');
-                };
-            }
+            compassionBtn.addEventListener('click', function() {
+                createPopupMeditationWindow('compassion');
+            });
             
-            if (energyResetBtn) {
-                energyResetBtn.onclick = function(e) {
-                    console.log("Energy Reset button clicked");
-                    e.preventDefault();
-                    createPopupMeditationWindow('energyReset');
-                };
-            }
+            energyResetBtn.addEventListener('click', function() {
+                createPopupMeditationWindow('energyReset');
+            });
             
-            if (moodBlocksBtn) {
-                moodBlocksBtn.onclick = function(e) {
-                    console.log("MoodBlocks button clicked");
-                    e.preventDefault();
-                    openMoodBlocksPopup();
-                };
-            }
+            moodBlocksBtn.addEventListener('click', function() {
+                openMoodBlocksPopup();
+            });
             
-            if (rememberWhyBtn) {
-                rememberWhyBtn.onclick = function(e) {
-                    console.log("Remember Why button clicked");
-                    e.preventDefault();
-                    openRememberWhyPopup();
-                };
-            }
+            rememberWhyBtn.addEventListener('click', function() {
+                openRememberWhyPopup();
+            });
         });
     </script>
 </body>
