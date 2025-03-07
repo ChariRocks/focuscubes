@@ -98,6 +98,14 @@
                 document.getElementById('options-screen').classList.remove('hidden');
             }
         }
+        
+        // Check for hash fragment to skip login
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.location.hash === '#path') {
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('options-screen').classList.remove('hidden');
+            }
+        });
     </script>
 </body>
 </html>
