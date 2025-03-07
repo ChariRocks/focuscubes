@@ -98,6 +98,9 @@
   background-color: #10b981;
   color: white;
   border-color: #10b981;
+  font-weight: 600;
+  font-size: 15px;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
 }
 
 .bar-mode-button[onclick*="MoodBlocks.html"],
@@ -110,19 +113,19 @@
 
 .bar-mode-button[onclick*="focusandclarity.html"] {
   background-color: #f3f4f6;
-  color: #000000; /* Black text for Focus and Clarity */
+  color: #4b5563; /* Slate-600 to match main design */
   border-color: #e5e7eb;
 }
 
 .bar-mode-button[onclick*="compassion.html"] {
   background-color: #f3f4f6;
-  color: #000000; /* Black text */
+  color: #4b5563; /* Slate-600 to match main design */
   border-color: #e5e7eb;
 }
 
 .bar-mode-button[onclick*="DoubleBreathEnergyReset.html"] {
   background-color: #f3f4f6;
-  color: #000000; /* Black text */
+  color: #4b5563; /* Slate-600 to match main design */
   border-color: #e5e7eb;
 }
 
@@ -146,6 +149,8 @@
   background-color: #059669;
   color: white;
   border-color: #059669;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
 }
 
 .bar-mode-button[onclick*="MoodBlocks.html"]:hover,
@@ -162,12 +167,15 @@
   color: white;
   border-color: #10b981;
   font-weight: 600;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
 }
 
 .bar-mode-button-primary:hover {
   background-color: #059669;
   color: white !important;
   border-color: #059669;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
 }
 
 .bar-mode-button[onclick*="rememberyourwhy.html"]:hover,
