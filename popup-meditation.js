@@ -1566,35 +1566,41 @@ function makeDraggable(element) {
 
   function dragMouseDown(e) {
     e = e || window.event;
-    e.preventDefault();
-    // Get the mouse cursor position at startup
-    pos3 = e.clientX;
-    pos4 = e.clientY;
+    
+    // Only prevent default if we're in the header (dragging)
+    if (e.target.closest('.popup-meditation-header')) {
+      e.preventDefault();
+      
+      // Get the mouse cursor position at startup
+      pos3 = e.clientX;
+      pos4 = e.clientY;
 
-    // Change position from transform to actual positioning
-    const computedStyle = window.getComputedStyle(element);
-    const transform = computedStyle.getPropertyValue('transform');
+      // Change position from transform to actual positioning
+      const computedStyle = window.getComputedStyle(element);
+      const transform = computedStyle.getPropertyValue('transform');
 
-    // Only modify position if the element has been animated in
-    if (transform !== 'matrix(1, 0, 0, 1, 0, 0)' && transform !== 'none') {
-      // Reset transform and set absolute positioning
-      element.style.transform = 'none';
-      element.style.transition = 'none';
-      element.style.position = 'absolute';
-      element.style.margin = '0';
+      // Only modify position if the element has been animated in
+      if (transform !== 'matrix(1, 0, 0, 1, 0, 0)' && transform !== 'none') {
+        // Reset transform and set absolute positioning
+        element.style.transform = 'none';
+        element.style.transition = 'none';
+        element.style.position = 'absolute';
+        element.style.margin = '0';
 
-      // Calculate current position
-      const rect = element.getBoundingClientRect();
-      element.style.top = rect.top + 'px';
-      element.style.right = (window.innerWidth - rect.right) + 'px';
+        // Calculate current position
+        const rect = element.getBoundingClientRect();
+        element.style.top = rect.top + 'px';
+        element.style.right = (window.innerWidth - rect.right) + 'px';
+      }
+
+      document.onmouseup = closeDragElement;
+      document.onmousemove = elementDrag;
     }
-
-    document.onmouseup = closeDragElement;
-    document.onmousemove = elementDrag;
   }
 
   function dragTouchStart(e) {
-    e.preventDefault();
+    // Don't prevent default here as it blocks button clicks
+    // e.preventDefault();
     const touch = e.touches[0];
     pos3 = touch.clientX;
     pos4 = touch.clientY;

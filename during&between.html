@@ -11,21 +11,21 @@
     <link href="bar-mode.css" rel="stylesheet">  <!-- Added link to bar-mode.css -->
     <link href="popup-meditation.css" rel="stylesheet">  <!-- Added link to popup-meditation.css -->
     <script src="popup-meditation.js"></script>  <!-- Added popup meditation JavaScript -->
-    
+
     <script>
       // Intercept clicks on special links to open popups in bar mode
       document.addEventListener('click', function(event) {
         if (document.body.classList.contains('bar-mode-active')) {
           // Check if the clicked element is a link or button
           let targetElement = event.target;
-          
+
           // Navigate up to find parent links or buttons if needed
           while (targetElement != null && targetElement !== document) {
             // Check for links (A tags)
             if (targetElement.tagName === 'A') {
               // Check the href of the link
               const href = targetElement.getAttribute('href');
-              
+
               if (href === 'MoodBlocks.html') {
                 event.preventDefault();
                 openMoodBlocksPopup();
@@ -401,38 +401,38 @@
         document.getElementById('energyResetBtn').addEventListener('click', handleEnergyResetButton);
         document.getElementById('moodBlocksBtn').addEventListener('click', handleMoodBlocksButton);
         document.getElementById('rememberWhyBtn').addEventListener('click', handleRememberWhyButton);
-        
+
         // Handler functions for meditation buttons in bar mode
         function handleDuringCallButton() {
             if (!startPopupMeditationFromBarMode('duringCall')) {
                 startMeditation();
             }
         }
-        
+
         function handleFocusClarityButton() {
             if (!startPopupMeditationFromBarMode('focusClarity')) {
                 window.location.href = 'focusandclarity.html';
             }
         }
-        
+
         function handleCompassionButton() {
             if (!startPopupMeditationFromBarMode('compassion')) {
                 window.location.href = 'compassion.html';
             }
         }
-        
+
         function handleEnergyResetButton() {
             if (!startPopupMeditationFromBarMode('energyReset')) {
                 window.location.href = 'DoubleBreathEnergyReset.html';
             }
         }
-        
+
         function handleMoodBlocksButton() {
             if (!openMoodBlocksPopup()) {
                 window.location.href = 'MoodBlocks.html';
             }
         }
-        
+
         function handleRememberWhyButton() {
             if (!openRememberWhyPopup()) {
                 window.location.href = 'rememberyourwhy.html';
@@ -686,6 +686,53 @@
 
             // Make sure the bar mode buttons match the current screen
             updateBarModeButtons();
+        });
+    </script>
+    <script src="https://unpkg.com/phosphor-icons"></script>
+    <script src="popup-meditation.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const duringCallBtn = document.getElementById('duringCallBtn');
+            const focusClarityBtn = document.getElementById('focusClarityBtn');
+            const compassionBtn = document.getElementById('compassionBtn');
+            const energyResetBtn = document.getElementById('energyResetBtn');
+            const moodBlocksBtn = document.getElementById('moodBlocksBtn');
+            const rememberWhyBtn = document.getElementById('rememberWhyBtn');
+
+            // Add bar-mode-active class to body first to ensure popups work
+            document.body.classList.add('bar-mode-active');
+
+            // Create direct click handlers without setting onclick attributes
+            duringCallBtn.onclick = function(e) {
+                e.preventDefault();
+                createPopupMeditationWindow('duringCall');
+            };
+
+            focusClarityBtn.onclick = function(e) {
+                e.preventDefault();
+                createPopupMeditationWindow('focusClarity');
+            };
+
+            compassionBtn.onclick = function(e) {
+                e.preventDefault();
+                createPopupMeditationWindow('compassion');
+            };
+
+            energyResetBtn.onclick = function(e) {
+                e.preventDefault();
+                createPopupMeditationWindow('energyReset');
+            };
+
+            moodBlocksBtn.onclick = function(e) {
+                e.preventDefault();
+                openMoodBlocksPopup();
+            };
+
+            rememberWhyBtn.onclick = function(e) {
+                e.preventDefault();
+                openRememberWhyPopup();
+            };
         });
     </script>
 </body>
