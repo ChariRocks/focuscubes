@@ -32,10 +32,11 @@
   flex-direction: column;
   transform: translateX(100%);
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
 }
 
 .popup-meditation-overlay.active .popup-meditation-container {
-  transform: translateX(0);
+  transform: translateY(-50%) translateX(0);
 }
 
 .popup-meditation-header {
@@ -44,6 +45,9 @@
   align-items: center;
   padding: 15px 20px;
   border-bottom: 1px solid #f3f4f6;
+  cursor: move; /* Show move cursor */
+  user-select: none; /* Prevent text selection during drag */
+  touch-action: none; /* Prevent scrolling on touch devices */
 }
 
 .popup-meditation-close {
