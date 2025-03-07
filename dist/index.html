@@ -3,112 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Focus Cubes - Interactive Demo</title>
-    <link href="./styles.compiled.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
-    <link href="bar-mode.css" rel="stylesheet">
+    <title>Focus Cubes</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.min.js"></script>
+    <link href="css/styles.css" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .fade-in { animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
 </head>
-<body>
-    <!-- Bar Mode Toggle Button -->
-    <button id="toggleViewMode" class="normal-view-toggle">
-        Switch to Bar Mode
-    </button>
-
-    <!-- Bar Mode Container -->
-    <div id="barMode" class="bar-mode hidden">
-        <div class="bar-mode-content">
-            <div class="flex items-center">
-                <img src="images/focuscubeslogo.png" alt="Focus Cubes Logo" class="h-8">
-            </div>
-
-            <div class="bar-mode-buttons">
-                <button id="barModeLoginBtn" class="bar-mode-button" onclick="barModeLogin()" style="display: none;">
-                    Log In
-                </button>
-                <button class="bar-mode-button" onclick="window.location.href='during&between.html'">
-                    While at Work
-                </button>
-                <button class="bar-mode-button" onclick="window.location.href='6weekhomeNEW.html'">
-                    6-Week Transformation
-                </button>
-                <button class="bar-mode-button" onclick="toggleBarMode()">
-                    Expand/Collapse
-                </button>
-            </div>
-
-            <button class="bar-mode-toggle" onclick="switchToNormalMode()">
-                Switch to Normal View
-            </button>
-        </div>
-    </div>
-
-    <div id="app" class="min-h-screen">
-        <!-- Login Screen -->
-        <div id="loginScreen" class="min-h-screen bg-gradient-to-b from-sky-50 to-blue-50 flex flex-col justify-center items-center p-6">
-            <!-- Logo -->
-           <!-- Logo -->
-                <div class="mb-16 animate__animated animate__fadeIn">
-                    <img src="images/focuscubeslogo.png" alt="Focus Cubes Logo" class="w-64">
+<body class="bg-gray-50">
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+            <div id="welcome-screen">
+                <div class="w-14 h-14 bg-indigo-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i data-lucide="battery" class="w-8 h-8 text-indigo-500"></i>
                 </div>
-
-            <!-- Welcome Text -->
-            <h1 class="font-light mb-12 text-center text-gray-700 animate__animated animate__fadeIn animate__delay-1s">
-                <span class="block text-3xl font-bold">Welcome</span>
-                <span class="block text-2xl">Find Your Focus, Find Your Best!</span>
-            </h1>
-
-            <!-- Login Form -->
-            <div class="w-full max-w-sm space-y-8 animate__animated animate__fadeIn animate__delay-2s">
+                <h1 class="text-2xl font-medium text-gray-800 mb-3 text-center">
+                    Welcome to Focus Cubes
+                </h1>
+                <p class="text-base text-gray-600 mb-8 text-center">
+                    Your private reset space between calls
+                </p>
                 <input
                     type="text"
                     id="nameInput"
-                    placeholder="Your name"
-                    class="w-full bg-white/50 border border-sky-100 rounded-xl px-4 py-3 text-lg text-gray-700 focus:ring-2 focus:ring-sky-200 focus:border-sky-300 placeholder:text-gray-400"
+                    placeholder="Your name?"
+                    class="w-full px-6 py-4 rounded-xl border border-gray-200 text-center text-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 mb-4"
+                />
+                <p class="text-xs text-gray-500 mb-6 text-center">
+                    Focus Cubes is a self-help tool, not a replacement for mental health care. If you need support, please contact HR or your healthcare provider.
+                </p>
+                <button
+                    onclick="showNotificationScreen()"
+                    id="startButton"
+                    class="w-full py-4 bg-indigo-500 text-white rounded-xl text-base font-medium hover:bg-indigo-600 transition-colors"
                 >
-
-                <button 
-                    id="beginButton"
-                    class="w-full bg-gradient-to-r from-sky-500 to-teal-500 text-white rounded-xl py-6 text-lg font-light hover:opacity-90 transition-all shadow-sm hover:shadow-md"
-                >
-                    Begin
-                </button>
-            </div>
-        </div>
-
-        <!-- Path Selection Screen -->
-        <div id="pathScreen" class="min-h-screen bg-gradient-to-b from-sky-50 to-blue-50 flex flex-col hidden">
-            <!-- Header -->
-            <div class="absolute top-0 left-0 right-0 flex justify-between p-6">
-                <button 
-                    id="backButton"
-                    class="text-sky-600 hover:text-sky-700 transition-colors text-sm"
-                >
-                    back
+                    Start Fresh
                 </button>
             </div>
 
-            <div class="flex-1 flex flex-col justify-center p-6">
-                <!-- Greeting -->
-                <h1 id="greeting" class="text-3xl font-light mb-16 text-center text-gray-700">
-                    Hello
+            <div id="notification-screen" class="hidden">
+                <div class="w-14 h-14 bg-indigo-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i data-lucide="bell" class="w-8 h-8 text-indigo-500"></i>
+                </div>
+                <h1 class="text-2xl font-medium text-gray-800 mb-3 text-center">
+                    Hi <span id="userName"></span>, Ready for Better Days?
                 </h1>
-
-                <!-- Choice Cards -->
-                <div class="space-y-6 max-w-sm mx-auto w-full">
-                    <button 
-                        class="w-full bg-white/80 backdrop-blur-sm border border-sky-100 text-gray-700 rounded-3xl p-8 text-left transform hover:scale-[1.02] transition-all shadow-sm hover:shadow-md"
-                        onclick="selectPath('While at Work')"
+                <p class="text-base text-gray-600 mb-8 text-center">
+                    Get 3-4 quick reset prompts during your shift. 30-60 second breaks that make all the difference.
+                </p>
+                <div class="space-y-3">
+                    <button
+                        onclick="window.location.href='during&between.html'"
+                        class="w-full py-4 bg-indigo-500 text-white rounded-xl text-base font-medium hover:bg-indigo-600"
                     >
-                        <h2 class="text-2xl font-bold mb-2 text-sky-700">While at Work</h2>
-                        <p class="text-sm text-gray-500">Boost your day. Right here, Right now!</p>
+                        Enable Quick Resets
                     </button>
-
                     <button 
-                        class="w-full bg-teal-50/80 backdrop-blur-sm border border-teal-100 text-gray-700 rounded-3xl p-8 text-left transform hover:scale-[1.02] transition-all shadow-sm hover:shadow-md"
-                        onclick="selectPath('6-Week Shift')"
+                        onclick="finishOnboarding(false)"
+                        class="w-full py-4 border border-gray-200 text-gray-600 rounded-xl text-base font-medium hover:bg-gray-50"
                     >
-                        <h2 class="text-2xl font-bold mb-2 text-teal-700">6-Week Transformation</h2>
-                        <p class="text-sm text-gray-500">Build lasting Resilience and Focus for Life!</p>
+                        Set Up Later
                     </button>
                 </div>
             </div>
@@ -116,161 +76,25 @@
     </div>
 
     <script>
-        // Elements
-        const loginScreen = document.getElementById('loginScreen');
-        const pathScreen = document.getElementById('pathScreen');
-        const nameInput = document.getElementById('nameInput');
-        const beginButton = document.getElementById('beginButton');
-        const backButton = document.getElementById('backButton');
-        const greeting = document.getElementById('greeting');
+        lucide.createIcons();
 
-        // Event Listeners
-        beginButton.addEventListener('click', handleBegin);
-        backButton.addEventListener('click', handleBack);
-        nameInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                handleBegin();
-            }
-        });
-
-        // Functions
-        function handleBegin() {
-            const name = nameInput.value.trim();
+        function showNotificationScreen() {
+            const name = document.getElementById('nameInput').value.trim();
             if (name) {
-                greeting.textContent = `Hello, ${name}.`;
-
-                loginScreen.classList.add('animate__fadeOut');
-                setTimeout(() => {
-                    loginScreen.classList.add('hidden');
-                    pathScreen.classList.remove('hidden');
-                    pathScreen.classList.add('animate__fadeIn');
-                }, 500);
-            } else {
-                nameInput.classList.add('border-red-300');
-                nameInput.classList.add('animate__shakeX');
-                setTimeout(() => {
-                    nameInput.classList.remove('animate__shakeX');
-                }, 1000);
+                document.getElementById('welcome-screen').classList.add('hidden');
+                document.getElementById('notification-screen').classList.remove('hidden');
+                document.getElementById('userName').textContent = name;
             }
         }
 
-        function handleBack() {
-            pathScreen.classList.add('animate__fadeOut');
-            setTimeout(() => {
-                pathScreen.classList.add('hidden');
-                pathScreen.classList.remove('animate__fadeOut');
-                loginScreen.classList.remove('hidden', 'animate__fadeOut');
-                loginScreen.classList.add('animate__fadeIn');
-                nameInput.value = '';
-            }, 500);
-        }
-
-        function selectPath(path) {
-    const button = event.currentTarget;
-    button.classList.add('scale-95');
-    setTimeout(() => {
-        button.classList.remove('scale-95');
-        if (path === '6-Week Shift') {
-            window.location.href = '6weekhomeNEW.html';
-        } else if (path === 'While at Work') {
+        function finishOnboarding(enableNotifications) {
+            const name = document.getElementById('nameInput').value;
+            const message = enableNotifications ? 
+                `Thanks ${name}! You'll receive 3-4 gentle reminders during your shift for quick 30-60 second resets.` :
+                `Welcome ${name}! You can enable reminders anytime in settings.`;
+            alert(message);
             window.location.href = 'during&between.html';
         }
-    }, 200);
-}
-
-        // Add functionality to allow login from bar mode
-        function barModeLogin() {
-            const name = nameInput.value.trim();
-            if (name) {
-                // Switch to path screen
-                loginScreen.classList.add('animate__fadeOut');
-                setTimeout(() => {
-                    loginScreen.classList.add('hidden');
-                    pathScreen.classList.remove('hidden');
-                    pathScreen.classList.add('animate__fadeIn');
-                    greeting.textContent = `Hello, ${name}.`;
-                }, 500);
-            } else {
-                nameInput.focus();
-                nameInput.classList.add('border-red-300');
-                nameInput.classList.add('animate__shakeX');
-                setTimeout(() => {
-                    nameInput.classList.remove('animate__shakeX');
-                }, 1000);
-            }
-        }
-
-        if (window.location.hash === '#path') {
-    loginScreen.classList.add('hidden');
-    pathScreen.classList.remove('hidden');
-    pathScreen.classList.add('animate__fadeIn');
-}
-    </script>
-
-    <!-- Bar Mode JavaScript -->
-    <script>
-        // Elements
-        const toggleViewModeBtn = document.getElementById('toggleViewMode');
-        const barMode = document.getElementById('barMode');
-        const appContainer = document.getElementById('app');
-
-        // Event Listeners
-        toggleViewModeBtn.addEventListener('click', switchToBarMode);
-
-        // Functions for view mode switching
-        function switchToBarMode() {
-            barMode.classList.remove('hidden');
-            toggleViewModeBtn.classList.add('hidden');
-            document.body.classList.add('bar-mode-active');
-
-            // Save preference
-            localStorage.setItem('viewMode', 'bar');
-        }
-
-        function switchToNormalMode() {
-            barMode.classList.add('hidden');
-            toggleViewModeBtn.classList.remove('hidden');
-            document.body.classList.remove('bar-mode-active');
-
-            // Save preference
-            localStorage.setItem('viewMode', 'normal');
-        }
-
-        function toggleBarMode() {
-            barMode.classList.toggle('bar-mode-expanded');
-        }
-
-        // Check saved preference on load
-        document.addEventListener('DOMContentLoaded', function() {
-            const savedViewMode = localStorage.getItem('viewMode');
-            const isLoginScreen = document.getElementById('loginScreen') && 
-                                !document.getElementById('loginScreen').classList.contains('hidden');
-
-            // Only activate bar mode if we're not on the login screen
-            if (savedViewMode === 'bar' && !isLoginScreen) {
-                switchToBarMode();
-            }
-
-            // Handle login screen - show only login button in bar mode
-            if (loginScreen && !loginScreen.classList.contains('hidden')) {
-                // Show bar mode but only with login button
-                document.getElementById('barMode').classList.remove('hidden');
-                document.getElementById('toggleViewMode').classList.remove('hidden');
-
-                // Show only login button, hide all others
-                const barModeButtons = document.querySelectorAll('.bar-mode-buttons button');
-                barModeButtons.forEach(button => {
-                    if (button.id === 'barModeLoginBtn') {
-                        button.style.display = 'inline-flex';
-                    } else {
-                        button.style.display = 'none';
-                    }
-                });
-            } else {
-                // Hide login button when not on login screen
-                document.getElementById('barModeLoginBtn').style.display = 'none';
-            }
-        });
     </script>
 </body>
 </html>
