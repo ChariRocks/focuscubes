@@ -1,89 +1,100 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Focus Cubes</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.min.js"></script>
-    <link href="css/styles.css" rel="stylesheet">
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="css/styles.css" rel="stylesheet">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+    </script>
     <style>
-        .fade-in { animation: fadeIn 0.3s ease-out; }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        body {
+            background-color: #f0f7ff;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .gradient-button {
+            background: linear-gradient(to right, #4da7de, #45c19c);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .gradient-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(73, 169, 176, 0.3);
+        }
+        .logo-container {
+            margin-bottom: 60px;
         }
     </style>
 </head>
-<body class="bg-gray-50">
-    <div class="min-h-screen flex items-center justify-center p-4">
-        <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
-            <div id="welcome-screen">
-                <div class="w-14 h-14 bg-indigo-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <i data-lucide="battery" class="w-8 h-8 text-indigo-500"></i>
-                </div>
-                <h1 class="text-2xl font-medium text-gray-800 mb-3 text-center">
-                    Welcome to Focus Cubes
-                </h1>
-                <p class="text-base text-gray-600 mb-8 text-center">
-                    Your private reset space between calls
-                </p>
-                <input
-                    type="text"
-                    id="nameInput"
-                    placeholder="Your name?"
-                    class="w-full px-6 py-4 rounded-xl border border-gray-200 text-center text-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 mb-4"
-                />
-                <p class="text-xs text-gray-500 mb-6 text-center">
-                    Focus Cubes is a self-help tool, not a replacement for mental health care. If you need support, please contact HR or your healthcare provider.
-                </p>
-                <button
-                    onclick="showNotificationScreen()"
-                    id="startButton"
-                    class="w-full py-4 bg-indigo-500 text-white rounded-xl text-base font-medium hover:bg-indigo-600 transition-colors"
-                >
-                    Start Fresh
-                </button>
-            </div>
-
-            <div id="notification-screen" class="hidden">
-                <div class="w-14 h-14 bg-indigo-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <i data-lucide="bell" class="w-8 h-8 text-indigo-500"></i>
-                </div>
-                <h1 class="text-2xl font-medium text-gray-800 mb-3 text-center">
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md flex flex-col items-center">
+        <div class="logo-container">
+            <img src="images/focuscubeslogo.png" alt="Focus Cubes" class="h-14">
+        </div>
+        
+        <div class="text-center mb-10">
+            <h1 class="text-5xl font-bold text-gray-800 mb-4">Welcome</h1>
+            <p class="text-2xl text-gray-700">Find Your Focus, Find Your Best!</p>
+        </div>
+        
+        <div class="w-full">
+            <input 
+                type="text" 
+                id="nameInput" 
+                placeholder="Your name" 
+                class="w-full px-6 py-4 rounded-full border border-gray-200 mb-6 text-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            >
+            
+            <button 
+                id="startButton"
+                onclick="showNotificationScreen()" 
+                class="w-full py-4 rounded-full text-xl font-medium gradient-button"
+            >
+                Begin
+            </button>
+        </div>
+        
+        <div id="notification-screen" class="hidden w-full">
+            <div class="text-center mb-6">
+                <h1 class="text-2xl font-medium text-gray-800 mb-3">
                     Hi <span id="userName"></span>, Ready for Better Days?
                 </h1>
-                <p class="text-base text-gray-600 mb-8 text-center">
+                <p class="text-base text-gray-600">
                     Get 3-4 quick reset prompts during your shift. 30-60 second breaks that make all the difference.
                 </p>
-                <div class="space-y-3">
-                    <button
-                        onclick="window.location.href='during&between.html'"
-                        class="w-full py-4 bg-indigo-500 text-white rounded-xl text-base font-medium hover:bg-indigo-600"
-                    >
-                        Enable Quick Resets
-                    </button>
-                    <button 
-                        onclick="finishOnboarding(false)"
-                        class="w-full py-4 border border-gray-200 text-gray-600 rounded-xl text-base font-medium hover:bg-gray-50"
-                    >
-                        Set Up Later
-                    </button>
-                </div>
+            </div>
+            <div class="space-y-3">
+                <button
+                    onclick="window.location.href='during&between.html'"
+                    class="w-full py-4 gradient-button rounded-full text-base font-medium"
+                >
+                    Enable Quick Resets
+                </button>
+                <button 
+                    onclick="finishOnboarding(false)"
+                    class="w-full py-4 border border-gray-200 text-gray-600 rounded-full text-base font-medium hover:bg-gray-50"
+                >
+                    Set Up Later
+                </button>
             </div>
         </div>
     </div>
 
     <script>
-        lucide.createIcons();
-
         function showNotificationScreen() {
             const name = document.getElementById('nameInput').value.trim();
             if (name) {
-                document.getElementById('welcome-screen').classList.add('hidden');
                 document.getElementById('notification-screen').classList.remove('hidden');
                 document.getElementById('userName').textContent = name;
+                document.getElementById('nameInput').style.display = 'none';
+                document.getElementById('startButton').style.display = 'none';
             }
         }
 
