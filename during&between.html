@@ -395,12 +395,16 @@
         // Event Listeners
         document.getElementById('startButton').addEventListener('click', startMeditation);
         toggleViewMode.addEventListener('click', toggleBarMode);
-        document.getElementById('duringCallBtn').addEventListener('click', handleDuringCallButton);
-        document.getElementById('focusClarityBtn').addEventListener('click', handleFocusClarityButton);
-        document.getElementById('compassionBtn').addEventListener('click', handleCompassionButton);
-        document.getElementById('energyResetBtn').addEventListener('click', handleEnergyResetButton);
-        document.getElementById('moodBlocksBtn').addEventListener('click', handleMoodBlocksButton);
-        document.getElementById('rememberWhyBtn').addEventListener('click', handleRememberWhyButton);
+        
+        // Initialize bar mode if needed - only bind these events once
+        if (!document.body.classList.contains('bar-mode-active')) {
+            document.getElementById('duringCallBtn').addEventListener('click', handleDuringCallButton);
+            document.getElementById('focusClarityBtn').addEventListener('click', handleFocusClarityButton);
+            document.getElementById('compassionBtn').addEventListener('click', handleCompassionButton);
+            document.getElementById('energyResetBtn').addEventListener('click', handleEnergyResetButton);
+            document.getElementById('moodBlocksBtn').addEventListener('click', handleMoodBlocksButton);
+            document.getElementById('rememberWhyBtn').addEventListener('click', handleRememberWhyButton);
+        }
 
         // Handler functions for meditation buttons in bar mode
         function handleDuringCallButton() {
@@ -700,39 +704,44 @@
             const moodBlocksBtn = document.getElementById('moodBlocksBtn');
             const rememberWhyBtn = document.getElementById('rememberWhyBtn');
 
-            // Add bar-mode-active class to body first to ensure popups work
-            document.body.classList.add('bar-mode-active');
+            // Remove the previously added event listeners
+            duringCallBtn.removeEventListener('click', handleDuringCallButton);
+            focusClarityBtn.removeEventListener('click', handleFocusClarityButton);
+            compassionBtn.removeEventListener('click', handleCompassionButton);
+            energyResetBtn.removeEventListener('click', handleEnergyResetButton);
+            moodBlocksBtn.removeEventListener('click', handleMoodBlocksButton);
+            rememberWhyBtn.removeEventListener('click', handleRememberWhyButton);
 
             // Create direct click handlers without setting onclick attributes
-            duringCallBtn.onclick = function(e) {
+            duringCallBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 createPopupMeditationWindow('duringCall');
-            };
+            });
 
-            focusClarityBtn.onclick = function(e) {
+            focusClarityBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 createPopupMeditationWindow('focusClarity');
-            };
+            });
 
-            compassionBtn.onclick = function(e) {
+            compassionBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 createPopupMeditationWindow('compassion');
-            };
+            });
 
-            energyResetBtn.onclick = function(e) {
+            energyResetBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 createPopupMeditationWindow('energyReset');
-            };
+            });
 
-            moodBlocksBtn.onclick = function(e) {
+            moodBlocksBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 openMoodBlocksPopup();
-            };
+            });
 
-            rememberWhyBtn.onclick = function(e) {
+            rememberWhyBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 openRememberWhyPopup();
-            };
+            });
         });
     </script>
 </body>
