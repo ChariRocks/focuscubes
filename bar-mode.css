@@ -100,10 +100,12 @@
   border-color: #10b981;
 }
 
-.bar-mode-button[onclick*="MoodBlocks.html"] {
-  background-color: #fbbf24;
-  color: #1f2937;
-  border-color: #fbbf24;
+.bar-mode-button[onclick*="MoodBlocks.html"],
+#moodBlocksBtn {
+  background-color: #fcd34d;
+  color: #1e293b;
+  border-color: #fcd34d;
+  font-weight: 500;
 }
 
 .bar-mode-button[onclick*="focusandclarity.html"] {
@@ -124,10 +126,12 @@
   border-color: #e5e7eb;
 }
 
-.bar-mode-button[onclick*="rememberyourwhy.html"] {
+.bar-mode-button[onclick*="rememberyourwhy.html"],
+#rememberWhyBtn {
   background-color: #fef9c3;
-  color: #1f2937;
+  color: #1e293b;
   border-color: #fef08a;
+  font-weight: 500;
 }
 
 .bar-mode-button:hover {
@@ -145,10 +149,11 @@
 }
 
 .bar-mode-button[onclick*="MoodBlocks.html"]:hover,
-.bar-mode-button-primary:hover {
-  background-color: #f59e0b;
-  color: #1f2937;
-  border-color: #f59e0b;
+#moodBlocksBtn:hover {
+  background-color: #fbbf24;
+  color: #1e293b;
+  border-color: #fbbf24;
+  transform: scale(1.03);
 }
 
 /* Primary button (During Call) styling */
@@ -165,10 +170,12 @@
   border-color: #059669;
 }
 
-.bar-mode-button[onclick*="rememberyourwhy.html"]:hover {
+.bar-mode-button[onclick*="rememberyourwhy.html"]:hover,
+#rememberWhyBtn:hover {
   background-color: #fde68a;
-  color: #1f2937;
+  color: #1e293b;
   border-color: #fbbf24;
+  transform: scale(1.03);
 }
 
 .bar-mode-button[onclick*="focusandclarity.html"]:hover,
