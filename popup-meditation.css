@@ -32,6 +32,8 @@
   flex-direction: column;
   transform: translateX(100%);
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  cursor: move; /* Show move cursor on the container */
 }
 
 .popup-meditation-overlay.active .popup-meditation-container {

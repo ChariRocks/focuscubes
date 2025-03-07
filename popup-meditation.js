@@ -8,6 +8,9 @@ function createPopupMeditationWindow(meditationType) {
   const container = document.createElement('div');
   container.className = 'popup-meditation-container';
 
+  // Make the container draggable
+  makeDraggable(container);
+
   // Create header
   const header = document.createElement('div');
   header.className = 'popup-meditation-header';
@@ -481,6 +484,9 @@ function createFocusClarityMeditationPopup(type) {
   const container = document.createElement('div');
   container.className = 'popup-meditation-container';
 
+  // Make the container draggable
+  makeDraggable(container);
+
   // Create header
   const header = document.createElement('div');
   header.className = 'popup-meditation-header';
@@ -500,7 +506,7 @@ function createFocusClarityMeditationPopup(type) {
   // Create content for the meditation
   const content = document.createElement('div');
   content.className = 'popup-meditation-content';
-  
+
   // Create instruction screen first
   const instructionScreen = document.createElement('div');
   instructionScreen.className = 'flex-1 flex flex-col items-center justify-center p-6';
@@ -511,29 +517,29 @@ function createFocusClarityMeditationPopup(type) {
       <p class="text-lg text-slate-800 mt-8">Starting in <span id="popup-fc-instruction-count">3</span>...</p>
     </div>
   `;
-  
+
   content.appendChild(instructionScreen);
-  
+
   // Append components
   container.appendChild(header);
   container.appendChild(content);
   overlay.appendChild(container);
   document.body.appendChild(overlay);
-  
+
   // Activate the popup with a slight delay for animation
   setTimeout(() => {
     overlay.classList.add('active');
   }, 10);
-  
+
   // Start the 3-second countdown
   let timeLeft = 3;
   const countdownElement = document.getElementById('popup-fc-instruction-count');
   countdownElement.textContent = timeLeft;
-  
+
   const countdown = setInterval(() => {
     timeLeft--;
     countdownElement.textContent = timeLeft;
-    
+
     if (timeLeft <= 0) {
       clearInterval(countdown);
       // Replace instruction screen with meditation content
@@ -541,7 +547,7 @@ function createFocusClarityMeditationPopup(type) {
       startFocusClarityMeditation(content, type);
     }
   }, 1000);
-  
+
   return overlay;
 }
 
@@ -702,19 +708,19 @@ function startFocusClarityMeditation(content, type) {
     // First ensure cube is small with no transition
     cube.style.transition = 'none';
     cube.style.transform = 'scale(1)';
-    
+
     // Force a reflow to ensure small size is applied
     cube.offsetHeight;
-    
+
     // Inhale phase - setup appearance
     phase = 'inhale';
     breatheText.textContent = 'Inhale with the cube';
     instruction.textContent = breaths[currentBreath].inhale;
     cube.className = 'w-36 h-36 rounded-xl flex items-center justify-center shadow-xl bg-emerald-100 text-center p-6';
-    
+
     // Set up transition property
     cube.style.transition = `all ${BREATH_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)`;
-    
+
     // Use timeout to ensure browser registers initial state before animating
     setTimeout(() => {
       cube.style.transform = 'scale(1.3)';
@@ -800,6 +806,9 @@ function createCompassionMeditationPopup(intensity) {
   const container = document.createElement('div');
   container.className = 'popup-meditation-container';
 
+  // Make the container draggable
+  makeDraggable(container);
+
   // Create header
   const header = document.createElement('div');
   header.className = 'popup-meditation-header';
@@ -819,7 +828,7 @@ function createCompassionMeditationPopup(intensity) {
   // Create content for the meditation
   const content = document.createElement('div');
   content.className = 'popup-meditation-content';
-  
+
   // Create instruction screen first
   const instructionScreen = document.createElement('div');
   instructionScreen.className = 'flex-1 flex flex-col items-center justify-center p-6';
@@ -830,29 +839,29 @@ function createCompassionMeditationPopup(intensity) {
       <p class="text-lg text-slate-800 mt-8">Starting in <span id="popup-comp-instruction-count">3</span>...</p>
     </div>
   `;
-  
+
   content.appendChild(instructionScreen);
-  
+
   // Append components
   container.appendChild(header);
   container.appendChild(content);
   overlay.appendChild(container);
   document.body.appendChild(overlay);
-  
+
   // Activate the popup with a slight delay for animation
   setTimeout(() => {
     overlay.classList.add('active');
   }, 10);
-  
+
   // Start the 3-second countdown
   let timeLeft = 3;
   const countdownElement = document.getElementById('popup-comp-instruction-count');
   countdownElement.textContent = timeLeft;
-  
+
   const countdown = setInterval(() => {
     timeLeft--;
     countdownElement.textContent = timeLeft;
-    
+
     if (timeLeft <= 0) {
       clearInterval(countdown);
       // Replace instruction screen with meditation content
@@ -860,7 +869,7 @@ function createCompassionMeditationPopup(intensity) {
       startCompassionMeditation(content, intensity);
     }
   }, 1000);
-  
+
   return overlay;
 }
 
@@ -903,7 +912,7 @@ function startCompassionMeditation(content, intensity) {
     // 5. Building compassion (1 breath)
     {
       inhale: "We're all human here",
-      exhale: "It's important to be kind to eachother"
+      exhale: ""It's important to be kind to eachother"
     }
   ];
 
@@ -1024,19 +1033,19 @@ function startCompassionMeditation(content, intensity) {
     // First reset cube to small size with no transition
     cube.style.transition = 'none';
     cube.style.transform = 'scale(1)';
-    
+
     // Force a reflow to ensure small size is applied
     cube.offsetHeight;
-    
+
     // Inhale phase - setup appearance
     phase = 'inhale';
     breatheText.textContent = 'Inhale with the cube';
     instruction.textContent = breaths[currentBreath].inhale;
     cube.className = 'w-36 h-36 rounded-3xl flex items-center justify-center shadow-xl bg-rose-100 text-center p-6';
-    
+
     // Set up transition property
     cube.style.transition = `all ${BREATH_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)`;
-    
+
     // Use timeout to ensure browser registers initial state before animating
     setTimeout(() => {
       cube.style.transform = 'scale(1.3)';
@@ -1126,6 +1135,9 @@ function createEnergyResetMeditationPopup(minutes) {
   const container = document.createElement('div');
   container.className = 'popup-meditation-container';
 
+  // Make the container draggable
+  makeDraggable(container);
+
   // Create header
   const header = document.createElement('div');
   header.className = 'popup-meditation-header';
@@ -1145,7 +1157,7 @@ function createEnergyResetMeditationPopup(minutes) {
   // Create content for the meditation
   const content = document.createElement('div');
   content.className = 'popup-meditation-content';
-  
+
   // Create instruction screen first
   const instructionScreen = document.createElement('div');
   instructionScreen.className = 'flex-1 flex flex-col items-center justify-center p-6';
@@ -1156,29 +1168,29 @@ function createEnergyResetMeditationPopup(minutes) {
       <p class="text-lg text-slate-800 mt-8">Starting in <span id="popup-energy-instruction-count">3</span>...</p>
     </div>
   `;
-  
+
   content.appendChild(instructionScreen);
-  
+
   // Append components
   container.appendChild(header);
   container.appendChild(content);
   overlay.appendChild(container);
   document.body.appendChild(overlay);
-  
+
   // Activate the popup with a slight delay for animation
   setTimeout(() => {
     overlay.classList.add('active');
   }, 10);
-  
+
   // Start the 3-second countdown
   let timeLeft = 3;
   const countdownElement = document.getElementById('popup-energy-instruction-count');
   countdownElement.textContent = timeLeft;
-  
+
   const countdown = setInterval(() => {
     timeLeft--;
     countdownElement.textContent = timeLeft;
-    
+
     if (timeLeft <= 0) {
       clearInterval(countdown);
       // Replace instruction screen with meditation content
@@ -1186,7 +1198,7 @@ function createEnergyResetMeditationPopup(minutes) {
       startEnergyResetMeditation(content, minutes);
     }
   }, 1000);
-  
+
   return overlay;
 }
 
@@ -1272,10 +1284,10 @@ function startEnergyResetMeditation(content, minutes) {
     // Reset the cube state first without transition
     cube.style.transition = 'none';
     cube.style.transform = 'scale(1)';
-    
+
     // Force a reflow to ensure the browser applies this state immediately
     cube.offsetHeight;
-    
+
     // First inhale (4 seconds)
     breatheText.textContent = "Inhale as the cube expands";
     cube.className = 'w-36 h-36 rounded-3xl flex flex-col items-center justify-center shadow-xl bg-green-50';
@@ -1285,7 +1297,7 @@ function startEnergyResetMeditation(content, minutes) {
 
     // Now set the transition and start the expansion after a small delay
     cube.style.transition = 'all 4s cubic-bezier(0.4, 0, 0.2, 1)';
-    
+
     // Use a small timeout to ensure the browser registers the initial state
     setTimeout(() => {
       cube.style.transform = 'scale(1.25)';
@@ -1434,6 +1446,9 @@ function openMoodBlocksPopup() {
   const container = document.createElement('div');
   container.className = 'popup-meditation-container';
 
+  // Make the container draggable
+  makeDraggable(container);
+
   // Create header
   const header = document.createElement('div');
   header.className = 'popup-meditation-header';
@@ -1488,6 +1503,9 @@ function openRememberWhyPopup() {
   const container = document.createElement('div');
   container.className = 'popup-meditation-container';
 
+  // Make the container draggable
+  makeDraggable(container);
+
   // Create header
   const header = document.createElement('div');
   header.className = 'popup-meditation-header';
@@ -1526,4 +1544,137 @@ function openRememberWhyPopup() {
   }, 10);
 
   return true;
+}
+
+// Function to make an element draggable
+function makeDraggable(element) {
+  let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+
+  // Get the header as the drag handle
+  const header = element.querySelector('.popup-meditation-header');
+
+  if (header) {
+    // If present, the header is where you move the element from
+    header.style.cursor = 'move';
+    header.onmousedown = dragMouseDown;
+    header.ontouchstart = dragTouchStart;
+  } else {
+    // Otherwise, move the element from anywhere inside it
+    element.onmousedown = dragMouseDown;
+    element.ontouchstart = dragTouchStart;
+  }
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // Get the mouse cursor position at startup
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+
+    // Change position from transform to actual positioning
+    const computedStyle = window.getComputedStyle(element);
+    const transform = computedStyle.getPropertyValue('transform');
+
+    // Only modify position if the element has been animated in
+    if (transform !== 'matrix(1, 0, 0, 1, 0, 0)' && transform !== 'none') {
+      // Reset transform and set absolute positioning
+      element.style.transform = 'none';
+      element.style.transition = 'none';
+      element.style.position = 'absolute';
+      element.style.margin = '0';
+
+      // Calculate current position
+      const rect = element.getBoundingClientRect();
+      element.style.top = rect.top + 'px';
+      element.style.right = (window.innerWidth - rect.right) + 'px';
+    }
+
+    document.onmouseup = closeDragElement;
+    document.onmousemove = elementDrag;
+  }
+
+  function dragTouchStart(e) {
+    e.preventDefault();
+    const touch = e.touches[0];
+    pos3 = touch.clientX;
+    pos4 = touch.clientY;
+
+    // Change position from transform to actual positioning
+    const computedStyle = window.getComputedStyle(element);
+    const transform = computedStyle.getPropertyValue('transform');
+
+    // Only modify position if the element has been animated in
+    if (transform !== 'matrix(1, 0, 0, 1, 0, 0)' && transform !== 'none') {
+      // Reset transform and set absolute positioning
+      element.style.transform = 'none';
+      element.style.transition = 'none';
+      element.style.position = 'absolute';
+      element.style.margin = '0';
+
+      // Calculate current position
+      const rect = element.getBoundingClientRect();
+      element.style.top = rect.top + 'px';
+      element.style.right = (window.innerWidth - rect.right) + 'px';
+    }
+
+    document.ontouchend = closeDragElement;
+    document.ontouchmove = elementTouchDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+
+    // Calculate the new cursor position
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+
+    // Constrain the element to stay within the viewport
+    const rect = element.getBoundingClientRect();
+    let newTop = (element.offsetTop - pos2);
+    let newLeft = (element.offsetLeft - pos1);
+
+    // Constrain to viewport
+    newTop = Math.max(0, Math.min(newTop, window.innerHeight - rect.height));
+    newLeft = Math.max(0, Math.min(newLeft, window.innerWidth - rect.width));
+
+    // Set the element's new position
+    element.style.top = newTop + "px";
+    element.style.left = newLeft + "px";
+    element.style.right = "auto"; // Clear right positioning
+  }
+
+  function elementTouchDrag(e) {
+    const touch = e.touches[0];
+
+    // Calculate the new touch position
+    pos1 = pos3 - touch.clientX;
+    pos2 = pos4 - touch.clientY;
+    pos3 = touch.clientX;
+    pos4 = touch.clientY;
+
+    // Constrain the element to stay within the viewport
+    const rect = element.getBoundingClientRect();
+    let newTop = (element.offsetTop - pos2);
+    let newLeft = (element.offsetLeft - pos1);
+
+    // Constrain to viewport
+    newTop = Math.max(0, Math.min(newTop, window.innerHeight - rect.height));
+    newLeft = Math.max(0, Math.min(newLeft, window.innerWidth - rect.width));
+
+    // Set the element's new position
+    element.style.top = newTop + "px";
+    element.style.left = newLeft + "px";
+    element.style.right = "auto"; // Clear right positioning
+  }
+
+  function closeDragElement() {
+    // Stop moving when mouse button or touch is released
+    document.onmouseup = null;
+    document.onmousemove = null;
+    document.ontouchend = null;
+    document.ontouchmove = null;
+  }
 }
