@@ -19,6 +19,9 @@
             background-color: #f0f7ff;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
+        .bg-mint-50 {
+            background-color: #f0f9f1;
+        }
         .gradient-button {
             background: linear-gradient(to right, #4da7de, #45c19c);
             color: white;
@@ -72,19 +75,17 @@
         </div>
         
         <div id="options-screen" class="hidden w-full">
-            <div class="flex justify-between items-center mb-6 py-3 z-10">
-                <button onclick="goBack()" class="text-blue-600">
-                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <div class="flex justify-between items-center px-4 py-4 bg-mint-50">
+                <button onclick="goBack()" class="p-2">
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="m15 18-6-6 6-6"/>
                     </svg>
                 </button>
-                <div class="flex space-x-2">
-                    <button class="bg-indigo-600 text-white text-sm font-medium py-2 px-4 rounded-full hover:bg-indigo-700 transition-colors">
-                        Switch to Bar Mode
-                    </button>
-                </div>
-                <button onclick="closePage()" class="text-gray-500">
-                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <button class="bg-indigo-600 text-white text-sm font-medium py-2 px-4 rounded-full hover:bg-indigo-700 transition-colors">
+                    Switch to Bar Mode
+                </button>
+                <button onclick="closePage()" class="p-2">
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
                     </svg>
                 </button>
