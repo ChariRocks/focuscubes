@@ -18,6 +18,11 @@ function initBarMode() {
         // Save preference
         localStorage.setItem('viewMode', 'bar');
         
+        // Update buttons based on current visible screen if updateBarModeButtons exists
+        if (typeof updateBarModeButtons === 'function') {
+            updateBarModeButtons();
+        }
+        
         console.log("Bar mode activated");
     };
     
