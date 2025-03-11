@@ -260,34 +260,20 @@
                 const grid = document.getElementById('moodGrid');
 
                 if (currentView === 'simple') {
-                    // Create thumbs layout for simple view
-                    grid.innerHTML = `
-                        <div class="flex flex-col items-center gap-4">
-                            <button onclick='selectMood(${JSON.stringify(simpleMoods[0])})' 
-                                    class="flex flex-col items-center justify-center w-40 h-40 rounded-lg ${getColorClass(simpleMoods[0].color, selectedMood?.id === simpleMoods[0].id)} text-white p-4 ${selectedMood?.id === simpleMoods[0].id ? 'scale-105' : ''} transition-all">
-                                <div class="text-4xl mb-2">👍👍</div>
-                                <span class="text-sm font-medium">Much Better</span>
-                            </button>
-                            
-                            <button onclick='selectMood(${JSON.stringify(simpleMoods[1])})' 
-                                    class="flex flex-col items-center justify-center w-40 h-40 rounded-lg ${getColorClass(simpleMoods[1].color, selectedMood?.id === simpleMoods[1].id)} text-white p-4 ${selectedMood?.id === simpleMoods[1].id ? 'scale-105' : ''} transition-all">
-                                <div class="text-4xl mb-2">👍</div>
-                                <span class="text-sm font-medium">Better</span>
-                            </button>
-                            
-                            <button onclick='selectMood(${JSON.stringify(simpleMoods[2])})' 
-                                    class="flex flex-col items-center justify-center w-40 h-40 rounded-lg ${getColorClass(simpleMoods[2].color, selectedMood?.id === simpleMoods[2].id)} text-white p-4 ${selectedMood?.id === simpleMoods[2].id ? 'scale-105' : ''} transition-all">
-                                <div class="text-4xl mb-2">😐</div>
-                                <span class="text-sm font-medium">Neutral</span>
-                            </button>
-                            
-                            <button onclick='selectMood(${JSON.stringify(simpleMoods[3])})' 
-                                    class="flex flex-col items-center justify-center w-40 h-40 rounded-lg ${getColorClass(simpleMoods[3].color, selectedMood?.id === simpleMoods[3].id)} text-white p-4 ${selectedMood?.id === simpleMoods[3].id ? 'scale-105' : ''} transition-all">
-                                <div class="text-4xl mb-2">👎</div>
-                                <span class="text-sm font-medium">Worse</span>
-                            </button>
-                        </div>
-                    `;
+                    // Create simple view with subtle icons
+                    grid.innerHTML = simpleMoods.map(mood => `
+                        <button onclick='selectMood(${JSON.stringify(mood)})' 
+                                class="${getColorClass(mood.color, selectedMood?.id === mood.id)} 
+                                    w-full p-4 rounded-lg text-white font-medium transition-all flex items-center">
+                            <span class="mr-2 text-xl">${
+                                mood.id === 1 ? '👍👍' : 
+                                mood.id === 2 ? '👍' : 
+                                mood.id === 3 ? '😐' : 
+                                '👎'
+                            }</span>
+                            ${mood.name}
+                        </button>
+                    `).join('');
                 } else {
                     grid.innerHTML = detailedMoods.map(group => `
                         <div class="grid grid-cols-2 gap-2">
