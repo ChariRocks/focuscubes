@@ -93,7 +93,7 @@
         // Default Mood Data
         const defaultSimpleMoods = [
             { id: 1, name: 'Much Better', color: 'emerald', level: 1 },
-            { id: 2, name: 'Better', color: 'blue', level: 2 },
+            { id: 2, name: 'Better', color: 'green', level: 2 },
             { id: 3, name: 'Neutral', color: 'yellow', level: 3 },
             { id: 4, name: 'Worse', color: 'orange', level: 4 }
         ];
@@ -120,12 +120,12 @@
         // UI Functions
         function getColorClass(color, isSelected) {
             const colors = {
-                emerald: isSelected ? 'bg-emerald-500 ring-4 ring-emerald-200' : 'bg-emerald-400 hover:bg-emerald-500',
-                green: isSelected ? 'bg-green-500 ring-4 ring-green-200' : 'bg-green-400 hover:bg-green-500',
-                blue: isSelected ? 'bg-blue-500 ring-4 ring-blue-200' : 'bg-blue-400 hover:bg-blue-500',
-                yellow: isSelected ? 'bg-yellow-500 ring-4 ring-yellow-200' : 'bg-yellow-400 hover:bg-yellow-500',
-                orange: isSelected ? 'bg-orange-500 ring-4 ring-orange-200' : 'bg-orange-400 hover:bg-orange-500',
-                red: isSelected ? 'bg-red-500 ring-4 ring-red-200' : 'bg-red-400 hover:bg-red-500'
+                emerald: isSelected ? 'bg-emerald-400 ring-2 ring-emerald-100' : 'bg-emerald-300 hover:bg-emerald-400',
+                green: isSelected ? 'bg-green-400 ring-2 ring-green-100' : 'bg-green-300 hover:bg-green-400',
+                blue: isSelected ? 'bg-blue-400 ring-2 ring-blue-100' : 'bg-blue-300 hover:bg-blue-400',
+                yellow: isSelected ? 'bg-yellow-300 ring-2 ring-yellow-100' : 'bg-yellow-200 hover:bg-yellow-300',
+                orange: isSelected ? 'bg-orange-300 ring-2 ring-orange-100' : 'bg-orange-200 hover:bg-orange-300',
+                red: isSelected ? 'bg-red-300 ring-2 ring-red-100' : 'bg-red-200 hover:bg-red-300'
             };
             return colors[color] || colors.blue;
         }
@@ -264,12 +264,12 @@
                     grid.innerHTML = simpleMoods.map(mood => `
                         <button onclick='selectMood(${JSON.stringify(mood)})' 
                                 class="${getColorClass(mood.color, selectedMood?.id === mood.id)} 
-                                    w-full p-4 rounded-lg text-white font-medium transition-all flex items-center">
-                            <span class="mr-2 text-xl">${
-                                mood.id === 1 ? '👍👍' : 
-                                mood.id === 2 ? '👍' : 
-                                mood.id === 3 ? '😐' : 
-                                '👎'
+                                    w-full p-4 rounded-lg text-slate-700 font-medium transition-all flex items-center">
+                            <span class="mr-2 text-lg opacity-75">${
+                                mood.id === 1 ? '▲▲' : 
+                                mood.id === 2 ? '▲' : 
+                                mood.id === 3 ? '○' : 
+                                '▼'
                             }</span>
                             ${mood.name}
                         </button>
