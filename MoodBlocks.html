@@ -220,24 +220,46 @@
         }
 
         function selectMood(mood) {
-            // If clicking the same mood again, deselect it
-            if (selectedMood && selectedMood.id === mood.id) {
-                selectedMood = null;
-                previousMood = null;
+            // For detailed view, maintain the current two-step process
+            if (currentView === 'detailed') {
+                // If clicking the same mood again, deselect it
+                if (selectedMood && selectedMood.id === mood.id) {
+                    selectedMood = null;
+                    previousMood = null;
+                    updateHeader();
+                    renderMoods();
+                    return;
+                }
+
+                // If there's already a selected mood, show improvement dialog
+                if (selectedMood) {
+                    previousMood = selectedMood;
+                    showImprovement(previousMood, mood);
+                }
+
+                selectedMood = mood;
                 updateHeader();
                 renderMoods();
-                return;
-            }
-
-            // If there's already a selected mood, show improvement dialog
-            if (selectedMood) {
-                previousMood = selectedMood;
+            } 
+            // For simple view, record mood directly with a single click
+            else {
+                // For simple view, we'll simulate having a "default" previous state
+                // This allows users to record their current mood with just one click
+                previousMood = {
+                    id: 0,
+                    name: "Previous state",
+                    level: mood.level,  // We use the same level as a default
+                    color: mood.color
+                };
+                selectedMood = mood;
+                
+                // Show the improvement dialog immediately
                 showImprovement(previousMood, mood);
+                
+                // Reset selection after showing dialog
+                updateHeader();
+                renderMoods();
             }
-
-            selectedMood = mood;
-            updateHeader();
-            renderMoods();
         }
 
         function updateHeader() {
@@ -303,20 +325,21 @@
             let dialogTitle = 'Reflection';
             
             if (currentView === 'simple') {
-                // For simple view, adapt text based on the change direction
-                if (to.level < from.level) {
-                    // They're feeling better
+                // For simple view, adapt text based on the mood selected
+                if (to.name === 'Much Better') {
                     dialogTitle = 'Great Progress!';
+                    promptText = `You're feeling ${to.name}. What one thing specifically helped you feel much better?`;
+                } else if (to.name === 'Better') {
+                    dialogTitle = 'Positive Change';
                     promptText = `You're feeling ${to.name}. What one thing specifically helped you feel better?`;
-                } else if (to.level > from.level) {
-                    // They're feeling worse
+                } else if (to.name === 'Neutral') {
+                    dialogTitle = 'Neutral State';
+                    promptText = `You're feeling neutral. What's one small thing that might help shift your day in a positive direction?`;
+                } else if (to.name === 'Worse') {
                     dialogTitle = 'Something Changed';
                     promptText = `You're feeling ${to.name}. What specifically contributed to this change?`;
-                } else if (to.name === 'Neutral') {
-                    // Neutral specific prompt
-                    promptText = `You're feeling neutral. What's one small thing that might help shift your day in a positive direction?`;
                 } else {
-                    // No change in level
+                    // Generic fallback
                     promptText = `You selected ${to.name}. What's on your mind right now?`;
                 }
             } else {
@@ -344,14 +367,32 @@
         function saveNote() {
             const note = document.getElementById('noteInput').value;
             if (note.trim()) {
-                history.unshift({
-                    id: Date.now(),
-                    from: previousMood.name,
-                    to: selectedMood.name,
-                    note: note,
-                    date: new Date().toISOString()
-                });
+                if (currentView === 'simple') {
+                    // For simple view, we record just the current mood
+                    history.unshift({
+                        id: Date.now(),
+                        from: currentView === 'simple' ? selectedMood.name : previousMood.name,
+                        to: selectedMood.name,
+                        note: note,
+                        date: new Date().toISOString()
+                    });
+                } else {
+                    // For detailed view, we record the transition from previous to current
+                    history.unshift({
+                        id: Date.now(),
+                        from: previousMood.name,
+                        to: selectedMood.name,
+                        note: note,
+                        date: new Date().toISOString()
+                    });
+                }
                 closeImprovement();
+                // Reset selection in simple view after recording
+                if (currentView === 'simple') {
+                    selectedMood = null;
+                    previousMood = null;
+                    renderMoods();
+                }
             }
         }
 
