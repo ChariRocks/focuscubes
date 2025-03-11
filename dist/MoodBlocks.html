@@ -62,7 +62,7 @@
         <!-- Other existing dialogs -->
         <div id="improvementDialog" class="fixed inset-0 bg-black bg-opacity-50 hidden">
             <div class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-lg w-[90vw] max-w-md">
-                <h3 class="text-lg font-bold mb-2">Great Progress!</h3>
+                <h3 id="dialogTitle" class="text-lg font-bold mb-2">Reflection</h3>
                 <p id="improvementText" class="text-gray-600 mb-4"></p>
                 <textarea id="noteInput" class="w-full p-3 border rounded-lg mb-4 h-32" placeholder="What specifically helped? What can you do more of? What can you do less of?"></textarea>
                 <div class="flex justify-end gap-2">
@@ -300,23 +300,39 @@
             document.getElementById('improvementDialog').classList.remove('hidden');
             
             let promptText = '';
+            let dialogTitle = 'Reflection';
+            
             if (currentView === 'simple') {
                 // For simple view, adapt text based on the change direction
                 if (to.level < from.level) {
                     // They're feeling better
+                    dialogTitle = 'Great Progress!';
                     promptText = `You're feeling ${to.name}. What one thing specifically helped you feel better?`;
                 } else if (to.level > from.level) {
                     // They're feeling worse
+                    dialogTitle = 'Something Changed';
                     promptText = `You're feeling ${to.name}. What specifically contributed to this change?`;
+                } else if (to.name === 'Neutral') {
+                    // Neutral specific prompt
+                    promptText = `You're feeling neutral. What's one small thing that might help shift your day in a positive direction?`;
                 } else {
                     // No change in level
                     promptText = `You selected ${to.name}. What's on your mind right now?`;
                 }
             } else {
-                // For detailed view, keep original format
-                promptText = `You've moved from "${from.name}" to "${to.name}". What specifically helped you feel better?`;
+                // For detailed view, adapt based on level comparison
+                if (to.level < from.level) {
+                    dialogTitle = 'Great Progress!';
+                    promptText = `You've moved from "${from.name}" to "${to.name}". What specifically helped you feel better?`;
+                } else if (to.level > from.level) {
+                    dialogTitle = 'Something Changed';
+                    promptText = `You've moved from "${from.name}" to "${to.name}". What do you think contributed to this change?`;
+                } else {
+                    promptText = `You've moved from "${from.name}" to "${to.name}". What observations do you have about this shift?`;
+                }
             }
             
+            document.getElementById('dialogTitle').textContent = dialogTitle;
             document.getElementById('improvementText').textContent = promptText;
         }
 
