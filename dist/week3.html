@@ -5,53 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Choosing New Paths</title>
     <link href="css/styles.css" rel="stylesheet">
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <link href="https://cdn.jsdelivr.net/npm/@radix-ui/themes@2.0.0/styles.css" rel="stylesheet" />
-    <link href="bar-mode.css" rel="stylesheet">
-    <script src="bar-mode.js"></script>
 </head>
-<body class="bg-gradient-to-b from-purple-50 to-white min-h-screen">
-    <!-- Bar Mode Toggle Button -->
-    <button id="toggleViewMode" class="normal-view-toggle">Switch to Bar Mode</button>
-
-    <!-- Bar Mode Container -->
-    <div id="barMode" class="bar-mode hidden">
-        <div class="bar-mode-content">
-            <div class="flex items-center">
-                <img src="images/focuscubeslogo.png" alt="Focus Cubes Logo" class="h-8">
-            </div>
-
-            <div id="homeScreenButtons" class="bar-mode-buttons">
-                <button class="bar-mode-button" onclick="window.location.href='index.html'">
-                    <i class="ph ph-house mr-2"></i> Home
-                </button>
-                <button class="bar-mode-button" onclick="window.location.href='during&between.html'">
-                    <i class="ph ph-phone mr-2"></i> While at Work
-                </button>
-                <button class="bar-mode-button" onclick="window.location.href='6weekhomeNEW.html'">
-                    <i class="ph ph-timer mr-2"></i> 6-Week Transformation
-                </button>
-                <button class="bar-mode-button" id="focusClarityBtn" onclick="window.location.href='focusandclarity.html'">
-                    <i class="ph ph-brain mr-2 text-green-600"></i> Focus & Clarity
-                </button>
-                <button class="bar-mode-button" id="compassionBtn" onclick="window.location.href='compassion.html'">
-                    <i class="ph ph-heart mr-2 text-green-600"></i> Compassion
-                </button>
-                <button class="bar-mode-button" id="energyResetBtn" onclick="window.location.href='DoubleBreathEnergyReset.html'">
-                    <i class="ph ph-lightning mr-2 text-green-600"></i> Energy Reset
-                </button>
-                <button class="bar-mode-button" id="moodBlocksBtn" onclick="window.location.href='MoodBlocks.html'">
-                    <i class="ph ph-heart-straight mr-2 text-pink-400"></i> MoodBlocks
-                </button>
-                <button class="bar-mode-button" id="rememberWhyBtn" onclick="window.location.href='rememberyourwhy.html'">
-                    <i class="ph ph-question mr-2 text-amber-500"></i> Remember Why
-                </button>
-            </div>
-
-            <button class="bar-mode-toggle" onclick="switchToNormalMode()">Switch to Normal View</button>
-        </div>
-    </div>
-
+<body class="bg-gray-50">
     <div class="max-w-2xl mx-auto min-h-screen bg-gray-50">
         <div class="flex justify-between items-center p-4 border-b">
             <button onclick="history.back()" class="p-2 rounded-full hover:bg-gray-100">
@@ -130,11 +85,6 @@
         function goToMoodBlocks() {
             sessionStorage.setItem('previousPage', 'video-page');
             window.location.href = 'MoodBlocks.html';
-        }
-        // Add this function to handle the switch to normal mode
-        function switchToNormalMode() {
-            document.getElementById('barMode').classList.add('hidden');
-            document.getElementById('toggleViewMode').classList.remove('hidden');
         }
     </script>
 </body>
