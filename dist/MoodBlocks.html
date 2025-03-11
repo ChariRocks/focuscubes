@@ -92,11 +92,10 @@
 
         // Default Mood Data
         const defaultSimpleMoods = [
-            { id: 1, name: 'Joyful', color: 'emerald', level: 1 },
-            { id: 2, name: 'Content', color: 'blue', level: 2 },
+            { id: 1, name: 'Feeling Much Better', color: 'emerald', level: 1 },
+            { id: 2, name: 'Feeling Better', color: 'blue', level: 2 },
             { id: 3, name: 'Neutral', color: 'yellow', level: 3 },
-            { id: 4, name: 'Frustrated', color: 'orange', level: 4 },
-            { id: 5, name: 'Overwhelmed', color: 'red', level: 5 }
+            { id: 4, name: 'Feeling Worse', color: 'red', level: 4 }
         ];
 
         const defaultDetailedMoods = [
@@ -261,37 +260,31 @@
                 const grid = document.getElementById('moodGrid');
 
                 if (currentView === 'simple') {
-                    // Thumbs up/down layout for simple view
+                    // Thumbs up/down layout for simple view with 4 choices
                     grid.innerHTML = `
                         <div class="flex flex-col items-center gap-4">
                             <button onclick='selectMood(${JSON.stringify(simpleMoods[0])})' 
                                     class="flex flex-col items-center ${selectedMood?.id === simpleMoods[0].id ? 'scale-110 opacity-100' : 'opacity-80'} transition-all">
                                 <div class="text-4xl text-emerald-500 mb-1">👍👍</div>
-                                <span class="text-sm font-medium text-slate-700">${simpleMoods[0].name}</span>
+                                <span class="text-sm font-medium text-slate-700">Feeling Much Better</span>
                             </button>
                             
                             <button onclick='selectMood(${JSON.stringify(simpleMoods[1])})' 
                                     class="flex flex-col items-center ${selectedMood?.id === simpleMoods[1].id ? 'scale-110 opacity-100' : 'opacity-80'} transition-all">
                                 <div class="text-4xl text-blue-500 mb-1">👍</div>
-                                <span class="text-sm font-medium text-slate-700">${simpleMoods[1].name}</span>
+                                <span class="text-sm font-medium text-slate-700">Feeling Better</span>
                             </button>
                             
                             <button onclick='selectMood(${JSON.stringify(simpleMoods[2])})' 
                                     class="flex flex-col items-center ${selectedMood?.id === simpleMoods[2].id ? 'scale-110 opacity-100' : 'opacity-80'} transition-all">
-                                <div class="text-4xl text-yellow-500 mb-1">👐</div>
-                                <span class="text-sm font-medium text-slate-700">${simpleMoods[2].name}</span>
+                                <div class="text-4xl text-yellow-500 mb-1">😐</div>
+                                <span class="text-sm font-medium text-slate-700">Neutral</span>
                             </button>
                             
                             <button onclick='selectMood(${JSON.stringify(simpleMoods[3])})' 
                                     class="flex flex-col items-center ${selectedMood?.id === simpleMoods[3].id ? 'scale-110 opacity-100' : 'opacity-80'} transition-all">
-                                <div class="text-4xl text-orange-500 mb-1">👎</div>
-                                <span class="text-sm font-medium text-slate-700">${simpleMoods[3].name}</span>
-                            </button>
-                            
-                            <button onclick='selectMood(${JSON.stringify(simpleMoods[4])})' 
-                                    class="flex flex-col items-center ${selectedMood?.id === simpleMoods[4].id ? 'scale-110 opacity-100' : 'opacity-80'} transition-all">
-                                <div class="text-4xl text-red-500 mb-1">👎👎</div>
-                                <span class="text-sm font-medium text-slate-700">${simpleMoods[4].name}</span>
+                                <div class="text-4xl text-red-500 mb-1">👎</div>
+                                <span class="text-sm font-medium text-slate-700">Feeling Worse</span>
                             </button>
                         </div>
                     `;
