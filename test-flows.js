@@ -237,13 +237,7 @@ async function runTests() {
   
   const browser = await puppeteer.launch({
     headless: 'new',
-    args: [
-      '--no-sandbox', 
-      '--disable-setuid-sandbox',
-      '--disable-dev-shm-usage',
-      '--disable-gpu'
-    ],
-    ignoreDefaultArgs: ['--disable-extensions']
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
   });
   
   try {
