@@ -208,6 +208,12 @@
         }
 
         function setView(view) {
+            // Reset selections when switching between tabs
+            if (currentView !== view) {
+                selectedMood = null;
+                previousMood = null;
+            }
+            
             currentView = view;
             document.getElementById('simpleBtn').className = view === 'simple' ? 
                 'flex-1 py-2 px-4 rounded-lg font-medium bg-blue-500 text-white' : 
