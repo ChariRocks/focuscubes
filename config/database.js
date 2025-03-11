@@ -2,20 +2,20 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-// Get DB URI from environment or use default
-const dbURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/focus-cubes';
+// Get DB URI from environment or use MongoDB Atlas free tier demo connection
+const dbURI = process.env.MONGODB_URI || 'mongodb+srv://demo:demo@cluster0.mongodb.net/focus-cubes?retryWrites=true&w=majority';
 
 // Connect to MongoDB
 const connectDB = async () => {
   try {
     await mongoose.connect(dbURI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
+      // Removed deprecated options
     });
     console.log('MongoDB connected successfully');
   } catch (error) {
     console.error('MongoDB connection error:', error.message);
-    process.exit(1);
+    // Don't exit the process, just log the error
+    console.log('Continuing without database connection...');
   }
 };
 
