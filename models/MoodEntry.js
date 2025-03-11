@@ -18,10 +18,9 @@ const moodEntrySchema = new mongoose.Schema({
     color: String
   },
   currentMood: {
-    name: String,
-    level: Number,
-    color: String,
-    required: true
+    name: { type: String, required: true },
+    level: { type: Number, required: true },
+    color: { type: String, required: true }
   },
   reflection: {
     type: String,
