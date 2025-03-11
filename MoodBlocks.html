@@ -261,13 +261,40 @@
                 const grid = document.getElementById('moodGrid');
 
                 if (currentView === 'simple') {
-                    grid.innerHTML = simpleMoods.map(mood => `
-                        <button onclick='selectMood(${JSON.stringify(mood)})' 
-                                class="${getColorClass(mood.color, selectedMood?.id === mood.id)} 
-                                    w-full p-4 rounded-lg text-white font-medium transition-all">
-                            ${mood.name}
-                        </button>
-                    `).join('');
+                    // Thumbs up/down layout for simple view
+                    grid.innerHTML = `
+                        <div class="flex flex-col items-center gap-4">
+                            <button onclick='selectMood(${JSON.stringify(simpleMoods[0])})' 
+                                    class="flex flex-col items-center ${selectedMood?.id === simpleMoods[0].id ? 'scale-110 opacity-100' : 'opacity-80'} transition-all">
+                                <div class="text-4xl text-emerald-500 mb-1">👍👍</div>
+                                <span class="text-sm font-medium text-slate-700">${simpleMoods[0].name}</span>
+                            </button>
+                            
+                            <button onclick='selectMood(${JSON.stringify(simpleMoods[1])})' 
+                                    class="flex flex-col items-center ${selectedMood?.id === simpleMoods[1].id ? 'scale-110 opacity-100' : 'opacity-80'} transition-all">
+                                <div class="text-4xl text-blue-500 mb-1">👍</div>
+                                <span class="text-sm font-medium text-slate-700">${simpleMoods[1].name}</span>
+                            </button>
+                            
+                            <button onclick='selectMood(${JSON.stringify(simpleMoods[2])})' 
+                                    class="flex flex-col items-center ${selectedMood?.id === simpleMoods[2].id ? 'scale-110 opacity-100' : 'opacity-80'} transition-all">
+                                <div class="text-4xl text-yellow-500 mb-1">👐</div>
+                                <span class="text-sm font-medium text-slate-700">${simpleMoods[2].name}</span>
+                            </button>
+                            
+                            <button onclick='selectMood(${JSON.stringify(simpleMoods[3])})' 
+                                    class="flex flex-col items-center ${selectedMood?.id === simpleMoods[3].id ? 'scale-110 opacity-100' : 'opacity-80'} transition-all">
+                                <div class="text-4xl text-orange-500 mb-1">👎</div>
+                                <span class="text-sm font-medium text-slate-700">${simpleMoods[3].name}</span>
+                            </button>
+                            
+                            <button onclick='selectMood(${JSON.stringify(simpleMoods[4])})' 
+                                    class="flex flex-col items-center ${selectedMood?.id === simpleMoods[4].id ? 'scale-110 opacity-100' : 'opacity-80'} transition-all">
+                                <div class="text-4xl text-red-500 mb-1">👎👎</div>
+                                <span class="text-sm font-medium text-slate-700">${simpleMoods[4].name}</span>
+                            </button>
+                        </div>
+                    `;
                 } else {
                     grid.innerHTML = detailedMoods.map(group => `
                         <div class="grid grid-cols-2 gap-2">
