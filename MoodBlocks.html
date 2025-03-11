@@ -215,6 +215,7 @@
             document.getElementById('detailedBtn').className = view === 'detailed' ? 
                 'flex-1 py-2 px-4 rounded-lg font-medium bg-blue-500 text-white' : 
                 'flex-1 py-2 px-4 rounded-lg font-medium bg-gray-100 text-gray-600';
+            updateHeader();
             renderMoods();
         }
 
@@ -243,16 +244,22 @@
             const header = document.getElementById('headerText');
             const prev = document.getElementById('previousMood');
 
-            if (!selectedMood) {
-                header.textContent = 'How were you feeling before?';
+            if (currentView === 'simple') {
+                header.textContent = 'How are you feeling?';
                 prev.classList.add('hidden');
-            } else if (previousMood) {
-                header.textContent = 'How are you feeling now?';
-                prev.textContent = `Previous: ${previousMood.name}`;
-                prev.classList.remove('hidden');
             } else {
-                header.textContent = 'How are you feeling now?';
-                prev.classList.add('hidden');
+                // Detailed view keeps the original behavior
+                if (!selectedMood) {
+                    header.textContent = 'How were you feeling before?';
+                    prev.classList.add('hidden');
+                } else if (previousMood) {
+                    header.textContent = 'How are you feeling now?';
+                    prev.textContent = `Previous: ${previousMood.name}`;
+                    prev.classList.remove('hidden');
+                } else {
+                    header.textContent = 'How are you feeling now?';
+                    prev.classList.add('hidden');
+                }
             }
         }
 
@@ -291,8 +298,26 @@
 
         function showImprovement(from, to) {
             document.getElementById('improvementDialog').classList.remove('hidden');
-            document.getElementById('improvementText').textContent = 
-                `You've moved from "${from.name}" to "${to.name}". What specifically helped you feel better?`;
+            
+            let promptText = '';
+            if (currentView === 'simple') {
+                // For simple view, adapt text based on the change direction
+                if (to.level < from.level) {
+                    // They're feeling better
+                    promptText = `You're feeling ${to.name}. What one thing specifically helped you feel better?`;
+                } else if (to.level > from.level) {
+                    // They're feeling worse
+                    promptText = `You're feeling ${to.name}. What specifically contributed to this change?`;
+                } else {
+                    // No change in level
+                    promptText = `You selected ${to.name}. What's on your mind right now?`;
+                }
+            } else {
+                // For detailed view, keep original format
+                promptText = `You've moved from "${from.name}" to "${to.name}". What specifically helped you feel better?`;
+            }
+            
+            document.getElementById('improvementText').textContent = promptText;
         }
 
         function closeImprovement() {
