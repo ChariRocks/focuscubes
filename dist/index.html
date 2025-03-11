@@ -58,6 +58,7 @@
                 <img src="images/focuscubeslogo.png" alt="Focus Cubes Logo" class="h-8">
             </div>
 
+            <!-- Home Screen Buttons -->
             <div id="homeScreenButtons" class="bar-mode-buttons">
                 <button class="bar-mode-button" onclick="window.location.href='index.html'">
                     <i class="ph ph-house mr-2"></i> Home
@@ -82,6 +83,29 @@
                 </button>
                 <button class="bar-mode-button" id="rememberWhyBtn" onclick="window.location.href='rememberyourwhy.html'">
                     <i class="ph ph-question mr-2 text-amber-500"></i> Remember Why
+                </button>
+            </div>
+            
+            <!-- Login Screen Buttons -->
+            <div id="loginScreenButtons" class="bar-mode-buttons hidden">
+                <button class="bar-mode-button" id="barModeLoginBtn" onclick="skipToOptions()">
+                    <i class="ph ph-sign-in mr-2"></i> Begin
+                </button>
+            </div>
+            
+            <!-- Options Screen Buttons -->
+            <div id="optionsScreenButtons" class="bar-mode-buttons hidden">
+                <button class="bar-mode-button" onclick="goBack()">
+                    <i class="ph ph-arrow-left mr-2"></i> Back
+                </button>
+                <button class="bar-mode-button" onclick="window.location.href='during&between.html'">
+                    <i class="ph ph-phone mr-2"></i> While at Work
+                </button>
+                <button class="bar-mode-button" onclick="window.location.href='6weekhomeNEW.html'">
+                    <i class="ph ph-timer mr-2"></i> 6-Week Transformation
+                </button>
+                <button class="bar-mode-button" onclick="closePage()">
+                    <i class="ph ph-x mr-2"></i> Close
                 </button>
             </div>
 
@@ -165,6 +189,9 @@
                 if (window.location.hash !== '#path') {
                     window.location.hash = 'path';
                 }
+                
+                // Update bar mode buttons if in bar mode
+                updateBarModeButtons();
             }
         }
 
@@ -173,6 +200,8 @@
             if (window.location.hash === '#path') {
                 document.getElementById('login-screen').classList.add('hidden');
                 document.getElementById('options-screen').classList.remove('hidden');
+                // Update bar mode buttons
+                updateBarModeButtons();
             }
         });
 
@@ -182,6 +211,9 @@
             document.getElementById('login-screen').classList.remove('hidden');
             // Remove the hash from the URL
             history.pushState("", document.title, window.location.pathname);
+            
+            // Update bar mode buttons if in bar mode
+            updateBarModeButtons();
         }
 
         function closePage() {
@@ -190,12 +222,44 @@
             // we'll just go back to the login screen
             goBack();
         }
-
+        
+        // Helper function to update bar mode buttons based on current screen
+        function updateBarModeButtons() {
+            // Only do something if we're in bar mode
+            if (document.body.classList.contains('bar-mode-active')) {
+                const loginScreen = document.getElementById('login-screen');
+                const optionsScreen = document.getElementById('options-screen');
+                
+                const isLoginVisible = !loginScreen.classList.contains('hidden');
+                const isOptionsVisible = !optionsScreen.classList.contains('hidden');
+                
+                // Toggle visibility of button sets based on current screen
+                document.getElementById('homeScreenButtons').classList.add('hidden');
+                document.getElementById('loginScreenButtons').classList.add('hidden');
+                document.getElementById('optionsScreenButtons').classList.add('hidden');
+                
+                if (isLoginVisible) {
+                    document.getElementById('loginScreenButtons').classList.remove('hidden');
+                } else if (isOptionsVisible) {
+                    document.getElementById('optionsScreenButtons').classList.remove('hidden');
+                } else {
+                    document.getElementById('homeScreenButtons').classList.remove('hidden');
+                }
+            }
+        }
+        
         // Initialize bar mode
         document.addEventListener('DOMContentLoaded', function() {
             // Ensure Phosphor Icons are loaded
             if (typeof PhosphorIcons !== 'undefined') {
                 PhosphorIcons.replace();
+            }
+            
+            // Check saved preference for bar mode
+            const savedViewMode = localStorage.getItem('viewMode');
+            if (savedViewMode === 'bar') {
+                // This will be handled by bar-mode.js's init function
+                setTimeout(updateBarModeButtons, 100); // Small delay to ensure elements are ready
             }
         });
     </script>
