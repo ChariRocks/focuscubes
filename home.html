@@ -6,6 +6,7 @@
     <title>Call Center Meditation App</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/lucide-icons/0.259.0/lucide-icons.css" rel="stylesheet">
+    <link href="bar-mode.css" rel="stylesheet">
     <style>
         .screen {
             display: none;
@@ -74,6 +75,41 @@
     </style>
 </head>
 <body class="bg-gray-50">
+    <!-- Bar Mode Toggle Button -->
+    <button id="toggleViewMode" class="normal-view-toggle">
+        Switch to Bar Mode
+    </button>
+    
+    <!-- Bar Mode Container -->
+    <div id="barMode" class="bar-mode hidden">
+        <div class="bar-mode-content">
+            <div class="flex items-center">
+                <img src="images/focuscubeslogo.png" alt="Focus Cubes Logo" class="h-8">
+            </div>
+            
+            <div class="bar-mode-buttons">
+                <button class="bar-mode-button quick-breathing-btn-bar">
+                    Quick Reset
+                </button>
+                <button class="bar-mode-button intensity-screen-btn-bar">
+                    Energy Boost
+                </button>
+                <button class="bar-mode-button" onclick="window.location.href='during&between.html'">
+                    While at Work
+                </button>
+                <button class="bar-mode-button" onclick="window.location.href='6weekhomeNEW.html'">
+                    6-Week Program
+                </button>
+                <button class="bar-mode-button" onclick="toggleBarMode()">
+                    Expand/Collapse
+                </button>
+            </div>
+            
+            <button class="bar-mode-toggle" onclick="switchToNormalMode()">
+                Switch to Normal View
+            </button>
+        </div>
+    </div>
     <div class="max-w-md mx-auto min-h-screen bg-white">
         <!-- Home Screen -->
         <div id="homeScreen" class="screen active p-6">
@@ -360,8 +396,43 @@
         startBreathing();
         }
 
+        // Bar Mode Functions
+        function switchToBarMode() {
+            document.getElementById('barMode').classList.remove('hidden');
+            document.getElementById('toggleViewMode').classList.add('hidden');
+            document.body.classList.add('bar-mode-active');
+            
+            // Save preference
+            localStorage.setItem('viewMode', 'bar');
+        }
+        
+        function switchToNormalMode() {
+            document.getElementById('barMode').classList.add('hidden');
+            document.getElementById('toggleViewMode').classList.remove('hidden');
+            document.body.classList.remove('bar-mode-active');
+            
+            // Save preference
+            localStorage.setItem('viewMode', 'normal');
+        }
+        
+        function toggleBarMode() {
+            document.getElementById('barMode').classList.toggle('bar-mode-expanded');
+        }
+        
         // Event Listeners
         document.addEventListener("DOMContentLoaded", function () {
+            // Check saved view mode preference
+            const savedViewMode = localStorage.getItem('viewMode');
+            if (savedViewMode === 'bar') {
+                switchToBarMode();
+            }
+            
+            // Set up bar mode toggle
+            document.getElementById('toggleViewMode').addEventListener('click', switchToBarMode);
+            
+            // Set up bar mode buttons
+            document.querySelector('.quick-breathing-btn-bar')?.addEventListener('click', startQuickBreathing);
+            document.querySelector('.intensity-screen-btn-bar')?.addEventListener('click', showIntensityScreen);
         // Wait for Lucide to be available
         if (window.lucide) {
             window.lucide.createIcons();

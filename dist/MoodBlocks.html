@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customizable MoodBlocks</title>
+    <link href="css/styles.css" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body class="bg-gray-100 p-4">
+    <div class="max-w-md mx-auto">
+        <!-- Navigation -->
+        <nav class="flex justify-between items-center mb-4">
+            <button onclick="window.history.back()" class="w-8 h-8 flex items-center justify-center text-slate-600 hover:text-slate-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <h1 class="text-xl font-medium text-slate-800">Mood Tracker</h1>
+            <button onclick="window.history.back()" class="w-8 h-8 flex items-center justify-center text-slate-600 hover:text-slate-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </nav>
+        <!-- Controls -->
+        <div class="flex gap-2 mb-4">
+            <button onclick="setView('simple')" id="simpleBtn" class="flex-1 py-2 px-4 rounded-lg font-medium bg-blue-500 text-white">Simple</button>
+            <button onclick="setView('detailed')" id="detailedBtn" class="flex-1 py-2 px-4 rounded-lg font-medium bg-gray-100 text-gray-600">Detailed</button>
+            <button onclick="showHistory()" class="px-4 py-2 rounded-lg bg-gray-100 text-gray-600">History</button>
+            <button onclick="showCustomize()" class="px-4 py-2 rounded-lg bg-gray-100 text-gray-600">Customize</button>
+        </div>
+
+        <!-- Main Card -->
+        <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+            <div class="p-6">
+                <h2 id="headerText" class="text-xl font-bold text-center mb-2">How were you feeling before?</h2>
+                <p id="previousMood" class="text-center text-gray-600 text-sm mb-4 hidden"></p>
+                <div id="moodGrid" class="space-y-2"></div>
+            </div>
+        </div>
+
+        <!-- Customize Dialog -->
+            <div id="customizeDialog" class="fixed inset-0 bg-black bg-opacity-50 hidden">
+                <div class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-lg w-[90vw] max-w-md max-h-[80vh] overflow-y-auto relative">
+                    <button onclick="document.getElementById('customizeDialog').classList.add('hidden')" 
+                            class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                    <h3 class="text-lg font-bold mb-4">Customize Emotions</h3>
+                <div id="customizeContent" class="space-y-4"></div>
+                <div class="mt-6 flex justify-end gap-2">
+                    <button onclick="resetCustomizations()" class="px-4 py-2 border rounded-lg text-gray-600">Reset to Default</button>
+                    <button onclick="saveCustomizations()" class="px-4 py-2 bg-blue-500 text-white rounded-lg">Save Changes</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Other existing dialogs -->
+        <div id="improvementDialog" class="fixed inset-0 bg-black bg-opacity-50 hidden">
+            <div class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-lg w-[90vw] max-w-md">
+                <h3 id="dialogTitle" class="text-lg font-bold mb-2">Reflection</h3>
+                <p id="improvementText" class="text-gray-600 mb-4"></p>
+                <textarea id="noteInput" class="w-full p-3 border rounded-lg mb-4 h-32" placeholder="Jot down what helped or hindered - even a brief note helps build awareness."></textarea>
+                <div class="flex justify-end gap-2">
+                    <button onclick="closeImprovement()" class="px-4 py-2 border rounded-lg">Skip</button>
+                    <button onclick="saveNote()" class="px-4 py-2 bg-blue-500 text-white rounded-lg">Save</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="historyDialog" class="fixed inset-0 bg-black bg-opacity-50 hidden">
+            <div class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-lg w-[90vw] max-w-md max-h-[80vh] overflow-y-auto">
+                <h3 class="text-lg font-bold mb-2">Improvement History</h3>
+                <div id="historyContent" class="space-y-4"></div>
+                <div class="mt-4 flex justify-end">
+                    <button onclick="closeHistory()" class="px-4 py-2 border rounded-lg">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State
+        let currentView = 'simple';
+        let selectedMood = null;
+        let previousMood = null;
+        let history = [];
+
+        // Default Mood Data
+        const defaultSimpleMoods = [
+            { id: 1, name: 'Much Better', color: 'emerald', level: 1 },
+            { id: 2, name: 'Better', color: 'green', level: 2 },
+            { id: 3, name: 'Neutral', color: 'yellow', level: 3 },
+            { id: 4, name: 'Worse', color: 'orange', level: 4 }
+        ];
+
+        const defaultDetailedMoods = [
+            ['Joyful', 'Passionate', 'Excited', 'Inspired'],
+            ['Confident', 'Enthusiastic', 'Grateful', 'Peaceful'],
+            ['Content', 'Calm', 'Relaxed', 'Focused'],
+            ['Uncertain', 'Nervous', 'Frustrated', 'Anxious'],
+            ['Overwhelmed', 'Discouraged', 'Exhausted', 'Defeated']
+        ];
+
+        // Load customized moods from localStorage or use defaults
+        let simpleMoods = JSON.parse(localStorage.getItem('simpleMoods')) || defaultSimpleMoods;
+        let detailedMoods = JSON.parse(localStorage.getItem('detailedMoods')) || defaultDetailedMoods.map((group, groupIndex) => 
+            group.map((name, index) => ({
+                id: `d${groupIndex * 4 + index + 1}`,
+                name,
+                level: groupIndex + 1,
+                color: ['emerald', 'green', 'blue', 'yellow', 'red'][groupIndex]
+            }))
+        );
+
+        // UI Functions
+        function getColorClass(color, isSelected) {
+            const colors = {
+                emerald: isSelected ? 'bg-emerald-400 ring-2 ring-emerald-100' : 'bg-emerald-300 hover:bg-emerald-400',
+                green: isSelected ? 'bg-green-400 ring-2 ring-green-100' : 'bg-green-300 hover:bg-green-400',
+                blue: isSelected ? 'bg-blue-400 ring-2 ring-blue-100' : 'bg-blue-300 hover:bg-blue-400',
+                yellow: isSelected ? 'bg-yellow-300 ring-2 ring-yellow-100' : 'bg-yellow-200 hover:bg-yellow-300',
+                orange: isSelected ? 'bg-orange-300 ring-2 ring-orange-100' : 'bg-orange-200 hover:bg-orange-300',
+                red: isSelected ? 'bg-red-300 ring-2 ring-red-100' : 'bg-red-200 hover:bg-red-300'
+            };
+            return colors[color] || colors.blue;
+        }
+
+        function showCustomize() {
+            const dialog = document.getElementById('customizeDialog');
+            const content = document.getElementById('customizeContent');
+            dialog.classList.remove('hidden');
+
+            content.innerHTML = `
+                <div class="mb-6">
+                    <h4 class="font-medium mb-2">Simple View Emotions</h4>
+                    ${simpleMoods.map((mood, index) => `
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="w-4 h-4 rounded-full ${getColorClass(mood.color, false)}"></div>
+                            <input type="text" 
+                                   value="${mood.name}"
+                                   data-type="simple"
+                                   data-index="${index}"
+                                   class="flex-1 p-2 border rounded-lg"
+                                   onchange="updateMoodName(event)">
+                        </div>
+                    `).join('')}
+                </div>
+                <div>
+                    <h4 class="font-medium mb-2">Detailed View Emotions</h4>
+                    ${detailedMoods.map((group, groupIndex) => `
+                        <div class="mb-4">
+                            <div class="w-4 h-4 rounded-full inline-block ${getColorClass(['emerald', 'green', 'blue', 'yellow', 'red'][groupIndex], false)} mr-2"></div>
+                            <span class="font-medium">Level ${groupIndex + 1}</span>
+                            <div class="grid grid-cols-2 gap-2 mt-2">
+                                ${group.map((mood, moodIndex) => `
+                                    <input type="text" 
+                                           value="${mood.name}"
+                                           data-type="detailed"
+                                           data-group="${groupIndex}"
+                                           data-index="${moodIndex}"
+                                           class="p-2 border rounded-lg"
+                                           onchange="updateMoodName(event)">
+                                `).join('')}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function updateMoodName(event) {
+            const { type, index, group } = event.target.dataset;
+            const newName = event.target.value.trim();
+
+            if (type === 'simple') {
+                simpleMoods[index].name = newName;
+            } else {
+                detailedMoods[group][index].name = newName;
+            }
+        }
+
+        function saveCustomizations() {
+            localStorage.setItem('simpleMoods', JSON.stringify(simpleMoods));
+            localStorage.setItem('detailedMoods', JSON.stringify(detailedMoods));
+            document.getElementById('customizeDialog').classList.add('hidden');
+            renderMoods();
+        }
+
+        function resetCustomizations() {
+            simpleMoods = [...defaultSimpleMoods];
+            detailedMoods = defaultDetailedMoods.map((group, groupIndex) => 
+                group.map((name, index) => ({
+                    id: `d${groupIndex * 4 + index + 1}`,
+                    name,
+                    level: groupIndex + 1,
+                    color: ['emerald', 'green', 'blue', 'yellow', 'red'][groupIndex]
+                }))
+            );
+            localStorage.removeItem('simpleMoods');
+            localStorage.removeItem('detailedMoods');
+            showCustomize(); // Refresh the customize dialog
+            renderMoods();
+        }
+
+        function setView(view) {
+            // Reset selections when switching between tabs
+            if (currentView !== view) {
+                selectedMood = null;
+                previousMood = null;
+            }
+            
+            currentView = view;
+            document.getElementById('simpleBtn').className = view === 'simple' ? 
+                'flex-1 py-2 px-4 rounded-lg font-medium bg-blue-500 text-white' : 
+                'flex-1 py-2 px-4 rounded-lg font-medium bg-gray-100 text-gray-600';
+            document.getElementById('detailedBtn').className = view === 'detailed' ? 
+                'flex-1 py-2 px-4 rounded-lg font-medium bg-blue-500 text-white' : 
+                'flex-1 py-2 px-4 rounded-lg font-medium bg-gray-100 text-gray-600';
+            updateHeader();
+            renderMoods();
+        }
+
+        function selectMood(mood) {
+            // For detailed view, maintain the current two-step process
+            if (currentView === 'detailed') {
+                // If clicking the same mood again, deselect it
+                if (selectedMood && selectedMood.id === mood.id) {
+                    selectedMood = null;
+                    previousMood = null;
+                    updateHeader();
+                    renderMoods();
+                    return;
+                }
+
+                // If there's already a selected mood, show improvement dialog
+                if (selectedMood) {
+                    previousMood = selectedMood;
+                    showImprovement(previousMood, mood);
+                }
+
+                selectedMood = mood;
+                updateHeader();
+                renderMoods();
+            } 
+            // For simple view, record mood directly with a single click
+            else {
+                // For simple view, we'll simulate having a "default" previous state
+                // This allows users to record their current mood with just one click
+                previousMood = {
+                    id: 0,
+                    name: "Previous state",
+                    level: mood.level,  // We use the same level as a default
+                    color: mood.color
+                };
+                selectedMood = mood;
+                
+                // Show the improvement dialog immediately
+                showImprovement(previousMood, mood);
+                
+                // Reset selection after showing dialog
+                updateHeader();
+                renderMoods();
+            }
+        }
+
+        function updateHeader() {
+            const header = document.getElementById('headerText');
+            const prev = document.getElementById('previousMood');
+
+            if (currentView === 'simple') {
+                header.textContent = 'How are you feeling?';
+                prev.classList.add('hidden');
+            } else {
+                // Detailed view keeps the original behavior
+                if (!selectedMood) {
+                    header.textContent = 'How were you feeling before?';
+                    prev.classList.add('hidden');
+                } else if (previousMood) {
+                    header.textContent = 'How are you feeling now?';
+                    prev.textContent = `Previous: ${previousMood.name}`;
+                    prev.classList.remove('hidden');
+                } else {
+                    header.textContent = 'How are you feeling now?';
+                    prev.classList.add('hidden');
+                }
+            }
+        }
+
+        function renderMoods() {
+                const grid = document.getElementById('moodGrid');
+
+                if (currentView === 'simple') {
+                    // Create simple view with subtle icons
+                    grid.innerHTML = simpleMoods.map(mood => `
+                        <button onclick='selectMood(${JSON.stringify(mood)})' 
+                                class="${getColorClass(mood.color, selectedMood?.id === mood.id)} 
+                                    w-full p-4 rounded-lg text-slate-700 font-medium transition-all flex items-center">
+                            <span class="mr-2 text-lg opacity-75">${
+                                mood.id === 1 ? '▲▲' : 
+                                mood.id === 2 ? '▲' : 
+                                mood.id === 3 ? '○' : 
+                                '▼'
+                            }</span>
+                            ${mood.name}
+                        </button>
+                    `).join('');
+                } else {
+                    grid.innerHTML = detailedMoods.map(group => `
+                        <div class="grid grid-cols-2 gap-2">
+                            ${group.map(mood => `
+                                <button onclick='selectMood(${JSON.stringify(mood)})'
+                                        class="${getColorClass(mood.color, selectedMood?.id === mood.id)} 
+                                            p-4 rounded-lg text-white font-medium transition-all">
+                                    ${mood.name}
+                                </button>
+                            `).join('')}
+                        </div>
+                    `).join('');
+                }
+            }
+
+        function showImprovement(from, to) {
+            document.getElementById('improvementDialog').classList.remove('hidden');
+            
+            let promptText = '';
+            let dialogTitle = 'Reflection';
+            
+            if (currentView === 'simple') {
+                // For simple view, adapt text based on the mood selected
+                if (to.name === 'Much Better') {
+                    dialogTitle = 'Great Progress!';
+                    promptText = `You're feeling ${to.name}. What one thing specifically helped you feel much better?`;
+                } else if (to.name === 'Better') {
+                    dialogTitle = 'Positive Change';
+                    promptText = `You're feeling ${to.name}. What one thing specifically helped you feel better?`;
+                } else if (to.name === 'Neutral') {
+                    dialogTitle = 'Neutral State';
+                    promptText = `You're feeling neutral. What's one small thing that might help shift your day in a positive direction?`;
+                } else if (to.name === 'Worse') {
+                    dialogTitle = 'Something Changed';
+                    promptText = `You're feeling ${to.name}. What specifically contributed to this change?`;
+                } else {
+                    // Generic fallback
+                    promptText = `You selected ${to.name}. What's on your mind right now?`;
+                }
+            } else {
+                // For detailed view, adapt based on level comparison
+                if (to.level < from.level) {
+                    dialogTitle = 'Great Progress!';
+                    promptText = `You've moved from "${from.name}" to "${to.name}". What specifically helped you feel better?`;
+                } else if (to.level > from.level) {
+                    dialogTitle = 'Something Changed';
+                    promptText = `You've moved from "${from.name}" to "${to.name}". What do you think contributed to this change?`;
+                } else {
+                    promptText = `You've moved from "${from.name}" to "${to.name}". What observations do you have about this shift?`;
+                }
+            }
+            
+            document.getElementById('dialogTitle').textContent = dialogTitle;
+            document.getElementById('improvementText').textContent = promptText;
+        }
+
+        function closeImprovement() {
+            document.getElementById('improvementDialog').classList.add('hidden');
+            document.getElementById('noteInput').value = '';
+        }
+
+        function saveNote() {
+            const note = document.getElementById('noteInput').value;
+            if (note.trim()) {
+                if (currentView === 'simple') {
+                    // For simple view, we record just the current mood
+                    history.unshift({
+                        id: Date.now(),
+                        from: currentView === 'simple' ? selectedMood.name : previousMood.name,
+                        to: selectedMood.name,
+                        note: note,
+                        date: new Date().toISOString()
+                    });
+                } else {
+                    // For detailed view, we record the transition from previous to current
+                    history.unshift({
+                        id: Date.now(),
+                        from: previousMood.name,
+                        to: selectedMood.name,
+                        note: note,
+                        date: new Date().toISOString()
+                    });
+                }
+                closeImprovement();
+                // Reset selection in simple view after recording
+                if (currentView === 'simple') {
+                    selectedMood = null;
+                    previousMood = null;
+                    renderMoods();
+                }
+            }
+        }
+
+        function showHistory() {
+            const content = document.getElementById('historyContent');
+            document.getElementById('historyDialog').classList.remove('hidden');
+
+            if (history.length === 0) {
+                content.innerHTML = '<p class="text-gray-500 text-center">No improvements recorded yet.</p>';
+            } else {
+                content.innerHTML = history.map(entry => `
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <div class="text-sm text-gray-600 mb-1">
+                            ${new Date(entry.date).toLocaleDateString()} - 
+                            ${entry.from} → ${entry.to}
+                        </div>
+                        <p class="text-gray-800">${entry.note}</p>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function closeHistory() {
+            document.getElementById('historyDialog').classList.add('hidden');
+        }
+
+        // Initial render
+        renderMoods();
+    </script>
+</body>
+</html>

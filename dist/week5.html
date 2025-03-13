@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Growing Through Challenge</title>
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+    <div class="max-w-2xl mx-auto min-h-screen bg-gray-50">
+        <div class="flex justify-between items-center p-4 border-b">
+            <button onclick="history.back()" class="p-2 rounded-full hover:bg-gray-100">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"/>
+                </svg>
+            </button>
+            <button onclick="location.href='6weekhomeNEW.html'" class="p-2 rounded-full hover:bg-gray-100">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+        </div>
+
+        <div class="p-4">
+            <h2 class="text-xl font-bold mb-6">Week 5: Growing Through Challenge</h2>
+
+            <div class="mb-4">
+                <div class="relative bg-black aspect-video rounded-xl overflow-hidden">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <button id="playButton" class="p-4 rounded-full bg-white/20 hover:bg-white/30 transition-colors">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                <polygon points="5 3 19 12 5 21 5 3"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <img src="/api/placeholder/640/360" alt="Video thumbnail" class="w-full h-full object-cover opacity-50">
+                </div>
+            </div>
+
+            <button onclick="goToMoodBlocks()"
+                class="w-full bg-amber-100 rounded-xl p-5 hover:bg-amber-200 transition-colors mb-8">
+                <div class="flex items-center justify-between">
+                    <div class="text-left">
+                        <h3 class="text-lg font-light text-slate-800 flex items-center gap-1">
+                            MoodBlocks<span class="text-xs align-top">™</span>
+                        </h3>
+                        <p class="text-sm text-slate-500">Track emotions & build awareness</p>
+                    </div>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                </div>
+            </button>
+
+            <div class="bg-white rounded-xl p-6 shadow-md">
+                <h3 class="text-lg font-semibold mb-4">Practice Instructions</h3>
+                <ol class="space-y-4 text-gray-600">
+                    <li class="flex gap-3">
+                        <span class="font-medium text-gray-900">1.</span>
+                        <span>Identify a current challenge or pressure point in your life</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="font-medium text-gray-900">2.</span>
+                        <span>Use the reframing techniques presented in the video to view it differently</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="font-medium text-gray-900">3.</span>
+                        <span>Practice the growth-oriented questions when facing difficult situations</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="font-medium text-gray-900">4.</span>
+                        <span>Document a small action step you can take to transform this challenge</span>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('playButton').addEventListener('click', function() {
+            console.log('Video play clicked');
+        });
+
+        function goToMoodBlocks() {
+            sessionStorage.setItem('previousPage', 'video-page');
+            window.location.href = 'MoodBlocks.html';
+        }
+    </script>
+</body>
+</html>

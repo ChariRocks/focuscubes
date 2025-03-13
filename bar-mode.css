@@ -1,0 +1,264 @@
+.bar-mode {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to right, #f0f9ff, #e0f2fe);
+  border-bottom: 1px solid #bae6fd;
+  z-index: 1000;
+  overflow: visible;
+  transition: height 0.3s ease;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.bar-mode-expanded {
+  height: 100vh;
+  overflow: auto;
+}
+
+.bar-mode-toggle {
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: 15px;
+  font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+}
+
+.bar-mode-toggle:hover {
+  background-color: #4338ca;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+}
+
+.bar-mode-toggle:active {
+  transform: scale(1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.bar-mode-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 20px;
+  height: 100%;
+}
+
+.bar-mode-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0 15px;
+  transition: opacity 0.3s ease;
+  flex: 1;
+  margin: 0 10px;
+}
+
+.bar-mode-buttons.hidden {
+  display: none;
+}
+
+.bar-mode-button {
+  padding: 8px 15px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #e0e7ff;
+  background-color: white;
+  color: #4f46e5;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  margin: 5px 3px;
+  font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  transform-origin: center;
+}
+
+/* Button variants based on functionality */
+.bar-mode-button[onclick*="during&between.html"],
+.bar-mode-button[id="duringCallBtn"] {
+  background-color: #10b981;
+  color: white;
+  border-color: #10b981;
+  font-weight: 600;
+  font-size: 15px;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.bar-mode-button[onclick*="MoodBlocks.html"],
+#moodBlocksBtn {
+  background-color: #fcd34d;
+  color: #1e293b;
+  border-color: #fcd34d;
+  font-weight: 500;
+}
+
+.bar-mode-button[onclick*="focusandclarity.html"] {
+  background-color: #f3f4f6;
+  color: #4b5563; /* Slate-600 to match main design */
+  border-color: #e5e7eb;
+}
+
+.bar-mode-button[onclick*="compassion.html"] {
+  background-color: #f3f4f6;
+  color: #4b5563; /* Slate-600 to match main design */
+  border-color: #e5e7eb;
+}
+
+.bar-mode-button[onclick*="DoubleBreathEnergyReset.html"] {
+  background-color: #f3f4f6;
+  color: #4b5563; /* Slate-600 to match main design */
+  border-color: #e5e7eb;
+}
+
+.bar-mode-button[onclick*="rememberyourwhy.html"],
+#rememberWhyBtn {
+  background-color: #fef9c3;
+  color: #1e293b;
+  border-color: #fef08a;
+  font-weight: 500;
+}
+
+.bar-mode-button:hover {
+  transform: scale(1.03);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+}
+
+/* Maintain colors on hover for specific buttons */
+.bar-mode-button[onclick*="during&between.html"]:hover,
+.bar-mode-button[id="duringCallBtn"]:hover {
+  background-color: #059669;
+  color: white;
+  border-color: #059669;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+.bar-mode-button[onclick*="MoodBlocks.html"]:hover,
+#moodBlocksBtn:hover {
+  background-color: #fbbf24;
+  color: #1e293b;
+  border-color: #fbbf24;
+  transform: scale(1.03);
+}
+
+/* Primary button (During Call) styling */
+.bar-mode-button-primary {
+  background-color: #10b981;
+  color: white;
+  border-color: #10b981;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.bar-mode-button-primary:hover {
+  background-color: #059669;
+  color: white !important;
+  border-color: #059669;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+.bar-mode-button[onclick*="rememberyourwhy.html"]:hover,
+#rememberWhyBtn:hover {
+  background-color: #fde68a;
+  color: #1e293b;
+  border-color: #fbbf24;
+  transform: scale(1.03);
+}
+
+.bar-mode-button[onclick*="focusandclarity.html"]:hover,
+.bar-mode-button[onclick*="compassion.html"]:hover,
+.bar-mode-button[onclick*="DoubleBreathEnergyReset.html"]:hover {
+  background-color: #e5e7eb;
+}
+
+.bar-mode-button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.normal-view-toggle {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.normal-view-toggle {
+  transform: translateX(-50%);
+}
+
+.normal-view-toggle:hover {
+  background-color: #4338ca;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  filter: brightness(1.1);
+}
+
+.normal-view-toggle:active {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  filter: brightness(0.95);
+}
+
+body.bar-mode-active {
+  /* Increased padding to ensure content is visible below the bar */
+  padding-top: 80px;
+  /* Add transition for smooth movement */
+  transition: padding-top 0.3s ease;
+}
+
+/* Make sure all page content is properly positioned */
+body.bar-mode-active main,
+body.bar-mode-active #homeScreen,
+body.bar-mode-active #meditationScreen,
+body.bar-mode-active .min-h-screen,
+body.bar-mode-active #app {
+  padding-top: 20px;
+}
+
+/* Ensure back and close buttons are visible in bar mode */
+body.bar-mode-active nav {
+  z-index: 10;
+  position: relative;
+}
+
+/* Show only login button in bar mode on login screen */
+body.bar-mode-active #loginScreen:not(.hidden) ~ * .bar-mode-buttons button:not(#barModeLoginBtn) {
+  display: none !important;
+}
+
+/* Remove padding when bar mode is active but we're on login screen */
+body.bar-mode-active #loginScreen {
+  padding-top: 0;
+}

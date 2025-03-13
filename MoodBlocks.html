@@ -57,14 +57,14 @@
                 </div>
             </div>
         </div>
-        
+
 
         <!-- Other existing dialogs -->
         <div id="improvementDialog" class="fixed inset-0 bg-black bg-opacity-50 hidden">
             <div class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-lg w-[90vw] max-w-md">
-                <h3 class="text-lg font-bold mb-2">Great Progress!</h3>
+                <h3 id="dialogTitle" class="text-lg font-bold mb-2">Reflection</h3>
                 <p id="improvementText" class="text-gray-600 mb-4"></p>
-                <textarea id="noteInput" class="w-full p-3 border rounded-lg mb-4 h-32" placeholder="What specifically helped? What can you do more of? What can you do less of?"></textarea>
+                <textarea id="noteInput" class="w-full p-3 border rounded-lg mb-4 h-32" placeholder="Jot down what helped or hindered - even a brief note helps build awareness."></textarea>
                 <div class="flex justify-end gap-2">
                     <button onclick="closeImprovement()" class="px-4 py-2 border rounded-lg">Skip</button>
                     <button onclick="saveNote()" class="px-4 py-2 bg-blue-500 text-white rounded-lg">Save</button>
@@ -92,11 +92,10 @@
 
         // Default Mood Data
         const defaultSimpleMoods = [
-            { id: 1, name: 'Joyful', color: 'emerald', level: 1 },
-            { id: 2, name: 'Content', color: 'blue', level: 2 },
+            { id: 1, name: 'Much Better', color: 'emerald', level: 1 },
+            { id: 2, name: 'Better', color: 'green', level: 2 },
             { id: 3, name: 'Neutral', color: 'yellow', level: 3 },
-            { id: 4, name: 'Frustrated', color: 'orange', level: 4 },
-            { id: 5, name: 'Overwhelmed', color: 'red', level: 5 }
+            { id: 4, name: 'Worse', color: 'orange', level: 4 }
         ];
 
         const defaultDetailedMoods = [
@@ -121,12 +120,12 @@
         // UI Functions
         function getColorClass(color, isSelected) {
             const colors = {
-                emerald: isSelected ? 'bg-emerald-500 ring-4 ring-emerald-200' : 'bg-emerald-400 hover:bg-emerald-500',
-                green: isSelected ? 'bg-green-500 ring-4 ring-green-200' : 'bg-green-400 hover:bg-green-500',
-                blue: isSelected ? 'bg-blue-500 ring-4 ring-blue-200' : 'bg-blue-400 hover:bg-blue-500',
-                yellow: isSelected ? 'bg-yellow-500 ring-4 ring-yellow-200' : 'bg-yellow-400 hover:bg-yellow-500',
-                orange: isSelected ? 'bg-orange-500 ring-4 ring-orange-200' : 'bg-orange-400 hover:bg-orange-500',
-                red: isSelected ? 'bg-red-500 ring-4 ring-red-200' : 'bg-red-400 hover:bg-red-500'
+                emerald: isSelected ? 'bg-emerald-400 ring-2 ring-emerald-100' : 'bg-emerald-300 hover:bg-emerald-400',
+                green: isSelected ? 'bg-green-400 ring-2 ring-green-100' : 'bg-green-300 hover:bg-green-400',
+                blue: isSelected ? 'bg-blue-400 ring-2 ring-blue-100' : 'bg-blue-300 hover:bg-blue-400',
+                yellow: isSelected ? 'bg-yellow-300 ring-2 ring-yellow-100' : 'bg-yellow-200 hover:bg-yellow-300',
+                orange: isSelected ? 'bg-orange-300 ring-2 ring-orange-100' : 'bg-orange-200 hover:bg-orange-300',
+                red: isSelected ? 'bg-red-300 ring-2 ring-red-100' : 'bg-red-200 hover:bg-red-300'
             };
             return colors[color] || colors.blue;
         }
@@ -209,6 +208,12 @@
         }
 
         function setView(view) {
+            // Reset selections when switching between tabs
+            if (currentView !== view) {
+                selectedMood = null;
+                previousMood = null;
+            }
+            
             currentView = view;
             document.getElementById('simpleBtn').className = view === 'simple' ? 
                 'flex-1 py-2 px-4 rounded-lg font-medium bg-blue-500 text-white' : 
@@ -216,55 +221,91 @@
             document.getElementById('detailedBtn').className = view === 'detailed' ? 
                 'flex-1 py-2 px-4 rounded-lg font-medium bg-blue-500 text-white' : 
                 'flex-1 py-2 px-4 rounded-lg font-medium bg-gray-100 text-gray-600';
+            updateHeader();
             renderMoods();
         }
 
         function selectMood(mood) {
-            // If clicking the same mood again, deselect it
-            if (selectedMood && selectedMood.id === mood.id) {
-                selectedMood = null;
-                previousMood = null;
+            // For detailed view, maintain the current two-step process
+            if (currentView === 'detailed') {
+                // If clicking the same mood again, deselect it
+                if (selectedMood && selectedMood.id === mood.id) {
+                    selectedMood = null;
+                    previousMood = null;
+                    updateHeader();
+                    renderMoods();
+                    return;
+                }
+
+                // If there's already a selected mood, show improvement dialog
+                if (selectedMood) {
+                    previousMood = selectedMood;
+                    showImprovement(previousMood, mood);
+                }
+
+                selectedMood = mood;
                 updateHeader();
                 renderMoods();
-                return;
-            }
-
-            // If there's already a selected mood, show improvement dialog
-            if (selectedMood) {
-                previousMood = selectedMood;
+            } 
+            // For simple view, record mood directly with a single click
+            else {
+                // For simple view, we'll simulate having a "default" previous state
+                // This allows users to record their current mood with just one click
+                previousMood = {
+                    id: 0,
+                    name: "Previous state",
+                    level: mood.level,  // We use the same level as a default
+                    color: mood.color
+                };
+                selectedMood = mood;
+                
+                // Show the improvement dialog immediately
                 showImprovement(previousMood, mood);
+                
+                // Reset selection after showing dialog
+                updateHeader();
+                renderMoods();
             }
-            
-            selectedMood = mood;
-            updateHeader();
-            renderMoods();
         }
 
         function updateHeader() {
             const header = document.getElementById('headerText');
             const prev = document.getElementById('previousMood');
-            
-            if (!selectedMood) {
-                header.textContent = 'How were you feeling before?';
+
+            if (currentView === 'simple') {
+                header.textContent = 'How are you feeling?';
                 prev.classList.add('hidden');
-            } else if (previousMood) {
-                header.textContent = 'How are you feeling now?';
-                prev.textContent = `Previous: ${previousMood.name}`;
-                prev.classList.remove('hidden');
             } else {
-                header.textContent = 'How are you feeling now?';
-                prev.classList.add('hidden');
+                // Detailed view keeps the original behavior
+                if (!selectedMood) {
+                    header.textContent = 'How were you feeling before?';
+                    prev.classList.add('hidden');
+                } else if (previousMood) {
+                    header.textContent = 'How are you feeling now?';
+                    prev.textContent = `Previous: ${previousMood.name}`;
+                    prev.classList.remove('hidden');
+                } else {
+                    header.textContent = 'How are you feeling now?';
+                    prev.classList.add('hidden');
+                }
             }
         }
 
         function renderMoods() {
                 const grid = document.getElementById('moodGrid');
-                
+
                 if (currentView === 'simple') {
+                    // Create simple view with subtle icons
                     grid.innerHTML = simpleMoods.map(mood => `
                         <button onclick='selectMood(${JSON.stringify(mood)})' 
                                 class="${getColorClass(mood.color, selectedMood?.id === mood.id)} 
-                                    w-full p-4 rounded-lg text-white font-medium transition-all">
+                                    w-full p-4 rounded-lg text-slate-700 font-medium transition-all flex items-center">
+                            <span class="mr-2 text-lg opacity-75">${
+                                mood.id === 1 ? '▲▲' : 
+                                mood.id === 2 ? '▲' : 
+                                mood.id === 3 ? '○' : 
+                                '▼'
+                            }</span>
                             ${mood.name}
                         </button>
                     `).join('');
@@ -285,8 +326,43 @@
 
         function showImprovement(from, to) {
             document.getElementById('improvementDialog').classList.remove('hidden');
-            document.getElementById('improvementText').textContent = 
-                `You've moved from "${from.name}" to "${to.name}". What specifically helped you feel better?`;
+            
+            let promptText = '';
+            let dialogTitle = 'Reflection';
+            
+            if (currentView === 'simple') {
+                // For simple view, adapt text based on the mood selected
+                if (to.name === 'Much Better') {
+                    dialogTitle = 'Great Progress!';
+                    promptText = `You're feeling ${to.name}. What one thing specifically helped you feel much better?`;
+                } else if (to.name === 'Better') {
+                    dialogTitle = 'Positive Change';
+                    promptText = `You're feeling ${to.name}. What one thing specifically helped you feel better?`;
+                } else if (to.name === 'Neutral') {
+                    dialogTitle = 'Neutral State';
+                    promptText = `You're feeling neutral. What's one small thing that might help shift your day in a positive direction?`;
+                } else if (to.name === 'Worse') {
+                    dialogTitle = 'Something Changed';
+                    promptText = `You're feeling ${to.name}. What specifically contributed to this change?`;
+                } else {
+                    // Generic fallback
+                    promptText = `You selected ${to.name}. What's on your mind right now?`;
+                }
+            } else {
+                // For detailed view, adapt based on level comparison
+                if (to.level < from.level) {
+                    dialogTitle = 'Great Progress!';
+                    promptText = `You've moved from "${from.name}" to "${to.name}". What specifically helped you feel better?`;
+                } else if (to.level > from.level) {
+                    dialogTitle = 'Something Changed';
+                    promptText = `You've moved from "${from.name}" to "${to.name}". What do you think contributed to this change?`;
+                } else {
+                    promptText = `You've moved from "${from.name}" to "${to.name}". What observations do you have about this shift?`;
+                }
+            }
+            
+            document.getElementById('dialogTitle').textContent = dialogTitle;
+            document.getElementById('improvementText').textContent = promptText;
         }
 
         function closeImprovement() {
@@ -297,21 +373,39 @@
         function saveNote() {
             const note = document.getElementById('noteInput').value;
             if (note.trim()) {
-                history.unshift({
-                    id: Date.now(),
-                    from: previousMood.name,
-                    to: selectedMood.name,
-                    note: note,
-                    date: new Date().toISOString()
-                });
+                if (currentView === 'simple') {
+                    // For simple view, we record just the current mood
+                    history.unshift({
+                        id: Date.now(),
+                        from: currentView === 'simple' ? selectedMood.name : previousMood.name,
+                        to: selectedMood.name,
+                        note: note,
+                        date: new Date().toISOString()
+                    });
+                } else {
+                    // For detailed view, we record the transition from previous to current
+                    history.unshift({
+                        id: Date.now(),
+                        from: previousMood.name,
+                        to: selectedMood.name,
+                        note: note,
+                        date: new Date().toISOString()
+                    });
+                }
                 closeImprovement();
+                // Reset selection in simple view after recording
+                if (currentView === 'simple') {
+                    selectedMood = null;
+                    previousMood = null;
+                    renderMoods();
+                }
             }
         }
 
         function showHistory() {
             const content = document.getElementById('historyContent');
             document.getElementById('historyDialog').classList.remove('hidden');
-            
+
             if (history.length === 0) {
                 content.innerHTML = '<p class="text-gray-500 text-center">No improvements recorded yet.</p>';
             } else {

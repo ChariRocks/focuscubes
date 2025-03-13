@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus Cubes - Focus Exercises</title>
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .exercise-progress {
+            transition: width 1s linear;
+        }
+
+        .focus-pulse {
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .exercise-card {
+            transition: all 0.3s ease;
+        }
+
+        .exercise-card:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="p-6 max-w-4xl mx-auto">
+        <!-- Header with Back Button -->
+        <header class="flex items-center mb-8">
+            <button onclick="window.history.back()" class="mr-4 p-2 rounded-full hover:bg-gray-100">
+                <i class="fas fa-arrow-left text-gray-600"></i>
+            </button>
+            <div>
+                <h1 class="text-2xl font-bold text-gray-800">Focus Exercises</h1>
+                <p class="text-gray-600">Choose a 2-minute exercise to enhance focus</p>
+            </div>
+        </header>
+
+        <!-- Exercise Cards -->
+        <div class="grid gap-6 mb-8">
+            <!-- Single Point Focus -->
+            <div id="exercise1" class="exercise-card bg-white rounded-xl p-6 shadow-lg cursor-pointer" onclick="startExercise('singlePoint')">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center space-x-4">
+                        <div class="p-3 rounded-xl bg-green-100">
+                            <i class="fas fa-dot-circle text-green-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-medium text-gray-800">Single Point Focus</h3>
+                            <p class="text-gray-600">Concentrate on one point of your cube</p>
+                        </div>
+                    </div>
+                    <span class="text-sm text-gray-500">2 min</span>
+                </div>
+            </div>
+
+            <!-- Mental Clarity -->
+            <div id="exercise2" class="exercise-card bg-white rounded-xl p-6 shadow-lg cursor-pointer" onclick="startExercise('mentalClarity')">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center space-x-4">
+                        <div class="p-3 rounded-xl bg-blue-100">
+                            <i class="fas fa-brain text-blue-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-medium text-gray-800">Mental Clarity</h3>
+                            <p class="text-gray-600">Clear mental clutter with focused breathing</p>
+                        </div>
+                    </div>
+                    <span class="text-sm text-gray-500">2 min</span>
+                </div>
+            </div>
+
+            <!-- Flow State Primer -->
+            <div id="exercise3" class="exercise-card bg-white rounded-xl p-6 shadow-lg cursor-pointer" onclick="startExercise('flowPrimer')">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center space-x-4">
+                        <div class="p-3 rounded-xl bg-purple-100">
+                            <i class="fas fa-stream text-purple-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-medium text-gray-800">Flow State Primer</h3>
+                            <p class="text-gray-600">Quick technique to enter flow state</p>
+                        </div>
+                    </div>
+                    <span class="text-sm text-gray-500">2 min</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exercise Modal -->
+        <div id="exerciseModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center">
+            <div class="bg-white rounded-xl p-8 max-w-lg w-full mx-4 fade-in">
+                <div class="text-center mb-8">
+                    <h2 id="exerciseTitle" class="text-2xl font-bold text-gray-800 mb-2"></h2>
+                    <p id="exerciseInstruction" class="text-gray-600"></p>
+                </div>
+
+                <!-- Focus Point -->
+                <div class="relative w-32 h-32 mx-auto mb-8">
+                    <div id="focusPoint" class="absolute inset-0 rounded-full bg-green-100 focus-pulse"></div>
+                    <div class="absolute inset-0 flex items-center justify-center text-gray-600" id="focusText">
+                        Focus
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="bg-gray-200 rounded-full h-2 mb-4">
+                    <div id="progressBar" class="exercise-progress bg-green-600 h-2 rounded-full" style="width: 0%"></div>
+                </div>
+
+                <!-- Timer -->
+                <div class="text-center mb-8">
+                    <span id="timer" class="text-2xl font-bold text-gray-800">2:00</span>
+                </div>
+
+                <!-- Close Button -->
+                <button onclick="closeExercise()" class="w-full bg-gray-100 text-gray-800 py-3 rounded-lg hover:bg-gray-200">
+                    End Exercise
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const exercises = {
+            singlePoint: {
+                title: "Single Point Focus",
+                instruction: "Keep your attention fixed on one point of your cube. Let your mind settle.",
+                color: "green"
+            },
+            mentalClarity: {
+                title: "Mental Clarity",
+                instruction: "With each breath, let go of one distracting thought.",
+                color: "blue"
+            },
+            flowPrimer: {
+                title: "Flow State Primer",
+                instruction: "Focus on the pulsing circle, matching your breath to its rhythm.",
+                color: "purple"
+            }
+        };
+
+        let timerInterval;
+        let progressInterval;
+        let timeLeft;
+
+        function startExercise(exerciseType) {
+            const exercise = exercises[exerciseType];
+            const modal = document.getElementById('exerciseModal');
+            const title = document.getElementById('exerciseTitle');
+            const instruction = document.getElementById('exerciseInstruction');
+            const focusPoint = document.getElementById('focusPoint');
+            
+            title.textContent = exercise.title;
+            instruction.textContent = exercise.instruction;
+            focusPoint.className = `absolute inset-0 rounded-full bg-${exercise.color}-100 focus-pulse`;
+            modal.classList.remove('hidden');
+
+            timeLeft = 120;
+            updateTimer();
+            
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimer();
+                if (timeLeft <= 0) {
+                    closeExercise();
+                }
+            }, 1000);
+
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = '0%';
+            progressBar.className = `exercise-progress bg-${exercise.color}-600 h-2 rounded-full`;
+            progressInterval = setInterval(() => {
+                const progress = ((120 - timeLeft) / 120) * 100;
+                progressBar.style.width = `${progress}%`;
+            }, 1000);
+        }
+
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer').textContent = 
+                `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function closeExercise() {
+            clearInterval(timerInterval);
+            clearInterval(progressInterval);
+            document.getElementById('exerciseModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>

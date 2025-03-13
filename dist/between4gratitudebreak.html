@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gratitude Break - Focus Cubes</title>
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@radix-ui/themes@2.0.0/styles.css" rel="stylesheet" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+
+        .cube-container {
+            perspective: 1000px;
+            width: 96px;
+            height: 96px;
+        }
+
+        .cube {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(251, 146, 60, 0.1), rgba(249, 168, 212, 0.1));
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            backface-visibility: hidden;
+        }
+
+        .step-transition {
+            transition: all 0.5s ease-in-out;
+            scroll-margin: 120px; /* This helps center the element when scrolling */
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="w-full max-w-2xl mx-auto h-[600px] bg-white rounded-xl shadow-xl overflow-hidden my-8">
+        <div class="h-full flex flex-col bg-gradient-to-b from-orange-50 to-pink-50">
+            <!-- Header -->
+            <div class="px-6 py-4 flex justify-between items-center border-b border-gray-100 bg-white/80 backdrop-blur-sm">
+                <a href="Betweencalls-new.html" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m15 18-6-6 6-6"/>
+                    </svg>
+                </a>
+                <h2 class="text-xl font-medium text-gray-800">Gratitude Break</h2>
+                <a href="Betweencalls-new.html" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="flex-1 overflow-hidden flex flex-col p-6 space-y-8">
+                <!-- Title -->
+                <div class="text-center">
+                    <h2 class="text-2xl font-medium text-gray-800 mb-2">Gratitude Break</h2>
+                    <p class="text-gray-600 text-sm">Find appreciation in your day (90 seconds)</p>
+                </div>
+
+                <!-- Cube -->
+                <div class="flex justify-center">
+                    <div class="relative">
+                        <div class="cube-container">
+                            <div class="cube" id="cube">
+                                <div class="cube-face" style="transform: translateZ(48px)"></div>
+                                <div class="cube-face" style="transform: translateZ(-48px) rotateY(180deg)"></div>
+                                <div class="cube-face" style="transform: translateX(48px) rotateY(90deg)"></div>
+                                <div class="cube-face" style="transform: translateX(-48px) rotateY(-90deg)"></div>
+                                <div class="cube-face" style="transform: translateY(-48px) rotateX(90deg)"></div>
+                                <div class="cube-face" style="transform: translateY(48px) rotateX(-90deg)"></div>
+                            </div>
+                        </div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-3xl font-light text-gray-700" id="timer">12</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Steps -->
+                <div class="flex-1 overflow-y-auto px-4">
+                    <div class="space-y-4 max-w-xl mx-auto" id="steps-container">
+                        <!-- Steps will be inserted here by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="flex justify-center space-x-6">
+                    <button 
+                        id="playPauseBtn"
+                        class="w-12 h-12 rounded-full bg-white hover:bg-orange-50 border-2 border-gray-200 flex items-center justify-center"
+                    >
+                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 3l14 9-14 9V3z"/>
+                        </svg>
+                    </button>
+                    <button 
+                        id="resetBtn"
+                        class="w-12 h-12 rounded-full bg-white hover:bg-orange-50 border-2 border-gray-200 flex items-center justify-center"
+                    >
+                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                            <path d="M3 3v5h5"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const steps = [
+            "Start with 3 steady breaths (3 counts in, 3 counts out)",
+            "Think of a colleague who helped you today - take a grateful breath",
+            "Recall a positive moment with a caller - breathe in appreciation",
+            "Remember something you handled well - breathe in pride",
+            "Take 2 breaths while holding these good feelings",
+            "Breathe in gratitude (4 counts), out contentment (4 counts)",
+            "Let a small smile form as you take 2 more breaths",
+            "One final grateful breath before returning to your day"
+        ];
+
+        let currentStep = 0;
+        let timerValue = 12;
+        let isPlaying = false;
+        let timerInterval;
+        let cubeRotation = 0;
+
+        const stepsContainer = document.getElementById('steps-container');
+        const timer = document.getElementById('timer');
+        const cube = document.getElementById('cube');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        // Create step elements
+        function createSteps() {
+                stepsContainer.innerHTML = steps.map((step, index) => `
+                    <div id="step-${index}" class="step-transition transform ${index === currentStep ? 'scale-100 opacity-100' : 'scale-95 opacity-40'}">
+                        <div class="p-6 rounded-2xl ${index === currentStep ? 'bg-white shadow-lg' : 'bg-white/50'}">
+                            <div class="flex items-start gap-4">
+                                <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm ${
+                                    index === currentStep ? 'bg-orange-500 text-white' : 'bg-gray-100 text-gray-400'
+                                }">
+                                    ${index + 1}
+                                </span>
+                                <span class="flex-1 text-lg ${index === currentStep ? 'text-gray-800' : 'text-gray-400'}">
+                                    ${step}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Scroll the current step into view
+                const currentStepElement = document.getElementById(`step-${currentStep}`);
+                if (currentStepElement) {
+                    currentStepElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }
+            }
+        function updateCube() {
+            cubeRotation += 1.6; // Gentle, appreciative rotation
+            cube.style.transform = `rotateX(${cubeRotation}deg) rotateY(${cubeRotation}deg)`;
+        }
+
+        // Rest of the JavaScript remains the same (startTimer, pauseTimer, resetExercise functions)
+        
+        function startTimer() {
+            isPlaying = true;
+            playPauseBtn.innerHTML = `
+                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 4h4v16H6z"/><path d="M14 4h4v16h-4z"/>
+                </svg>
+            `;
+            
+            timerInterval = setInterval(() => {
+                if (timerValue > 0) {
+                    timerValue--;
+                    timer.textContent = timerValue;
+                    updateCube();
+                } else {
+                    if (currentStep < steps.length - 1) {
+                        currentStep++;
+                        timerValue = 12;
+                        createSteps();
+                    } else {
+                        clearInterval(timerInterval);
+                        isPlaying = false;
+                        playPauseBtn.innerHTML = `
+                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 3l14 9-14 9V3z"/>
+                            </svg>
+                        `;
+                    }
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            isPlaying = false;
+            clearInterval(timerInterval);
+            playPauseBtn.innerHTML = `
+                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 3l14 9-14 9V3z"/>
+                </svg>
+            `;
+        }
+
+        function resetExercise() {
+            clearInterval(timerInterval);
+            currentStep = 0;
+            timerValue = 12;
+            isPlaying = false;
+            cubeRotation = 0;
+            cube.style.transform = `rotateX(0deg) rotateY(0deg)`;
+            timer.textContent = timerValue;
+            createSteps();
+            playPauseBtn.innerHTML = `
+                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 3l14 9-14 9V3z"/>
+                </svg>
+            `;
+        }
+
+        playPauseBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                pauseTimer();
+            } else {
+                startTimer();
+            }
+        });
+
+        resetBtn.addEventListener('click', resetExercise);
+
+        // Initialize
+        createSteps();
+    </script>
+</body>
+</html>

@@ -1,155 +1,159 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Focus Cubes - Interactive Demo</title>
+    <title>Focus Cubes</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+    </script>
+    <style>
+        body {
+            background-color: #f0f7ff;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .bg-mint-50 {
+            background-color: #f0f7ff;
+        }
+        .gradient-button {
+            background: linear-gradient(to right, #4da7de, #45c19c);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .gradient-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(73, 169, 176, 0.3);
+        }
+        .logo-container {
+            margin-bottom: 60px;
+        }
+        .card {
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+        .nav-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 12px 16px;
+        }
+    </style>
 </head>
-<body>
-    <div id="app" class="min-h-screen">
-        <!-- Login Screen -->
-        <div id="loginScreen" class="min-h-screen bg-gradient-to-b from-sky-50 to-blue-50 flex flex-col justify-center items-center p-6">
-            <!-- Logo -->
-           <!-- Logo -->
-                <div class="mb-16 animate__animated animate__fadeIn">
-                    <img src="images/focuscubeslogo.png" alt="Focus Cubes Logo" class="w-64">
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md flex flex-col items-center">
+        <div id="login-screen">
+            <div class="text-center mb-10">
+                <div class="flex justify-center mb-6">
+                    <img src="images/focuscubeslogo.png" alt="Focus Cubes" class="h-14">
                 </div>
-
-            <!-- Welcome Text -->
-            <h1 class="font-light mb-12 text-center text-gray-700 animate__animated animate__fadeIn animate__delay-1s">
-                <span class="block text-3xl font-bold">Welcome</span>
-                <span class="block text-2xl">Find Your Focus, Find Your Best!</span>
-            </h1>
-
-            <!-- Login Form -->
-            <div class="w-full max-w-sm space-y-8 animate__animated animate__fadeIn animate__delay-2s">
-                <input
-                    type="text"
-                    id="nameInput"
-                    placeholder="Your name"
-                    class="w-full bg-white/50 border border-sky-100 rounded-xl px-4 py-3 text-lg text-gray-700 focus:ring-2 focus:ring-sky-200 focus:border-sky-300 placeholder:text-gray-400"
+                <h1 class="text-5xl font-bold text-gray-800 mb-4">Welcome</h1>
+                <p class="text-2xl text-gray-700">Find Your Focus, Find Your Best!</p>
+            </div>
+            
+            <div class="w-full">
+                <input 
+                    type="text" 
+                    id="nameInput" 
+                    placeholder="Your name" 
+                    class="w-full px-6 py-4 rounded-full border border-gray-200 mb-6 text-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                 >
                 
                 <button 
-                    id="beginButton"
-                    class="w-full bg-gradient-to-r from-sky-500 to-teal-500 text-white rounded-xl py-6 text-lg font-light hover:opacity-90 transition-all shadow-sm hover:shadow-md"
+                    id="startButton"
+                    onclick="skipToOptions()" 
+                    class="w-full py-4 rounded-full text-xl font-medium gradient-button"
                 >
                     Begin
                 </button>
             </div>
         </div>
-
-        <!-- Path Selection Screen -->
-        <div id="pathScreen" class="min-h-screen bg-gradient-to-b from-sky-50 to-blue-50 flex flex-col hidden">
-            <!-- Header -->
-            <div class="absolute top-0 left-0 right-0 flex justify-between p-6">
-                <button 
-                    id="backButton"
-                    class="text-sky-600 hover:text-sky-700 transition-colors text-sm"
-                >
-                    back
+        
+        <div id="options-screen" class="hidden w-full relative">
+            <!-- Back and Close buttons -->
+            <div class="flex justify-between items-center mb-8 w-full">
+                <button onclick="goBack()" class="p-2">
+                    <svg class="h-7 w-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m15 18-6-6 6-6"/>
+                    </svg>
+                </button>
+                <h2 class="text-xl font-medium text-gray-800">Hello</h2>
+                <button onclick="closePage()" class="p-2">
+                    <svg class="h-7 w-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                    </svg>
                 </button>
             </div>
-
-            <div class="flex-1 flex flex-col justify-center p-6">
-                <!-- Greeting -->
-                <h1 id="greeting" class="text-3xl font-light mb-16 text-center text-gray-700">
-                    Hello
-                </h1>
-
-                <!-- Choice Cards -->
-                <div class="space-y-6 max-w-sm mx-auto w-full">
-                    <button 
-                        class="w-full bg-white/80 backdrop-blur-sm border border-sky-100 text-gray-700 rounded-3xl p-8 text-left transform hover:scale-[1.02] transition-all shadow-sm hover:shadow-md"
-                        onclick="selectPath('While at Work')"
-                    >
-                        <h2 class="text-2xl font-bold mb-2 text-sky-700">While at Work</h2>
-                        <p class="text-sm text-gray-500">Boost your day. Right here, Right now!</p>
-                    </button>
-
-                    <button 
-                        class="w-full bg-teal-50/80 backdrop-blur-sm border border-teal-100 text-gray-700 rounded-3xl p-8 text-left transform hover:scale-[1.02] transition-all shadow-sm hover:shadow-md"
-                        onclick="selectPath('6-Week Shift')"
-                    >
-                        <h2 class="text-2xl font-bold mb-2 text-teal-700">6-Week Transformation</h2>
-                        <p class="text-sm text-gray-500">Build lasting Resilience and Focus for Life!</p>
-                    </button>
-                </div>
+            
+            <!-- Logo -->
+            <div class="logo-container flex justify-center mb-8">
+                <img src="images/focuscubeslogo.png" alt="Focus Cubes" class="h-14">
+            </div>
+            
+            <div class="space-y-6 w-full">
+                <a href="during&between.html" class="block">
+                    <div class="card bg-white rounded-xl p-6 w-full">
+                        <h2 class="text-2xl font-semibold text-blue-700 mb-2">While at Work</h2>
+                        <p class="text-gray-600">Boost your day. Right here, Right now!</p>
+                    </div>
+                </a>
+                
+                <a href="6weekhomeNEW.html" class="block">
+                    <div class="card bg-green-50 rounded-xl p-6 w-full">
+                        <h2 class="text-2xl font-semibold text-teal-700 mb-2">6-Week Transformation</h2>
+                        <p class="text-gray-600">Build lasting Resilience and Focus for Life!</p>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
 
     <script>
-        // Elements
-        const loginScreen = document.getElementById('loginScreen');
-        const pathScreen = document.getElementById('pathScreen');
-        const nameInput = document.getElementById('nameInput');
-        const beginButton = document.getElementById('beginButton');
-        const backButton = document.getElementById('backButton');
-        const greeting = document.getElementById('greeting');
-
-        // Event Listeners
-        beginButton.addEventListener('click', handleBegin);
-        backButton.addEventListener('click', handleBack);
-        nameInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                handleBegin();
+        function skipToOptions() {
+            const name = document.getElementById('nameInput').value.trim();
+            if (name) {
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('options-screen').classList.remove('hidden');
+                // Add the hash to URL for direct access later
+                if (window.location.hash !== '#path') {
+                    window.location.hash = 'path';
+                }
+            }
+        }
+        
+        // Check for hash fragment to skip login
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.location.hash === '#path') {
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('options-screen').classList.remove('hidden');
             }
         });
 
-        // Functions
-        function handleBegin() {
-            const name = nameInput.value.trim();
-            if (name) {
-                greeting.textContent = `Hello, ${name}.`;
-                
-                loginScreen.classList.add('animate__fadeOut');
-                setTimeout(() => {
-                    loginScreen.classList.add('hidden');
-                    pathScreen.classList.remove('hidden');
-                    pathScreen.classList.add('animate__fadeIn');
-                }, 500);
-            } else {
-                nameInput.classList.add('border-red-300');
-                nameInput.classList.add('animate__shakeX');
-                setTimeout(() => {
-                    nameInput.classList.remove('animate__shakeX');
-                }, 1000);
-            }
+        function goBack() {
+            // If we came from the #path URL, show login screen
+            document.getElementById('options-screen').classList.add('hidden');
+            document.getElementById('login-screen').classList.remove('hidden');
+            // Remove the hash from the URL
+            history.pushState("", document.title, window.location.pathname);
         }
 
-        function handleBack() {
-            pathScreen.classList.add('animate__fadeOut');
-            setTimeout(() => {
-                pathScreen.classList.add('hidden');
-                pathScreen.classList.remove('animate__fadeOut');
-                loginScreen.classList.remove('hidden', 'animate__fadeOut');
-                loginScreen.classList.add('animate__fadeIn');
-                nameInput.value = '';
-            }, 500);
+        function closePage() {
+            // For web apps, this would typically close the app or navigate to a parent page
+            // Since we can't actually close the browser tab programmatically for security reasons,
+            // we'll just go back to the login screen
+            goBack();
         }
-
-        function selectPath(path) {
-    const button = event.currentTarget;
-    button.classList.add('scale-95');
-    setTimeout(() => {
-        button.classList.remove('scale-95');
-        if (path === '6-Week Shift') {
-            window.location.href = '6weekhomeNEW.html';
-        } else if (path === 'While at Work') {
-            window.location.href = 'during&between.html';
-        }
-    }, 200);
-}
-        
-        if (window.location.hash === '#path') {
-    loginScreen.classList.add('hidden');
-    pathScreen.classList.remove('hidden');
-    pathScreen.classList.add('animate__fadeIn');
-}
     </script>
 </body>
 </html>
-
